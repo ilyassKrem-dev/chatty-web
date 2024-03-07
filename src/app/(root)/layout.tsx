@@ -1,7 +1,9 @@
-import type { Metadata } from "next";
-import { Sora } from "next/font/google";
-
 import "../globals.css";
+import type { Metadata } from "next";
+
+import { Sora } from "next/font/google";
+import Theme from "@/assets/Theme/Theme";
+import NavHome from "@/components/Home/NavHome";
 
 const sora = Sora({ subsets: ["latin"] });
 
@@ -15,9 +17,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+ 
   return (
-    <html lang="en">
-      <body className={sora.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning={true}>
+      <body className={sora.className}>
+        
+          <Theme>
+            
+              <main>
+                {children}
+              </main>
+
+          </Theme>
+        
+      </body>
+     
     </html>
   );
 }
