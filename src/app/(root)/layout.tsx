@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 import { Sora } from "next/font/google";
 import Theme from "@/assets/Theme/Theme";
-import NavHome from "@/components/Home/NavHome";
+import Nav from "@/assets/other/Nav/Nav";
 
 const sora = Sora({ subsets: ["latin"] });
 
@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={sora.className}>
         
           <Theme>
-            
+              <Nav />
               <main>
                 {children}
               </main>

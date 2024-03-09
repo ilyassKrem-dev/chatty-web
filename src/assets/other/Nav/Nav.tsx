@@ -3,7 +3,9 @@ import Link from "next/link";
 import ToogleTheme from "@/assets/Theme/ToogleTheme";
 import { useEffect, useState } from "react";
 
-export default function NavHome() {
+export default function Nav({className}:{
+    className?:string
+}) {
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
@@ -20,7 +22,7 @@ export default function NavHome() {
     }, []);
 
     return (
-        <nav className={` p-3   w-full ${scrolled ? 'bg-blue-400 dark:bg-accent z-10 shadow-md fixed top-0' : ''}`}>
+        <nav className={` p-3   w-full ${scrolled ? 'bg-blue-400 dark:bg-accent  z-10 shadow-md fixed top-0' : ''} ${className}`}>
             <div className="flex justify-between items-center">
                 <div className="flex gap-2 items-center">
                     <Link href={"/"} className=" text-4xl font-bold text-white dark:text-blue-400 cursor-pointer hover:opacity-60 transition-all duration-200">

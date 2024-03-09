@@ -13,7 +13,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={sora.className}>{children}</body>
+      
+      <body className={`bg-black  items-center sm:flex flex-col justify-center w-full `+sora.className}>
+          <main className="sm:mt-32 mt-10 max-w-[400px] m-auto">
+          {children}
+          </main>
+      </body>
     </html>
   );
 }

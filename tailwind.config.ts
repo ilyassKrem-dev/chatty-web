@@ -26,6 +26,7 @@ const config = {
         primary: '#131424',
         secondary: '#393A47',
         accent: '#F13024',
+        "gray-1": "#697C89"
       },
       keyframes: {
         "accordion-down": {
