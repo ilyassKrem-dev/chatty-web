@@ -1,9 +1,9 @@
 "use client"
-
+import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import {} from "next-auth"
+import { tailspin } from "ldrs"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -16,13 +16,15 @@ import {
 import { Input } from "@/components/ui/input"
 import { signUpValidation } from "@/lib/validation/signUp"
 import { useState } from "react"
-import { signIn } from "next-auth/react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation"
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 export default  function SignUpForm() {
-  
+    const [errorN,setErrorN] = useState<boolean>(false)
+    const [errorE,setErrorE] = useState<boolean>(false)
+    const [loading,setLoading] = useState<boolean>(false)
     const router = useRouter()
+    tailspin.register()
     const form = useForm({
         resolver:zodResolver(signUpValidation),
         defaultValues:{
@@ -36,8 +38,9 @@ export default  function SignUpForm() {
     const { executeRecaptcha } = useGoogleReCaptcha();
 
     const onSubmit = async (values:z.infer<typeof signUpValidation>) => {
-      
+      setLoading(true)
       if(!executeRecaptcha) {
+        setLoading(false)
         throw {
           title:"reCaptcha not available at the moment",
           decription:"Please try again",
@@ -52,19 +55,22 @@ export default  function SignUpForm() {
         },
         body:JSON.stringify({
           name:values.name,
-          email:values.email,
+          email:values.email.toLowerCase(),
           password:values.password,
           token:reCaptchaToken
         })
       })
       const responseData = await response.json();
       if(!response.ok) {
-        throw new Error(responseData.message || "Failed to sign up");
+        setLoading(false)
+        if(responseData.error.startsWith('E')) return setErrorE(true)
+        if(responseData.error.startsWith('N')) return setErrorN(true)
+        throw new Error(responseData.error ||"Can't sign up rign now,try again later")
       }
-      if(responseData.message) router.push('/signin')
+      if(responseData.message) router.push('/login')
     }
-   
-
+    
+    
   return (
     <Form {...form}>
     
@@ -80,21 +86,25 @@ export default  function SignUpForm() {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Name" {...field} />
+                <Input onChangeCapture={() =>setErrorN(false)} placeholder="Name" {...field} />
               </FormControl>
+              {errorN&&<p className="text-accent text-sm font-medium ">Name already exsist</p>}
               <FormMessage />
             </FormItem>
           )}
         />
+        
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
+              
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type={"email"} placeholder="Email" {...field} />
+                <Input  onChangeCapture={() => setErrorE(false)} type={"email"} placeholder="Email" {...field} />
               </FormControl>
+              {errorE&&<p className="text-accent text-sm font-medium ">Email already exsist</p>}
               <FormMessage />
             </FormItem>
           )}
@@ -125,7 +135,19 @@ export default  function SignUpForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Sign up</Button>
+        <Button type="submit">
+          {!loading&&<p className="cursor-pointer">Sign up</p>}
+          {loading&&<l-tailspin 
+            size={30} 
+            stroke={5} 
+            speed="0.9" 
+            color={"white"}/>}
+        </Button>
+        <Link href={"/login"} className="w-full">
+          <Button className="w-full bg-gradient-to-r from-black  to-gray-600  hover:opacity-70 hover:text-opacity-100 transition-all duration-200">
+            Login
+          </Button>
+        </Link>
       </form>
     </Form>
   )

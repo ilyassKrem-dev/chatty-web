@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt"
 
+
 const UserShema = new mongoose.Schema({
     name:{
         type:String,
@@ -26,9 +27,15 @@ const UserShema = new mongoose.Schema({
     },
     lastLogin:{
         type:Date
+    },
+    completed:{
+        type:Boolean,
+        default:false
     }
     
-})
+},{timestamps:{
+    createdAt:true
+}})
 
 UserShema.pre('save', async function(next) {
     const user = this;

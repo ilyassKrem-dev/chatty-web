@@ -1,8 +1,7 @@
 "use client"
-import SignUpForm from "@/components/forms/SignUpForm"
 import { useEffect, useState } from "react"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
-export default function CaptchaWrapper() {
+export default function CaptchaWrapper({children}:{children:React.ReactNode}) {
     const [client,setClient] = useState(false)
     useEffect(() => {
         setClient(true)
@@ -23,7 +22,7 @@ export default function CaptchaWrapper() {
                 },
             }}
             >
-            <SignUpForm />
+            {children}
         </GoogleReCaptchaProvider>
     )
 }

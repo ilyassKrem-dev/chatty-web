@@ -1,10 +1,13 @@
 
-import CaptchaWrapper from "@/assets/other/ReCapchaWrapper/CaptchaWrapper"
+import CaptchaWrapper from "@/assets/other/Wrappers/CaptchaWrapper"
+import SignUpForm from "@/components/forms/SignUpForm"
 export default function Page() {
 
     return (
         <div className="">
-            <CaptchaWrapper />
+            <CaptchaWrapper>
+                <SignUpForm />
+            </CaptchaWrapper>
         </div>
     )
 }

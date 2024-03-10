@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
-
+import AuthProvider from "@/assets/other/Wrappers/NextAuthWrapper";
 import "../globals.css";
 
 const sora = Sora({ subsets: ["latin"] });
@@ -17,7 +17,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={sora.className}>{children}</body>
+      <body className={sora.className}>
+        <AuthProvider >
+          <main>
+            {children}
+          </main>
+          
+        </AuthProvider>
+      </body>
     </html>
   );
 }

@@ -18,9 +18,14 @@ export  async function POST(req:NextRequest) {
         }
         await ConnectDb();
 
-        const existeUser = await User.findOne({email})
-        if(existeUser) {
-            return NextResponse.json({message:"Email already exists"},{status:400})
+        const existeUserEmail = await User.findOne({email})
+        const exsiteUserName = await User.findOne({name})
+        
+        if(existeUserEmail) {
+            return NextResponse.json({error:"Email already exists"},{status:406})
+        }
+        if(exsiteUserName) {
+            return NextResponse.json({error:"Name already exists"},{status:406})
         }
         await User.create({
             name,
@@ -29,7 +34,7 @@ export  async function POST(req:NextRequest) {
         })
         return NextResponse.json({succes:true,message:"User registered successfuly"})
     } catch (error) {
-        return NextResponse.json({message:'Internal Server Error'},{status:501})
+        return NextResponse.json({error:'Internal Server Error'},{status:501})
     }
 }
 
