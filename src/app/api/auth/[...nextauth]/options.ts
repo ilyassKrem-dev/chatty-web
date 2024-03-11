@@ -1,10 +1,13 @@
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import User from "@/lib/models/user.model";
+
 
 export const options: NextAuthOptions = {
-
+    pages:{
+        signIn:"/login",
+        signOut:"/login"
+    },
     providers:[
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID??"",
@@ -17,7 +20,6 @@ export const options: NextAuthOptions = {
             
             credentials: {},
                 // @ts-ignore
-            
             async authorize(credentials) {
                 // @ts-ignore
                 const {name,email,password,type,token} = credentials

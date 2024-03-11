@@ -3,7 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { tailspin } from "ldrs"
+
+import LoadingAnimation from "@/assets/other/spinner"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -33,7 +34,7 @@ export default  function LoginForm() {
             password:""
         }
     })
-    tailspin.register()
+
     const { executeRecaptcha } = useGoogleReCaptcha();
 
     const onSubmit = async (values:z.infer<typeof loginValidation>) => {
@@ -79,7 +80,7 @@ export default  function LoginForm() {
           const reCaptchaToken = await executeRecaptcha("login")
           if(!reCaptchaToken) return setLoading(false)
           const resp = await signIn("google",{
-            callbackUrl:"/chat"
+            callbackUrl:"/tocomplete"
           })
           
           
@@ -128,11 +129,8 @@ export default  function LoginForm() {
         />
         <Button type="submit">
             {!loading&&<p className="cursor-pointer">Login</p>}
-            {loading&&<l-tailspin 
-            size={30} 
-            stroke={5} 
-            speed="0.9" 
-            color={"white"}/>}
+            {loading&&
+            <LoadingAnimation />}
           
         </Button>
       </form>

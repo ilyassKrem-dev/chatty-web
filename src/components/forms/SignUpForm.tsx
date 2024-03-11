@@ -3,7 +3,7 @@ import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { tailspin } from "ldrs"
+
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -19,12 +19,13 @@ import { useState } from "react"
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation"
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
+import LoadingAnimation from "@/assets/other/spinner"
 export default  function SignUpForm() {
     const [errorN,setErrorN] = useState<boolean>(false)
     const [errorE,setErrorE] = useState<boolean>(false)
     const [loading,setLoading] = useState<boolean>(false)
     const router = useRouter()
-    tailspin.register()
+  
     const form = useForm({
         resolver:zodResolver(signUpValidation),
         defaultValues:{
@@ -137,11 +138,7 @@ export default  function SignUpForm() {
         />
         <Button type="submit">
           {!loading&&<p className="cursor-pointer">Sign up</p>}
-          {loading&&<l-tailspin 
-            size={30} 
-            stroke={5} 
-            speed="0.9" 
-            color={"white"}/>}
+          {loading&&<LoadingAnimation />}
         </Button>
         <Link href={"/login"} className="w-full">
           <Button className="w-full bg-gradient-to-r from-black  to-gray-600  hover:opacity-70 hover:text-opacity-100 transition-all duration-200">

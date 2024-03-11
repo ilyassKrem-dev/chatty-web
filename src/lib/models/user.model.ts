@@ -25,6 +25,9 @@ const UserShema = new mongoose.Schema({
     status:{
         type:String
     },
+    bio:{
+        type:String
+    },
     lastLogin:{
         type:Date
     },
