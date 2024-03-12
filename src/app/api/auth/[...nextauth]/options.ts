@@ -22,7 +22,7 @@ export const options: NextAuthOptions = {
                 // @ts-ignore
             async authorize(credentials) {
                 // @ts-ignore
-                const {name,email,password,type,token} = credentials
+                const {email,password,token} = credentials
                 
                 try {
                     const apiUrl = process.env.NEXT_PUBLIC_API_URL + "/api/login";
@@ -41,7 +41,7 @@ export const options: NextAuthOptions = {
                         throw new Error(errorResponse.error);
                     }
                     const user = await fetchUser.json()
-                    
+                    user.authenticationMethod = 'custom'
                     
                     return user
                 } catch (error) {

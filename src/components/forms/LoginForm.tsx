@@ -80,7 +80,7 @@ export default  function LoginForm() {
           const reCaptchaToken = await executeRecaptcha("login")
           if(!reCaptchaToken) return setLoading(false)
           const resp = await signIn("google",{
-            callbackUrl:"/tocomplete"
+            callbackUrl:"/chat"
           })
           
           

@@ -81,9 +81,13 @@ export default  function CompleteForm({
         image:values.image,
         bio:values.bio
       })
-      console.log(added)
+      if(added?.message) {
+        setErrorN(true)
+        return setLoading(false)
+      } 
       
-      router.push('/chat')
+      
+      
     }
     
     
@@ -139,7 +143,7 @@ export default  function CompleteForm({
                 onChange={(e) => handleImage(e,field.onChange)} 
                 className="border-none cursor-pointer bg-transparent outline-none file:text-blue-400 hidden sm:block file:cursor-pointer"/>
               </FormControl>
-              {errorN&&<p className="text-accent text-sm font-medium ">Name already exsist</p>}
+             
               <FormMessage />
             </FormItem>
           )}
@@ -151,7 +155,7 @@ export default  function CompleteForm({
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input autoComplete={"off"}  placeholder="Name" {...field} />
+                <Input onChangeCapture={() => setErrorN(false)} autoComplete={"off"}  placeholder="Name" {...field} />
               </FormControl>
               {errorN&&<p className="text-accent text-sm font-medium ">Name already exsist</p>}
               <FormMessage />

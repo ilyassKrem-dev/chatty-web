@@ -20,21 +20,6 @@ export const AddUser = async ({
     try {
         await ConnectDb()
         const findUser =await  User.findOne({email})
-        if(!findUser) {
-            const findName = await User.findOne({name})
-            if(findName&&findName.name === name) {
-                return {
-                    message:"Name already exsite"
-                }
-            }
-            return await User.create({
-                name,
-                email,
-                image,
-                bio,
-                completed:true
-            })
-        }
         const findName = await User.findOne({name,_id:{
             $ne:findUser._id
         }})
@@ -66,12 +51,36 @@ export const fetchUserCompletion = async(email:string)  => {
         await ConnectDb()
         const user = await User.findOne({email})
             .select('-_id completed').lean()
-        console.log(user)
+        
         if(!user) {
             return {completed:false}
         }
         return user
     } catch (error:any) {
         throw new Error('Failed to find user '+error.message)
+    }
+}
+
+export const addGoogleAccount = async(
+    {name,
+    email,
+    image,
+    password}:{
+        name:string|null|undefined;
+        email:string|null|undefined;
+        image:string|null|undefined;
+        password:string;
+    }) => {
+    try {
+        await ConnectDb()
+        await User.create({
+            name,
+            email,
+            password,
+            image
+            
+        })
+    } catch (error:any) {
+        throw new Error('Failed to Add user'+error.message)
     }
 }
