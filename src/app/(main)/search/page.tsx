@@ -1,11 +1,11 @@
 
 
 
-export default function Page() {
-
+export default async function Page() {
+    
     return (
-        <div>
-            Search
+        <div className="flex justify-center items-center py-36">
+            No profile selected
         </div>
     )
 }

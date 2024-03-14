@@ -1,8 +1,12 @@
-
+"use client"
+import { useSession } from "next-auth/react";
 
 import Link from "next/link";
-
+import { redirect } from "next/navigation";
+ 
 export default function Page() {
+  const {data:session} = useSession()
+  if(session) redirect('/chat')
   return (
     <>
       

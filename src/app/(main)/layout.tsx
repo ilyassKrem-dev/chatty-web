@@ -6,6 +6,7 @@ import SessionCheck from "@/assets/other/Wrappers/SessionCheck";
 import RightNav from "@/components/main/nav/RightNav";
 import BottomNav from "@/components/main/nav/BottomNav";
 import Theme from "@/assets/Theme/Theme";
+import ChangedBar from "@/components/main/ChangedBar/ChangedBar";
 
 
 const sora = Sora({ subsets: ["latin"] });
@@ -28,8 +29,9 @@ export default function RootLayout({
             <Theme>
               <main className="flex flex-row">
                 <RightNav />
-                <section className="flex min-h-screen flex-1 flex-col items-center px-6 pt-28 pb-10 max-md:pb-32 sm:px-10">
-                  <div className="w-full max-w-4xl">
+                <ChangedBar />
+                <section className="flex min-h-screen flex-1 flex-col items-center  pb-10 max-md:pb-32 ">
+                  <div className="w-full ">
                     {children}
                   </div>
                 </section>

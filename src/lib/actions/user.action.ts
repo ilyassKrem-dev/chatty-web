@@ -2,6 +2,7 @@
 
 import { ConnectDb } from "../mongoose";
 import User from "../models/user.model";
+import { FilterQuery } from "mongoose";
 
 interface Params {
     name:string;
@@ -82,5 +83,89 @@ export const addGoogleAccount = async(
         })
     } catch (error:any) {
         throw new Error('Failed to Add user'+error.message)
+    }
+}
+
+export const fetchUser = async(email:string|null|undefined) => {
+    try {
+        await ConnectDb()
+        const user = await User.findOne({email})
+            .select('-_id name email image bio status ').lean()
+        
+        return user
+    } catch (error:any) {
+        throw new Error(`Failed to fetch user ${error.message}`)
+    }
+}
+
+export const onlineStatus = async(email:string|null|undefined,status:string) => {
+    try {
+        await ConnectDb()
+        const user = await User.findOneAndUpdate({email} ,{$set:{lastLogin:new Date(),status:status}})
+    } catch (error:any) {
+        throw new Error(`Failed to change status ${error.message}`)
+    }
+}
+
+export const fetchUsers = async(
+    {
+        searchString,
+        toShow=10,
+        sortBy="desc"
+    }
+    :{
+        searchString:string;
+        toShow?:number;
+        sortBy?: "desc";
+    }
+    ) => {
+
+    try {
+        await ConnectDb()
+        const regex = new RegExp(searchString,"i")
+        const query: FilterQuery<typeof User> = {}
+        if (searchString.trim() !== '') {
+            query.$or = [
+                { username: { $regex: regex } },
+                { name: { $regex: regex } }
+            ];
+        }
+    
+        let usersQuery;
+    
+        if (Object.keys(query).length === 0) {
+           
+            usersQuery = User.aggregate([
+                { $sample: { size: toShow } },
+                { $project: { _id: 1, name: 1, image: 1 }}
+            ]);
+        } else {
+            
+            const sortOptions = {
+                createdAt: sortBy
+            };
+            usersQuery = User.find(query).sort(sortOptions).limit(toShow).select('_id name image').lean();
+        }
+    
+        const users = await usersQuery.exec();
+
+        const usersData = users.map(user => {
+            return {...user,_id:user._id.toString()}
+        });
+        return usersData
+    } catch (error:any) {
+        throw new Error(`Failed to fetch users ${error.message}`)
+    }
+}
+
+export const fetchUserById = async(userId:string) => {
+    try {
+        await ConnectDb()
+        const user = await User.findById(userId)
+            .select('-id name image bio').lean()
+
+        return user
+    } catch (error:any) {
+        throw new Error(`Error fetching user ${error.message}`)
     }
 }

@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Sora } from "next/font/google";
 import Theme from "@/assets/Theme/Theme";
 import Nav from "@/assets/other/Nav/Nav";
-
+import AuthProvider from "@/assets/other/Wrappers/NextAuthWrapper";
 const sora = Sora({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,15 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={sora.className}>
-        
-          <Theme>
-              <Nav />
-              <main>
-                {children}
-              </main>
+          <AuthProvider>
+            <Theme>
+                <Nav />
+                <main>
+                  {children}
+                </main>
 
-          </Theme>
-        
+            </Theme>
+          </AuthProvider>
       </body>
      
     </html>
