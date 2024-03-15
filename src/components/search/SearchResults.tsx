@@ -24,21 +24,26 @@ export default function SearchResults() {
             <div className="flex flex-col gap-4">
                 {users.map((user,index) => {
                     return (
-                        <Link href={{ pathname: `/search/${user._id}`, query: { s: string } }} key={index} className="flex justify-between border rounded-full border-gray-300 hover:opacity-60 cursor-pointer">
-                            <div className="flex items-center gap-1">
-                                <Image 
-                                src={user.image} 
-                                alt="user profile pic"
-                                priority
-                                width={45} 
-                                height={45}
-                                className="rounded-full border border-gray-200"/>
-                                <p className="text-sm font-semibold">{user.name}</p>
-                            </div>
-                            <button className="bg-blue-400 rounded-full text-white px-6 text-sm">
-                                View
-                            </button>
-                        </Link>
+                        <Link href={{ pathname: `/search/${user._id}`, query: { s: string } }} key={index} className="flex items-center justify-between p-2 rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition duration-300 ease-in-out bg-white dark:bg-black hover:opacity-55 dark:border-black">
+                        <div className="flex items-center space-x-4">
+                          <div className="relative w-10 h-10">
+                            <Image 
+                              src={user.image} 
+                              alt="user profile pic"
+                              priority
+                              layout="fill"
+                              className="rounded-full bg-white"
+                            />
+                          </div>
+                          <div>
+                            <p className="text-lg font-semibold text-black dark:text-white">{user.name}</p>
+                            
+                          </div>
+                        </div>
+                        <button className="bg-blue-500 hover:opacity-60 dark:bg-accent text-white py-2 px-4 rounded-md transition duration-300 ease-in-out">
+                          View Profile
+                        </button>
+                      </Link>
                     )
                 })}
             </div>}

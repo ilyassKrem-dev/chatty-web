@@ -2,7 +2,7 @@
 
 import { ConnectDb } from "../mongoose";
 import User from "../models/user.model";
-import { FilterQuery } from "mongoose";
+import mongoose, { FilterQuery } from "mongoose";
 
 interface Params {
     name:string;
@@ -159,10 +159,11 @@ export const fetchUsers = async(
 }
 
 export const fetchUserById = async(userId:string) => {
+    const userIdToObject = new mongoose.Types.ObjectId(userId)
     try {
         await ConnectDb()
-        const user = await User.findById(userId)
-            .select('-id name image bio').lean()
+        const user = await User.findById(userIdToObject)
+            .select('-_id name image bio status')
 
         return user
     } catch (error:any) {

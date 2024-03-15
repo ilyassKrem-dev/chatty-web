@@ -6,7 +6,7 @@ import SessionCheck from "@/assets/other/Wrappers/SessionCheck";
 import RightNav from "@/components/main/nav/RightNav";
 import BottomNav from "@/components/main/nav/BottomNav";
 import Theme from "@/assets/Theme/Theme";
-import ChangedBar from "@/components/main/ChangedBar/ChangedBar";
+import ChangedBar from "@/components/shared/ChangedBar";
 
 
 const sora = Sora({ subsets: ["latin"] });

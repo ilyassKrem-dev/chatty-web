@@ -9,7 +9,7 @@ export default function ChangedBar() {
     
     return (
         <>
-            {navPathname !=="profile"&&<div className="sticky left-0 top-0 p-2 border-r py-10 w-[350px]">
+            {navPathname !=="profile"&&<div className=" hidden md:block p-2 border-r py-10 w-[350px] ">
                 {navPathname === "group"
                 ?
                 "Groups"

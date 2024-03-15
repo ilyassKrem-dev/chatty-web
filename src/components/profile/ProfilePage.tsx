@@ -5,7 +5,7 @@ import { fetchUser } from "@/lib/actions/user.action"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { FaChevronDown,FaImage } from "react-icons/fa6";
-import ProfileHeader from "@/components/profile/ProfileHeader"
+import ProfileHeader from "@/components/shared/ProfileHeader"
 import ProfileTabs from "./ProfileTabs"
 interface Params {
     name:string;
@@ -33,7 +33,7 @@ export default function ProfilePage() {
     return (
         <>
             {user&&<section className="flex flex-col w-full">
-                <ProfileHeader user={user}/>
+                <ProfileHeader user={user} type="profile"/>
                 <ProfileTabs />  
             </section>}
         

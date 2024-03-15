@@ -1,23 +1,50 @@
-"use client"
 
-import { useState } from "react"
+import RequestList from "./RequestList"
+import { Tabs,TabsList,TabsTrigger,TabsContent } from "../ui/tabs"
+import { FaUserFriends } from "react-icons/fa";
+import { IoPersonAddOutline } from "react-icons/io5";
 
-
+const  tabsLabels = [
+    {
+        icon:<FaUserFriends/>,
+        value:"friends",
+        label:"Friends"
+    },
+    {
+        icon:<IoPersonAddOutline/>,
+        value:"requests",
+        label:"Requests"
+    }
+]
 export default function ProfileTabs() {
-    const [tab ,setTab] = useState<string>("")
+
 
 
     return (
-        <div className="flex justify-center items-center text-center mt-10 text-white">
-            <div className="flex justify-center items-center w-full">
-                <div className="flex-1 bg-blue-400 p-2 border-2 border-gray-200 cursor-pointer hover:opacity-80 hover:text-blue-700 transition-all duration-300" onClick={() => setTab("friends")}>
-                    Friends
-                </div>
-                <div className="flex-1 bg-blue-400 p-2 border-gray-200 border-2 border-l-0 cursor-pointer hover:opacity-80 hover:text-blue-700 transition-all duration-300" onClick={() => setTab("requests")}>
-                    Requests
-                </div>
-            </div>
-                  
-        </div>
+        <section className="flex justify-center items-center text-center mt-10  flex-col">
+            <Tabs defaultValue="friends" className="w-full">
+                <TabsList className="flex min-h-[50px] flex-1 items-center gap-3 bg-blue-400 text-white data-[state=active]:bg-white data-[state=active]:text-black px-0">
+                    {tabsLabels.map((tab) => {
+                        return (
+                            <TabsTrigger key={tab.label} value={tab.value} className="flex min-h-[50px] flex-1 items-center gap-3 bg-blue-400 text-white data-[state=active]:bg-white data-[state=active]:text-black">
+                                <div>{tab.icon}</div>
+                                <p>{tab.label}</p>
+                            </TabsTrigger>
+                        )
+                    })}
+
+                </TabsList>
+                <TabsContent
+                    value="freinds"
+                    className="w-full ">
+
+                </TabsContent>
+                <TabsContent
+                    value="requests"
+                    className="w-full">
+                        <RequestList />
+                </TabsContent>
+            </Tabs>   
+        </section>
     )
 }
