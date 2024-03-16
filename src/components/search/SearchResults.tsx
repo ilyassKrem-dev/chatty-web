@@ -31,7 +31,8 @@ export default function SearchResults() {
                               src={user.image} 
                               alt="user profile pic"
                               priority
-                              layout="fill"
+                              fill
+                              sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 800px"
                               className="rounded-full bg-white"
                             />
                           </div>
