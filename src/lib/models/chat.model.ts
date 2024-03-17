@@ -24,15 +24,18 @@ const messageShema = new mongoose.Schema({
     },
     sender:{
         type:mongoose.Types.ObjectId,
-        reff:"User",
+        ref:"User",
         required:true
     },
     receiver: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User', required: true 
     },
-    content: { 
-        type: String
+    content:{
+        text:{type:String},
+        urls:[
+            String
+        ]
     },
     timestamp: { 
         type: Date, 

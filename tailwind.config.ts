@@ -26,6 +26,10 @@ const config = {
         primary: '#131424',
         secondary: '#393A47',
         accent: '#F13024',
+        light: "#EEEEEE",
+        dark: "#171717",
+        lighter: "#F2F2F2",
+        darker: "#0D0D0D",
         "gray-1": "#697C89"
       },
       keyframes: {

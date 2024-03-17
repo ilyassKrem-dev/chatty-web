@@ -106,3 +106,47 @@ export const fetchConvos = async(email:string|null|undefined) => {
         throw new Error(`Faild to fetch chats ${error.message}`)
     }
 }
+
+export const fetchConvoById = async(
+    {
+        email,
+        convoId,
+        toShow=10
+    }:{
+        email:string|null|undefined,
+        convoId:string;
+        toShow?:number
+    }
+) => {
+    try {
+        await ConnectDb()
+        const user = await User.findOne({email})
+        const convo = await Conversation.findById(convoId)
+                    .populate(
+                        {
+                            path:"participants",
+                            model:User,
+                            select:"_id name bio image"
+                        }
+                    )
+                    .populate(
+                        {
+                            path:"messages",
+                            model:Message,
+                            options:{limit:toShow,sort:{createdAt:-1}}
+                        }
+                    )
+                    .lean()
+        // @ts-ignore
+        const convoFiltered = convo?.participants.filter((parti:any) => parti._id.toString() !== user._id.toString());
+        const convoData:any = {
+            ...convo,
+            participants: convoFiltered
+        };
+        
+        //console.log(convoData)
+        return JSON.parse(JSON.stringify(convoData))
+    } catch (error:any) {
+        throw new Error(`Failed to fetch conversation ${error.message}`)
+    }
+}
