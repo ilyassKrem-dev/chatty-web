@@ -34,7 +34,13 @@ const messageShema = new mongoose.Schema({
     content:{
         text:{type:String},
         urls:[
-            String
+            {
+                url:String,
+                type:{
+                    type:String,
+                    enum: ['photo', 'video', 'file']
+                }
+            }
         ]
     },
     timestamp: { 

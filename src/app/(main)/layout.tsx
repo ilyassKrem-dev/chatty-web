@@ -7,7 +7,7 @@ import RightNav from "@/components/main/nav/RightNav";
 import BottomNav from "@/components/main/nav/BottomNav";
 import Theme from "@/assets/Theme/Theme";
 import ChangedBar from "@/components/shared/ChangedBar";
-
+import { SocketProvider } from "@/assets/other/providers/socket-provider";
 
 const sora = Sora({ subsets: ["latin"] });
 
@@ -26,18 +26,22 @@ export default function RootLayout({
       <body className={sora.className}>
         <AuthProvider >
           <SessionCheck>
-            <Theme>
-              <main className="flex flex-row">
-                <RightNav />
-                <ChangedBar />
-                <section className="flex min-h-screen flex-1 flex-col items-center">
-                  <div className="w-full ">
-                    {children}
-                  </div>
-                </section>
-              </main>
-              <BottomNav />
-            </Theme>
+            
+              <Theme>
+                <SocketProvider>
+                  <main className="flex flex-row">
+                    <RightNav />
+                    <ChangedBar />
+                    <section className="flex min-h-screen flex-1 flex-col items-center">
+                      <div className="w-full ">
+                        {children}
+                      </div>
+                    </section>
+                  </main>
+                  <BottomNav />
+                </SocketProvider>
+              </Theme>
+            
           </SessionCheck>
         </AuthProvider>
       </body>

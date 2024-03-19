@@ -17,6 +17,7 @@ export default function ChatInfo({friendInfo}:Props) {
                 <Image 
                 src={friendInfo.image} 
                 alt="Pic"
+                priority
                 width={50}
                 height={50} 
                 className="rounded-full border-2 border-light"/>

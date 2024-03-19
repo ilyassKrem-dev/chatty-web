@@ -1,6 +1,11 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
+import { Server as NetServer,Socket} from "net";
+import { NextApiResponse } from "next";
+import {Server as SocketIOServer} from "socket.io"
+
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -40,3 +45,11 @@ export const verifyCaptcha = async (token: string) => {
     const data = await response.json();
     return data.success;
   };
+
+export type NextApiResponseServerIo = NextApiResponse & {
+  socket:Socket & {
+    server: NetServer & {
+      io:SocketIOServer
+    }
+  }
+}

@@ -133,7 +133,12 @@ export const fetchConvoById = async(
                         {
                             path:"messages",
                             model:Message,
-                            options:{limit:toShow,sort:{createdAt:-1}}
+                            options:{limit:toShow,sort:{createdAt:-1}},
+                            populate:{
+                                path:"receiver",
+                                model:User,
+                                select:"image"
+                            }
                         }
                     )
                     .lean()
@@ -143,10 +148,41 @@ export const fetchConvoById = async(
             ...convo,
             participants: convoFiltered
         };
-        
+        const convoFull = JSON.parse(JSON.stringify(convoData))
         //console.log(convoData)
-        return JSON.parse(JSON.stringify(convoData))
+        return {convoFull,userId:user._id.toString()}
     } catch (error:any) {
         throw new Error(`Failed to fetch conversation ${error.message}`)
+    }
+}
+
+interface Params {
+    content:{
+        text:string;
+        urls:string[]
+    }
+    email:string|null|undefined;
+    convoId:string;
+    receiver:string;
+}
+export const sendMessage = async({content,email,convoId,receiver}:Params) => {
+    try {
+        await ConnectDb()
+        const user = await User.findOne({email})
+        /*const message = await Message.create({
+            conversation:convoId,
+            sender:user._id,
+            receiver:receiver,
+            content 
+        })
+        await Conversation.findByIdAndUpdate(convoId,{
+            $push:{messages:message._id}
+        })
+        if(!message) return {success:false}*/
+        
+        
+        
+    } catch (error:any) {
+        throw new Error(`Failed to send message ${error.message}`)
     }
 }

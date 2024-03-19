@@ -4,6 +4,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
+import { SocketIndicator } from "@/assets/other/socket-indicator"
+
 export default function RightNav() {
     const {data:session} = useSession()
     const pathname = usePathname()
@@ -11,6 +13,9 @@ export default function RightNav() {
     return (
         <nav className="hidden lg:flex sticky left-0 top-0 p-2 px-4 border-r dark:border-white bg-white z-30">
             <div className="flex justify-center  flex-col h-full gap-10 group">
+                <div className="self-center">
+                    <SocketIndicator />
+                </div>
                 {NavIcons.map((icon,index) => {
                     return (
                         <Link key={index} href={icon.route} className={`  cursor-pointer ${pathname === icon.route ? "text-blue-400 ":"text-gray-1 dark:text-white"} hover:text-black/80 dark:hover:text-blue-400 transition-all duration-300 flex gap-2 items-center justify-start ${icon.label ==="Theme" &&"justify-center"}`}>
