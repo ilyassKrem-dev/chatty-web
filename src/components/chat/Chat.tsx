@@ -15,9 +15,9 @@ export default function Chat({convoId}:{
     const [convo,setConvo] = useState<any>()
     const {data:session} = useSession()
     const [userId,setUserId] = useState<string>("")
-    
     const {socket} = useSocket()
-    console.log(socket)
+    const key = `Convo:${convoId}:messages`
+
     
     useEffect(() => {
         const convoFetching = async() => {
@@ -33,14 +33,26 @@ export default function Chat({convoId}:{
         convoFetching()
         
     },[])
-    
+   useEffect(() => {
+        if(!socket) return
+        socket.on(key,(message:any) => {
+            setConvo((prev:any) => {
+                return {...prev,messages:[...prev.messages,message]}
+            })
+        })
+
+
+        return () => {
+            socket.off(key)
+        }
+   },[socket])
       
     return (
         <div className="h-screen flex flex-col pb-[4.7rem] lg:pb-0">
             {convo&&
             <div className="flex flex-col h-full">
                 <ChatInfo friendInfo={convo.participants[0]}/>
-                <div className="flex-1">
+                <div className="flex-1 mb-6">
                     <ChatMessages messages={convo.messages} userId={userId}/>
                 </div>
                 <ChatInput 

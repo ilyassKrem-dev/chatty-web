@@ -165,24 +165,3 @@ interface Params {
     convoId:string;
     receiver:string;
 }
-export const sendMessage = async({content,email,convoId,receiver}:Params) => {
-    try {
-        await ConnectDb()
-        const user = await User.findOne({email})
-        /*const message = await Message.create({
-            conversation:convoId,
-            sender:user._id,
-            receiver:receiver,
-            content 
-        })
-        await Conversation.findByIdAndUpdate(convoId,{
-            $push:{messages:message._id}
-        })
-        if(!message) return {success:false}*/
-        
-        
-        
-    } catch (error:any) {
-        throw new Error(`Failed to send message ${error.message}`)
-    }
-}

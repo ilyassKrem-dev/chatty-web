@@ -9,7 +9,7 @@ export default function BottomNav() {
     const pathname = usePathname()
 
     return (
-        <nav className="fixed lg:hidden bottom-0 left-0 right-0 p-2 py-4 border-t border-gray-400 dark:border-white bg-white">
+        <nav className="fixed lg:hidden bottom-0 left-0 right-0 p-2 py-4 border-t border-gray-400 dark:border-white ">
             <div className="flex justify-center h-full gap-14 group md:gap-20 max-[400px]:gap-5">
                 {NavIcons.map((icon,index) => {
                     return (

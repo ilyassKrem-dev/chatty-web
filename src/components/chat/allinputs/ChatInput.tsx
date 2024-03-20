@@ -7,8 +7,8 @@ import { IoSend } from "react-icons/io5";
 import { useState } from "react";
 import ContentEditable from "react-contenteditable";
 import EmojisInput from "./EmojisInput";
-import { sendMessage } from "@/lib/actions/chat.action";
 
+import axios from "axios";
 interface Params {
     text:string;
     urls:string[]
@@ -23,21 +23,16 @@ export default function ChatInput({email,convoId,receiver}:Props) {
         text:"",
         urls:[],
     });
-
     const handleChange = (e: React.FormEvent<HTMLDivElement>) => {
         setContent({...content,text:e.currentTarget.innerText});
     };
     const handleSend= async() => {
-        const resp = await fetch("/api/messages",{
-            method: "POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                content:content,
-                email:email,
-                convoId:convoId,
-                receiver:receiver})
+        await axios.post("/api/socket/messages",{
+            content,
+            email,
+            convoId,
+            receiver,
+
         })
         setContent({
             text:"",
@@ -53,7 +48,7 @@ export default function ChatInput({email,convoId,receiver}:Props) {
                 <ContentEditable
                     html={content.text}
                     onChange={handleChange}
-                    className="min-h-20px p-2 outline-none bg-white rounded-xl border-2  text-sm max-h-[110px] flex-grow overflow-y-auto break-words whitespace-pre-wrap min-w-0  bg-transparent pr-10 [&::-webkit-scrollbar]:hidden max-w-full"
+                    className="min-h-20px p-2 outline-none bg-white rounded-xl border-2  text-sm max-h-[110px] flex-grow overflow-y-auto break-words whitespace-pre-wrap min-w-0  bg-transparent pr-10 [&::-webkit-scrollbar]:hidden max-w-full dark:text-dark"
                 />
                 <div className="absolute right-[0.6rem]">
                     <EmojisInput setContent={setContent}/>
