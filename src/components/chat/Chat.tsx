@@ -1,6 +1,6 @@
 "use client"
 import ChatInfo from "@/components/chat/ChatNav/ChatInfo"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useSession } from "next-auth/react"
 import { fetchConvoById } from "@/lib/actions/chat.action"
 import ChatInput from "./allinputs/ChatInput"
@@ -17,7 +17,7 @@ export default function Chat({convoId}:{
     const [userId,setUserId] = useState<string>("")
     const {socket} = useSocket()
     const key = `Convo:${convoId}:messages`
-
+    const messagesEndRef = useRef<HTMLDivElement>(null);
     
     useEffect(() => {
         const convoFetching = async() => {
@@ -46,19 +46,28 @@ export default function Chat({convoId}:{
             socket.off(key)
         }
    },[socket])
-      
+   useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [convo?.messages]);
     return (
-        <div className="h-screen flex flex-col pb-[4.7rem] lg:pb-0">
+        <div className=" lg:pb-0">
             {convo&&
-            <div className="flex flex-col h-full">
+            <div className="flex flex-col h-screen">
                 <ChatInfo friendInfo={convo.participants[0]}/>
-                <div className="flex-1 mb-6">
+
+                <section className=" flex-1 ml-3 overflow-y-auto">
                     <ChatMessages messages={convo.messages} userId={userId}/>
+                    
+                    <div ref={messagesEndRef} />
+                    
+                </section>
+                <div className="mb-[3.9rem] md:mb-[5.9rem] lg:mb-0">
+                    <ChatInput 
+                    email={session?.user?.email} 
+                    convoId={convo._id}
+                    receiver={convo.participants[0]._id}/>
                 </div>
-                <ChatInput 
-                email={session?.user?.email} 
-                convoId={convo._id}
-                receiver={convo.participants[0]._id}/>
+                
             </div> }   
         </div>
     )

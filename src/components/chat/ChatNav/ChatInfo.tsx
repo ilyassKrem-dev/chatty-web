@@ -12,7 +12,7 @@ export default function ChatInfo({friendInfo}:Props) {
 
 
     return (
-        <div className="flex p-2 border-b-2 justify-between">
+        <div className="flex p-2 border-b-2 justify-between dark:bg-dark bg-white dark:border-0">
             <div className="flex gap-2">
                 <Image 
                 src={friendInfo.image} 

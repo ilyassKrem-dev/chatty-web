@@ -33,7 +33,7 @@ export default function RootLayout({
                     <RightNav />
                     <ChangedBar />
                     <section className="flex min-h-screen flex-1 flex-col items-center">
-                      <div className="w-full ">
+                      <div className="w-full">
                         {children}
                       </div>
                     </section>

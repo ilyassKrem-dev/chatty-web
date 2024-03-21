@@ -13,6 +13,10 @@ const conversationSchema = new mongoose.Schema({
             ref:"Message"
         }
     ]
+},{
+    timestamps:{
+        createdAt:true
+    }
 })
 export const Conversation = mongoose.models.Conversation || mongoose.model("Conversation",conversationSchema)
 

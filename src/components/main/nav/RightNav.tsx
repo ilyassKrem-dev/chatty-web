@@ -11,7 +11,7 @@ export default function RightNav() {
     const pathname = usePathname()
     
     return (
-        <nav className="hidden lg:flex sticky left-0 top-0 p-2 px-4 border-r dark:border-white  z-30">
+        <nav className="hidden lg:flex sticky left-0 top-0 p-2 px-4 border-r dark:border-white  z-30 dark:bg-dark dark:border-0">
             <div className="flex justify-center  flex-col h-full gap-10 group">
                 <div className="self-center">
                     <SocketIndicator />

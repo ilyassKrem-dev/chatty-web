@@ -33,7 +33,7 @@ export default async function handler(
         })
         const messageFound = await Message.findById(message._id)
             .populate({
-                path:"receiver",
+                path:"sender",
                 model:User,
                 select:"_id image"
         })
