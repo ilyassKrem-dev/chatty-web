@@ -40,7 +40,7 @@ export default function Chat({convoId}:{
                 return {...prev,messages:[...prev.messages,message]}
             })
         })
-
+        
 
         return () => {
             socket.off(key)

@@ -134,8 +134,7 @@ export const fetchConvoById = async(
                             path:"messages",
                             model:Message,
                             options:{
-                            
-                            sort:{timestamp:-1}
+                            sort:{timestamp:1}
                             },
                             populate:{
                                 path:"sender",
@@ -146,7 +145,7 @@ export const fetchConvoById = async(
                     )
                     .lean()
         // @ts-ignore         
-        convo?.messages.reverse();
+        
         // @ts-ignore
         const convoFiltered = convo?.participants.filter((parti:any) => parti._id.toString() !== user._id.toString());
         const convoData:any = {

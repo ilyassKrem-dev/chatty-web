@@ -40,9 +40,10 @@ const messageShema = new mongoose.Schema({
         urls:[
             {
                 url:String,
+                name:String,
                 type:{
                     type:String,
-                    enum: ['photo', 'video', 'file']
+                    enum: ['photo', 'video', 'file',"audio"]
                 }
             }
         ]

@@ -5,7 +5,7 @@ import ChatSideNav from "../chat/ChatNav/ChatSideNav"
 
 export default function ChangedBar() {
     const pathname = usePathname()
-    const navPathname = pathname.split("/")[1]
+    const navPathname = pathname?.split("/")[1]
 
   
     return (
@@ -13,7 +13,7 @@ export default function ChangedBar() {
                 {navPathname !=="profile"&&
                 <div
                 
-                className="hidden md:block border-r-2 py-10 w-[350px] h-full px-4 ">
+                className="hidden md:block border-r-2 dark:border-r dark:border-gray-700 py-10 w-[350px] h-full px-4  dark:bg-dark/70 bg-white">
                     {navPathname === "group"
                     ?
                     "Groups"

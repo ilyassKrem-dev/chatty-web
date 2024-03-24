@@ -40,7 +40,7 @@ export default async function handler(
 
 
         const converstaionId = `Convo:${convoId}:messages`
-        
+     
         res?.socket?.server?.io?.emit(converstaionId,messageFound)
         
         return res.status(200).json({message:true})

@@ -8,7 +8,7 @@ export default function SearchBar() {
     const [search,setSearch] = useState<string>("")
     const router = useRouter()
     const pathname = usePathname()
-    const id = pathname.split('/')[2]
+    const id = pathname?.split('/')[2]
     useEffect(() => {
         const timeId = setTimeout(() => {
             if(search) {
@@ -35,7 +35,7 @@ export default function SearchBar() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)} 
-            className=" bg-transparent focus:outline-none group-focus:outline group-focus:outline-blue-400 placeholder:text-sm focus:placeholder:opacity-50" placeholder="Search"/>
+            className=" bg-transparent focus:outline-none group-focus:outline group-focus:outline-blue-400 placeholder:text-sm focus:placeholder:opacity-50 dark:text-black" placeholder="Search"/>
         </div>
     )
 }
