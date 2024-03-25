@@ -35,8 +35,8 @@ export default async function handler(
             .populate({
                 path:"sender",
                 model:User,
-                select:"_id image"
-        })
+                select:"_id image name"
+            })
 
 
         const converstaionId = `Convo:${convoId}:messages`

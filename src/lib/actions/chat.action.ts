@@ -139,8 +139,9 @@ export const fetchConvoById = async(
                             populate:{
                                 path:"sender",
                                 model:User,
-                                select:"image"
-                            }
+                                select:"_id image name"
+                            },
+                            
                         }
                     )
                     .lean()
@@ -160,12 +161,3 @@ export const fetchConvoById = async(
     }
 }
 
-interface Params {
-    content:{
-        text:string;
-        urls:string[]
-    }
-    email:string|null|undefined;
-    convoId:string;
-    receiver:string;
-}

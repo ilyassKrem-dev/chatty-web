@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { useState } from "react";
 import MessagesTypes from "./other/MessagesTypes";
+import ClickableMessages from "./other/CliclableMessages";
 export default function ChatMessages({
   messages,
   userId,
@@ -11,7 +12,7 @@ export default function ChatMessages({
 }) {
   console.log(messages)
     const [showMessageId, setShowMessageId] = useState<string | null>(null);
-
+    const [enlarge,setEnlarge] = useState<any>(null)
     function formatDate(dateString: string) {
         const date = new Date(dateString);
         const day = ("0" + date.getDate()).slice(-2);
@@ -29,7 +30,9 @@ export default function ChatMessages({
         const messageDate = new Date(message.timestamp);
         return messageDate < startOfCurrentDay; 
     });
-
+  const handleContainerClick = (messageId: string) => {
+    setShowMessageId(prevId => prevId !== messageId ? messageId : null);
+  };
   return (
     <section className="flex flex-col  gap-y-10 my-4">
       {messages.map((message: any) => {
@@ -49,7 +52,7 @@ export default function ChatMessages({
               )}
               <div>
                 <div className={`${message.sender._id === userId?"bg-blue-400 text-white":"bg-slate-200 text-black"} max-w-[300px] w-fit  text-end p-2 rounded-lg mx-4 relative ${like && "bg-transparent"}`} 
-                onClick={() => setShowMessageId(prev => !prev ? message._id:null)}>
+                onClick={() => handleContainerClick(message._id)}>
                     <div className={`flex flex-col gap-2  ${message.content.urls.length !== 0&&"items-center"}`}>
                         <div className="flex flex-wrap gap-2 justify-center">
                           {message.content.urls.length !== 0&&
@@ -61,18 +64,26 @@ export default function ChatMessages({
                                 ?
                                 <Image  
                                 src={url.url} 
-                                alt="image" 
+                                alt={url.url.split('/')[1].split(".")[0]} 
                                 width={40} 
                                 height={40}
                                 className="h-auto w-auto" />
                               :
-                              <MessagesTypes urlInfo={url}/>
+                              <MessagesTypes urlInfo={url} setEnlarge={setEnlarge}/>
                               }
                                 
                               </div>
                             )
                           })}
                         </div>
+
+                        {message.content.urls.length !==0 && message.content.urls[0].url !== "/like.png"&&<ClickableMessages 
+                        enlarge={enlarge}
+                        setEnlarge={setEnlarge}
+                        contentUrls={message.content.urls}
+                        sender={message.sender}
+                        time={message.timestamp}/>}
+
                         {message.content.text&&<p>{message.content.text}</p>}
                     </div>
 
