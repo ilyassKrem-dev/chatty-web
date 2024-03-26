@@ -37,7 +37,7 @@ export default  function RequestList() {
     }
     return (
         <>
-            {requests.length !== 0&&
+            {requests&&requests.length !== 0&&
             <div className="flex flex-col gap-5 mt-10 lg:mx-10">
                 {requests.map((request) => {
                     return (

@@ -1,8 +1,10 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import MessagesTypes from "./other/MessagesTypes";
 import ClickableMessages from "./other/CliclableMessages";
+import { MdDelete } from "react-icons/md";
+import axios from "axios";
 export default function ChatMessages({
   messages,
   userId,
@@ -10,9 +12,12 @@ export default function ChatMessages({
   messages: any;
   userId: string;
 }) {
-  console.log(messages)
+  
     const [showMessageId, setShowMessageId] = useState<string | null>(null);
+    const [show,setShow] = useState<string|null>(null)
+    const [pressTimer, setPressTimer] = useState<any>(null);
     const [enlarge,setEnlarge] = useState<any>(null)
+    
     function formatDate(dateString: string) {
         const date = new Date(dateString);
         const day = ("0" + date.getDate()).slice(-2);
@@ -33,6 +38,47 @@ export default function ChatMessages({
   const handleContainerClick = (messageId: string) => {
     setShowMessageId(prevId => prevId !== messageId ? messageId : null);
   };
+
+  const handleMouseDown = (id:string) => {
+    
+    const timer = setTimeout(() => {
+        setShow(id)
+        
+    }, 500);
+    
+    setPressTimer(timer);
+  };
+
+  const handleMouseUp = () => {
+    if (pressTimer) {
+      clearTimeout(pressTimer);
+      setPressTimer(null);
+    }
+  };
+
+  useEffect(() => {
+    function handleMouseUpOutside(event: MouseEvent) {
+        if (show !== null && pressTimer === null && event.target !== deleteButtonRef.current) {
+            setShow(null);
+        }
+    }
+
+    document.body.addEventListener("mouseup", handleMouseUpOutside);
+
+    return () => {
+        document.body.removeEventListener("mouseup", handleMouseUpOutside);
+    };
+}, [show, pressTimer]);
+
+  const deleteButtonRef = useRef<HTMLDivElement>(null);
+
+  const handleDelete = async(messageId:string) => {
+  
+      await axios.delete("/api/socket/messages/delete",{
+        data:messageId
+      })
+  }
+  
   return (
     <section className="flex flex-col  gap-y-10 my-4">
       {messages.map((message: any) => {
@@ -50,8 +96,12 @@ export default function ChatMessages({
                   height={40}
                   className="rounded-full h-auto w-auto"/>
               )}
-              <div>
-                <div className={`${message.sender._id === userId?"bg-blue-400 text-white":"bg-slate-200 text-black"} max-w-[300px] w-fit  text-end p-2 rounded-lg mx-4 relative ${like && "bg-transparent"}`} 
+              <div className="relative">
+                <div
+                onMouseDown={() => handleMouseDown(message._id)}
+                
+                onMouseUp={handleMouseUp}
+                className={`${message.sender._id === userId?"bg-blue-400 text-white":"bg-slate-200 text-black"} max-w-[300px] w-fit  text-end p-2 rounded-lg mx-4 relative ${like && "bg-transparent"}`} 
                 onClick={() => handleContainerClick(message._id)}>
                     <div className={`flex flex-col gap-2  ${message.content.urls.length !== 0&&"items-center"}`}>
                         <div className="flex flex-wrap gap-2 justify-center">
@@ -90,7 +140,17 @@ export default function ChatMessages({
                     <div className={`absolute h-0 w-0 border-y-8 border-y-transparent   ${message.sender._id === userId ? 
                     `top-3 -right-2 border-l-8  border-l-blue-400 ${like && "top-6 "}`:`top-3 -left-2 border-r-8  border-r-slat-100 ${like && "top-6 "}`
                     } `}/>
+
+                    
                 </div>
+                {show === message._id&&
+                <div
+                ref={deleteButtonRef} 
+                className={`rounded-lg absolute bg-white p-2 text-black flex gap-2 items-center -top-8 shadow-[0px_0px_4px_1px_rgb(0,0,0)] cursor-pointer hover:opacity-50 transition-all duration-300 ${message.sender._id === userId ? "-left-14":" -right-14"}`} onClick={() => handleDelete(message._id)}>
+                      <MdDelete className="text-accent text-xl"/>
+                      Delete
+                  </div>}
+
                 {showMessageId === message._id&&
                 <p className={`mx-4 ${message.sender._id === userId?"text-start":"text-end"} text-xs text-gray-1`}>
                 {formatDate(message.timestamp).split('\n').map((item,key) => {
@@ -103,7 +163,7 @@ export default function ChatMessages({
                 </p>}
               </div>
             </div>
-            {oldMessages[oldMessages.length -1]._id === message._id&&
+            {oldMessages[oldMessages.length -1]?._id === message._id&&
             <p className="text-center">Yesterday</p>}
           </div>
           

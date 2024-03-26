@@ -38,74 +38,39 @@ export const fetchConvoId = async(
     }
 }
 
-export const fetchConvos = async(email:string|null|undefined) => {
+export const fetchConvos = async (email: string | null | undefined) => {
     try {
-        await ConnectDb()
-        const user = await User.findOne({email})
-        const convos = await Conversation.aggregate([
-            { $match: { participants: user._id } },
-            {
-                $lookup: {
-                    from: 'messages',
-                    localField: 'messages',
-                    foreignField: '_id',
-                    as: 'messageObjects'
+        await ConnectDb();
+        const user = await User.findOne({ email });
+
+        const convos = await Conversation.find({participants:{$in:[user._id]}})
+            .populate(
+                {
+                    path:"participants",
+                    model:User,
+                    select:"_id name image"
                 }
-            },
-            {
-                $addFields: {
-                    lastMessage: {
-                        $cond: {
-                            if: { $eq: [{ $size: "$messageObjects" }, 0] }, 
-                            then: null, 
-                            else: { $arrayElemAt: ["$messageObjects", -1] } 
-                        }
-                    }
+            )
+            .populate(
+                {
+                    path:"messages",
+                    model:Message,
+                    select:"_id content"
                 }
-            },
-            {
-                $project: {
-                    participants: {
-                        $filter: {
-                            input: "$participants",
-                            as: "participant",
-                            cond: { $ne: ["$$participant", user._id] }
-                        }
-                    },
-                    lastMessage: 1
-                }
-            },
-            {
-                $addFields: {
-                    lastMessage: { $arrayElemAt: ["$lastMessageDetails", 0] }
-                }
-            },
-            {
-                $project: {
-                    participants: 1,
-                    lastMessage: {
-                        _id: "$lastMessage._id",
-                        text: "$lastMessage.text",
-                        
-                    }
-                }
-            },
-            
-        ]);
-        const convosData =await Conversation.populate(convos, {
-            path: 'participants',
-            model: User,
-            select: '-_id name image'
+            ).lean()
+        const convosfilter = convos.map((convo) => {
+            return {...convo,participants:convo.participants.filter((part:any) => part._id.toString() !== user._id.toString())}
         });
-        const convosString = convosData.map((convo) => {
-            return {...convo,_id:convo._id.toString()}
+        const convoLastMessage = convosfilter.map((convo:any) => {
+            return {...convo,messages:convo.messages[convo.messages.length - 1]}
         })
         
-        return JSON.parse(JSON.stringify(convosString))
-    } catch (error:any) {
-        throw new Error(`Faild to fetch chats ${error.message}`)
+        return JSON.parse(JSON.stringify(convoLastMessage));
+    } catch (error: any) {
+        throw new Error(`Failed to fetch chats ${error.message}`);
     }
 }
+
 
 export const fetchConvoById = async(
     {

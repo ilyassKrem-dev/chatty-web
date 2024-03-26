@@ -1,7 +1,7 @@
 import Image from "next/image"
 
 import { CiFileOn } from "react-icons/ci";
-import { FaRegFileAudio,FaRegFileZipper } from "react-icons/fa6";
+import { FaRegFileAudio,FaRegFileZipper,FaRegFilePdf } from "react-icons/fa6";
 
 
 interface Props {
@@ -28,7 +28,7 @@ export default function MessagesTypes({urlInfo,setEnlarge}:Props) {
                     ?
                     <Image 
                     src={urlInfo.url} 
-                    alt={urlInfo.name}
+                    alt={urlInfo.name || "image"}
                     priority
                     onClick={(e) => handleEnlarge(e,urlInfo)}
                     width={120} 
@@ -56,14 +56,17 @@ export default function MessagesTypes({urlInfo,setEnlarge}:Props) {
                     </div>
                     
                     :
-                    <div className="w-[120px] h-[120px]  max-[300px]:h-[100px] max-[300px]:w-[100px] text-5xl max-[300px]:text-3xl flex flex-col justify-center items-center gap-1" onClick={(e) => handleEnlarge(e,urlInfo)}>
+                    <div className="w-[120px] h-[120px]  max-[300px]:h-[100px] max-[300px]:w-[100px] text-5xl max-[300px]:text-3xl flex flex-col justify-center items-center gap-2" onClick={(e) => handleEnlarge(e,urlInfo)}>
                         {urlInfo.name.toLowerCase().includes('zip') || urlInfo.name.toLowerCase().includes('rar')
                         ?
                         <FaRegFileZipper />
                         :
+                        urlInfo.name.toLowerCase().includes('pdf') ?
+                        <FaRegFilePdf />
+                        :
                         <CiFileOn />
                         }
-                        
+                        <p className="text-sm truncate w-3/4">{urlInfo.name}</p>
                     </div>}
 
                 </div>  

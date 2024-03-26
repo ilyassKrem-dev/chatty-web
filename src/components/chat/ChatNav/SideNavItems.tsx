@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react"
+import { CiFileOn } from "react-icons/ci";
 
 import { useSession } from "next-auth/react"
 import { fetchConvos } from "@/lib/actions/chat.action"
 import Image from "next/image"
 import Link from "next/link"
+
 export default function SideNavItems() {
     const [chats,setChats] = useState<any[]>([])
     const {data:session} = useSession()
+    
+    
     useEffect(() =>{
         const chatsfetch = async() => {
             const response = await fetchConvos(session?.user?.email)
@@ -14,10 +18,11 @@ export default function SideNavItems() {
         }
         chatsfetch()
     },[])
-
+  
+   
     return (
         <>
-            {chats.length !==0&&
+            {chats&&chats.length !==0&&
             <div>
                 {chats.map(chat => {
                     return (
@@ -35,7 +40,28 @@ export default function SideNavItems() {
                           </div>
                           <div>
                             <p className="text-lg font-semibold text-black dark:text-white cursor-pointer">{chat.participants[0].name}</p>
-                            <p className=" truncate text-gray-1 text-sm">{chat.lastMessage.content?chat.lastMessage.content:"Start chatting now"}</p>
+                            <div className=" truncate text-gray-1 text-sm">{
+                            chat.messages?.content.text && chat.messages?.content.urls.length === 0
+                            ?
+                            chat.messages?.content.text
+                            :
+                            chat.messages?.content.text && chat.messages?.content.urls.length > 0
+                            ?
+                            <div className="flex gap-2">
+                              {chat.messages?.content.text}
+                              <CiFileOn className="text-xl"/>
+                            </div>
+                            :
+                            !chat.messages?.content.text && chat.messages?.content.urls.length > 0
+                            ?
+                            <div className="flex gap-2">
+                              {chat.messages?.content.urls.length  }
+                              <CiFileOn className="text-xl"/>
+                              
+                            </div>
+                            :
+                            "Start chatting now"}
+                            </div>
                           </div>
                         </div>
                         

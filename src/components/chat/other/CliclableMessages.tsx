@@ -2,7 +2,10 @@
 import Image from "next/image";
 import MessagesTypes from "./MessagesTypes";
 import { CiFileOn } from "react-icons/ci";
-import { FaRegFileAudio,FaRegFileZipper } from "react-icons/fa6";
+import { FaRegFileAudio,FaRegFileZipper,FaRegFilePdf } from "react-icons/fa6";
+import { MdOutlineFileDownload } from "react-icons/md";
+import Link from "next/link";
+
 interface Params {
     type:string;
     name:string;
@@ -31,11 +34,31 @@ contentUrls,sender,time}:Props) {
       
         return `${month}/${day}/${year}, ${hours}:${minutes}`;
       }
+    
+    const handleDownload = async (url: string, name: string) => {
+        try {
+            const response = await fetch(url);
+            const blob = await response.blob();
+            const blobUrl = window.URL.createObjectURL(blob);
+    
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = name; 
+            document.body.appendChild(link);
+            link.click(); 
+            document.body.removeChild(link); 
+    
+            
+            window.URL.revokeObjectURL(blobUrl);
+        } catch (error) {
+            console.error('Error downloading file:', error);
+        }
+    };
     return (
         <>
             {enlarge&&
             <div className="fixed top-0 bottom-0 right-0 left-0 bg-black/80 z-30 flex flex-col justify-center items-center" onClick={(e) => e.stopPropagation()}>
-                <div className="fixed top-0 left-0 right-0 flex p-2 items-center justify-between">
+                <div className="fixed top-0 left-0 right-0 flex p-2 md:p-4 items-center justify-between">
                     <div className="flex gap-2 items-center">
                         <Image 
                         src={sender.image} 
@@ -48,9 +71,13 @@ contentUrls,sender,time}:Props) {
                             <p>{formatDate(time)}</p>
                         </div>
                     </div>
-                    <div className="hover:bg-white/50 rounded-full text-lg p-1 px-3 cursor-pointer hover:opacity-50 transition-all duration-200"
-                    onClick={() => setEnlarge(null)}>
-                        X
+                    <div className="flex gap-2 items-center">
+                        <MdOutlineFileDownload className="hover:bg-white/50 rounded-full text-4xl p-1 cursor-pointer hover:opacity-50 transition-all duration-200" onClick={() => handleDownload(enlarge.url,enlarge.name)}/>
+                        <div className="hover:bg-white/50 rounded-full text-lg p-1 px-3 cursor-pointer hover:opacity-50 transition-all duration-200"
+                        onClick={() => setEnlarge(null)}>
+                            X
+                        </div>
+
                     </div>
                 </div>
                 {enlarge.type === "photo"
@@ -82,13 +109,17 @@ contentUrls,sender,time}:Props) {
                        
                     </div>
                     :
-                    <div className="w-[300px] h-[300px] flex justify-center items-center text-5xl">
+                    <div className="w-[300px] h-[300px] flex justify-center flex-col items-center text-5xl gap-10">
                         {enlarge.name.toLowerCase().includes('zip') || enlarge.name.toLowerCase().includes('rar')
                         ?
                         <FaRegFileZipper />
                         :
+                        enlarge.name.toLowerCase().includes('pdf') ?
+                        <FaRegFilePdf />
+                        :
                         <CiFileOn />
                         }
+                        <p className="text-base truncate">{enlarge.name}</p>
                     </div>}   
                 
                 <div className="absolute bottom-14  flex overflow-x-scroll gap-4 md:gap-6 md:items-center md:justify-center w-[75%] [&::-webkit-scrollbar]:hidden">
