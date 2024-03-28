@@ -170,3 +170,34 @@ export const fetchUserById = async(userId:string) => {
         throw new Error(`Error fetching user ${error.message}`)
     }
 }
+
+export const changeUserState = async(email:string|null|undefined,state:string) => {
+    try {
+       await ConnectDb()    
+        const user = await User.findOne({email})
+        if(!user.lastStatus || state==="offline") {
+            const updatedUser = await User.findByIdAndUpdate(user._id,{
+                $set:{
+                    status:state,
+                }
+            },{
+                new:true
+            }).lean()
+            //@ts-ignore
+            return JSON.parse(JSON.stringify({id:updatedUser?._id,state:updatedUser?.status}))
+        } else {
+           const updatedUser = await User.findByIdAndUpdate(user._id,{
+                $set:{
+                    status:user.lastStatus,
+                }
+            },{
+                new:true
+            }).lean()
+            //@ts-ignore
+            return JSON.parse(JSON.stringify({id:updatedUser?._id,state:updatedUser?.status}))
+        }
+        
+    } catch (error:any) {
+        throw new Error(`Failed to change state ${error.message}`)
+    }
+}

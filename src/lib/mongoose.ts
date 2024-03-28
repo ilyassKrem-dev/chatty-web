@@ -6,7 +6,7 @@ export async function ConnectDb() {
 
     if(!process.env.MONGODB_URL) return console.log('No MONGODB Url in env')
 
-    if(isConnected) return console.log('Already connected')
+    if(isConnected) return
     try {
         await mongoose.connect(process.env.MONGODB_URL)
         isConnected = true

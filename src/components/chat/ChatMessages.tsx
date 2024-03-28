@@ -143,7 +143,7 @@ export default function ChatMessages({
 
                     
                 </div>
-                {show === message._id&&
+                {show === message._id&&message.sender._id===userId&&
                 <div
                 ref={deleteButtonRef} 
                 className={`rounded-lg absolute bg-white p-2 text-black flex gap-2 items-center -top-8 shadow-[0px_0px_4px_1px_rgb(0,0,0)] cursor-pointer hover:opacity-50 transition-all duration-300 ${message.sender._id === userId ? "-left-14":" -right-14"}`} onClick={() => handleDelete(message._id)}>

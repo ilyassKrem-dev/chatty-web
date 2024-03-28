@@ -48,7 +48,7 @@ export const fetchConvos = async (email: string | null | undefined) => {
                 {
                     path:"participants",
                     model:User,
-                    select:"_id name image"
+                    select:"_id name image status"
                 }
             )
             .populate(

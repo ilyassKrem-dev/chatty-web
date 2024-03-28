@@ -58,7 +58,7 @@ export default  function FriendsList() {
                             </div>
                             <div className="flex flex-col items-start">
                               <p className="text-lg font-semibold text-black dark:text-white">{friend.name}</p>
-                              <Status status={friend.status} />
+                              <Status status={friend.status} type="list"/>
                             </div>
                           </div>
                           <RemoveFriend 
