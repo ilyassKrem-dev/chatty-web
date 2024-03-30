@@ -12,7 +12,11 @@ const conversationSchema = new mongoose.Schema({
             type:mongoose.Types.ObjectId,
             ref:"Message"
         }
-    ]
+    ],
+    type:{
+        type:String,
+        enum: ['private', 'group']
+    }
 },{
     timestamps:{
         createdAt:true
@@ -33,7 +37,7 @@ const messageShema = new mongoose.Schema({
     },
     receiver: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User', required: true 
+        ref: 'User'
     },
     content:{
         text:{type:String},

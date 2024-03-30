@@ -3,7 +3,7 @@ import RequestList from "./RequestList"
 import { Tabs,TabsList,TabsTrigger,TabsContent } from "../ui/tabs"
 import { FaUserFriends } from "react-icons/fa";
 import { IoPersonAddOutline } from "react-icons/io5";
-import FriendsList from "../shared/FriendsList";
+import FriendsList from "./FriendsList";
 const  tabsLabels = [
     {
         icon:<FaUserFriends/>,

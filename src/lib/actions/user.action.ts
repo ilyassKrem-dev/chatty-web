@@ -90,9 +90,9 @@ export const fetchUser = async(email:string|null|undefined) => {
     try {
         await ConnectDb()
         const user = await User.findOne({email})
-            .select('-_id name email image bio status ').lean()
+            .select('_id name email image bio status ').lean()
         
-        return user
+        return JSON.parse(JSON.stringify(user))
     } catch (error:any) {
         throw new Error(`Failed to fetch user ${error.message}`)
     }
@@ -111,12 +111,14 @@ export const fetchUsers = async(
     {
         searchString,
         toShow=10,
-        sortBy="desc"
+        sortBy="desc",
+        email
     }
     :{
         searchString:string;
         toShow?:number;
         sortBy?: "desc";
+        email:string|null|undefined
     }
     ) => {
 
@@ -130,7 +132,10 @@ export const fetchUsers = async(
                 { name: { $regex: regex } }
             ];
         }
-    
+        const currentUser = await User.findOne({email})
+        if(currentUser) {
+            query._id = {$ne:currentUser._id}
+        }
         let usersQuery;
     
         if (Object.keys(query).length === 0) {
@@ -140,7 +145,7 @@ export const fetchUsers = async(
                 { $project: { _id: 1, name: 1, image: 1 }}
             ]);
         } else {
-            
+
             const sortOptions = {
                 createdAt: sortBy
             };

@@ -3,16 +3,19 @@ import { fetchUsers } from "@/lib/actions/user.action"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import { useSession } from "next-auth/react"
 import Link from "next/link"
 export default function SearchResults() {
     const [users,setUsers] = useState<any[]>([])
     const seacrhParams = useSearchParams()
+    const {data:session} = useSession()
     const searchString = seacrhParams?.get('s')
     const string = typeof searchString === "string"? searchString : ""
     useEffect(() => {
         const usersFetch = async() => {
                 const users = await fetchUsers({
-                    searchString:string
+                    searchString:string,
+                    email:session?.user?.email
                 })
                 setUsers(users)
         }

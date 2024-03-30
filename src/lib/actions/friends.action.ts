@@ -201,3 +201,28 @@ export const removeFriend = async(
         throw new Error(`Failed to delete Friend ${error.message}`)
     }
 }
+
+export const  fetchIsFriends = async(
+    {
+    email,
+    otherId
+}:{
+    email:string|null|undefined;
+    otherId:string|undefined
+}) => {
+    try {
+        await ConnectDb()
+        const user = await User.findOne({email})
+        const otherUser = await User.findById(otherId)
+        const friends = await Friend.findOne({
+            user:user._id,
+            friend:otherUser._id
+        })
+        if(!friends) {
+            return {friends:false}
+        }
+        return {friends:true}
+    } catch (error:any) {
+        throw new Error(`Failed to check user ${error.message}`)
+    }
+}

@@ -21,14 +21,15 @@ export const fetchConvoId = async(
         const user = await User.findOne({email})
         let convo = await Conversation.findOne({
             participants:{
-                $all:[user._id,idToObjectId],
-                $size:2
-            }
+                $all:[user._id,idToObjectId]
+            },
+            type:"private"
         })
         if(!convo) {
             convo = await Conversation.create({
                 participants:[user._id,idToObjectId],
-                messages:[]
+                messages:[],
+                type:"private"
             })
         }
         const convoId = convo._id.toString()
@@ -38,12 +39,12 @@ export const fetchConvoId = async(
     }
 }
 
-export const fetchConvos = async (email: string | null | undefined) => {
+export const fetchConvos = async (email: string | null | undefined,type:string) => {
     try {
         await ConnectDb();
         const user = await User.findOne({ email });
 
-        const convos = await Conversation.find({participants:{$in:[user._id]}})
+        const convos = await Conversation.find({participants:{$in:[user._id]},type})
             .populate(
                 {
                     path:"participants",

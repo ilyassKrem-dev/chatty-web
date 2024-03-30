@@ -3,11 +3,12 @@ import ChangeImage from "@/assets/clickable/ChangImage";
 import AddFriend from "@/assets/clickable/AddFriend";
 import Status from "@/assets/clickable/Status";
 interface Props {
-    user :{
+    user:{
         name:string;
         image:string;
         bio:string;
         status?:string;   
+        email?:string
     },
     type?:string;
     userId?:string
@@ -32,7 +33,7 @@ export default function ProfileHeader({user,type,userId}:Props) {
                         className="rounded-full border-2 border-gray-200 bg-white" />
                         <div className="text-center lg:self-end lg:mb-1 lg:text-start">
                             <p className=" font-bold capitalize ">{user.name}</p>
-                            <Status status={user.status} type={type} />
+                            <Status status={user.status} type={type} email={user.email}/>
                             
                         </div>
                         

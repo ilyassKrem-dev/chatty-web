@@ -3,11 +3,12 @@
 import { useSession } from "next-auth/react"
 import { fetchUser } from "@/lib/actions/user.action"
 import { useEffect, useState } from "react"
-import Image from "next/image"
-import { FaChevronDown,FaImage } from "react-icons/fa6";
+
 import ProfileHeader from "@/components/shared/ProfileHeader"
 import ProfileTabs from "./ProfileTabs"
+import { useSocket } from "@/assets/other/providers/socket-provider"
 interface Params {
+    _id?:string
     name:string;
     email:string;
     image:string;
@@ -17,6 +18,7 @@ interface Params {
 export default function ProfilePage() {
     const {data:session} = useSession()
     const [user,setUser] = useState<Params>()
+    const {socket} = useSocket()
     useEffect(() => {
         const userFetch = async() => {
             try {
@@ -29,6 +31,15 @@ export default function ProfilePage() {
         }
         userFetch()
     },[session])
+    useEffect(() => {
+        if(!socket) return
+        const key = `User:${user?._id}`
+        socket.on(key,(data:string) => {
+            setUser((prev:any) => {
+                return {...prev,status:data}
+            })
+        })
+    },[socket,user])
     
     return (
         <>

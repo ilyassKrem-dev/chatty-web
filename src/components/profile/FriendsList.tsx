@@ -6,7 +6,7 @@ import { usePathname,useRouter } from "next/navigation"
 import { fetchFriends } from "@/lib/actions/friends.action"
 import { fetchConvoId } from "@/lib/actions/chat.action"
 import { removeFriend } from "@/lib/actions/friends.action"
-import RemoveFriend from "../profile/RemoveFriend"
+import RemoveFriend from "./RemoveFriend"
 import Status from "@/assets/clickable/Status"
 export default  function FriendsList() {
     const [friends,setFriends] = useState<any[]>([])
@@ -58,7 +58,7 @@ export default  function FriendsList() {
                             </div>
                             <div className="flex flex-col items-start">
                               <p className="text-lg font-semibold text-black dark:text-white">{friend.name}</p>
-                              <Status status={friend.status} type="list"/>
+                              <Status status={friend.status}/>
                             </div>
                           </div>
                           <RemoveFriend 

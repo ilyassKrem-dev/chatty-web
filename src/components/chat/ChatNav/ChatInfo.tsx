@@ -1,4 +1,5 @@
 import Image from "next/image";
+import AddToGroup from "../other/AddtoGroup";
 interface Props {
     friendInfo:{
         _id:string;
@@ -25,8 +26,9 @@ export default function ChatInfo({friendInfo}:Props) {
                     <p className=" font-semibold">{friendInfo.name}</p>
                 </div>
             </div>
-            <div className="flex items-center">
-                <div className="text-blue-400 text-3xl cursor-pointer">
+            <div className="flex items-center gap-10 relative">
+                <AddToGroup friendId={friendInfo._id}/>
+                <div className="text-blue-400 text-3xl cursor-pointer hover:opacity-50 transition-all duration-300">
                     &#x22EF;
                 </div>
             </div>
