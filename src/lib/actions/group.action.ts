@@ -64,7 +64,7 @@ export const fetchGroupConvos = async(email:string|null|undefined) => {
                     populate:{
                         path:"sender",
                         model:User,
-                        select:"-_id image"
+                        select:"-_id image name"
                     }
                 }
             ).lean()
@@ -88,7 +88,7 @@ export const fetchGroupChat = async(groupId:string,email:string|null|undefined) 
                 {
                     path:"participants.user",
                     model:User,
-                    select:"_id name bio image"
+                    select:"_id name bio image status"
                 }
             )
             .populate(
@@ -107,12 +107,10 @@ export const fetchGroupChat = async(groupId:string,email:string|null|undefined) 
                 }
             ).lean()
             //@ts-ignore
-            const grConvoFiltered = groupChat?.participants.filter((participant:any) => participant.user._id.toString() !== user._id.toString())
-            const grData = {
-                ...groupChat,
-                participants:grConvoFiltered
-            }
-            return JSON.parse(JSON.stringify(grData))
+            
+            const group = JSON.parse(JSON.stringify(groupChat))
+
+            return {convoFull:group,userId:user._id.toString()}
     } catch (error:any) {
         throw new Error(`Failrd to fetch messages: ${error.message}`)
     }

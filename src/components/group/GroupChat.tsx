@@ -1,12 +1,12 @@
 "use client"
-import ChatInfo from "@/components/chat/ChatNav/ChatInfo"
+
 import { useEffect, useRef, useState } from "react"
 import { useSession } from "next-auth/react"
 import { fetchGroupChat } from "@/lib/actions/group.action"
 import ChatInput from "@/components/chat/allinputs/ChatInput"
 import ChatMessages from "@/components/chat/ChatMessages"
 import { useSocket } from "@/assets/other/providers/socket-provider"
-
+import Info from "./groupChat/info"
 
 
 export default function GroupChat({convoId}:{
@@ -26,6 +26,7 @@ export default function GroupChat({convoId}:{
                 session?.user?.email
                 
             )
+            
             setConvo(response.convoFull)
             setUserId(response.userId)
            
@@ -63,20 +64,26 @@ export default function GroupChat({convoId}:{
         <div className=" lg:pb-0">
             {convo&&
             <div className="flex flex-col h-screen">
-                {/*<ChatInfo friendInfo={convo.participants[0]}/>*/}
+                <Info 
+                name={convo.name} 
+                img={convo.image} 
+                chatId={convoId}
+                members={convo.participants}/>
 
                 <section className=" flex-1 ml-3 overflow-y-auto custom-scrollbar">
-                    <ChatMessages messages={convo.messages} userId={userId}/>
+                    <ChatMessages messages={convo.messages} userId={userId} type="group"/>
                     
                     <div ref={messagesEndRef} />
                     
                 </section>
-                {/*<div className="mb-[3.9rem] md:mb-[5.9rem] lg:mb-0">
+                <div className="mb-[3.9rem] md:mb-[5.9rem] lg:mb-0">
                     <ChatInput 
                     email={session?.user?.email} 
                     convoId={convo._id}
-                    receiver={convo.participants[0]._id}/>
-                </div>*/}
+                    receiver={convo.participants[0].user._id}
+                    type="group"
+                    />
+                </div>
                 
             </div> }   
         </div>

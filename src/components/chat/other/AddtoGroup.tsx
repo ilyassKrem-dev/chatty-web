@@ -70,7 +70,7 @@ export default function AddToGroup({ friendId }: { friendId: string }) {
         +
       </div>
 
-      {!show && (
+      {show && (
         <div className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center z-30">
           <div className={`bg-dark/40 bg-opacity-75 fixed top-0 bottom-0 right-0 left-0 z-40 rounded-lg`}></div>
           <div className="flex justify-center items-center z-50">

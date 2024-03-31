@@ -23,8 +23,9 @@ interface Props {
     email:string|null|undefined;
     convoId:string;
     receiver:string;
+    type:string
 }
-export default function ChatInput({email,convoId,receiver}:Props) {
+export default function ChatInput({email,convoId,receiver,type}:Props) {
 
     const [content, setContent] = useState<Params>({
         text:"",
@@ -60,6 +61,7 @@ export default function ChatInput({email,convoId,receiver}:Props) {
             email,
             convoId,
             receiver,
+            type
 
         })
         setContent({

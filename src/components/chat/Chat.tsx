@@ -74,7 +74,8 @@ export default function Chat({convoId}:{
                     <ChatInput 
                     email={session?.user?.email} 
                     convoId={convo._id}
-                    receiver={convo.participants[0]._id}/>
+                    receiver={convo.participants[0]._id}
+                    type="private"/>
                 </div>
                 
             </div> }   

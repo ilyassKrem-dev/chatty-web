@@ -8,9 +8,11 @@ import axios from "axios";
 export default function ChatMessages({
   messages,
   userId,
+  type
 }: {
   messages: any;
   userId: string;
+  type?:string
 }) {
   
     const [showMessageId, setShowMessageId] = useState<string | null>(null);
@@ -75,7 +77,7 @@ export default function ChatMessages({
   const handleDelete = async(messageId:string) => {
   
       await axios.delete("/api/socket/messages/delete",{
-        data:messageId
+        data:{messageId,type}
       })
   }
   
@@ -103,6 +105,9 @@ export default function ChatMessages({
                 onMouseUp={handleMouseUp}
                 className={`${message.sender._id === userId?"bg-blue-400 text-white":"bg-slate-200 text-black"} max-w-[300px] w-fit  text-end p-2 rounded-lg mx-4 relative ${like && "bg-transparent"}`} 
                 onClick={() => handleContainerClick(message._id)}>
+
+                    {type==="group"&&message.sender._id !== userId&&
+                    <p className=" text-start font-bold">{message.sender.name}</p>}
                     <div className={`flex flex-col gap-2  ${message.content.urls.length !== 0&&"items-center"}`}>
                         <div className="flex flex-wrap gap-2 justify-center">
                           {message.content.urls.length !== 0&&
@@ -134,7 +139,7 @@ export default function ChatMessages({
                         sender={message.sender}
                         time={message.timestamp}/>}
 
-                        {message.content.text&&<p>{message.content.text}</p>}
+                        {message.content.text&&<p className="text-start">{message.content.text}</p>}
                     </div>
 
                     <div className={`absolute h-0 w-0 border-y-8 border-y-transparent   ${message.sender._id === userId ? 

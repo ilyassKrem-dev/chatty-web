@@ -1,4 +1,5 @@
 import { Conversation, Message } from "@/lib/models/chat.model";
+import { Groups } from "@/lib/models/group.model";
 import User from "@/lib/models/user.model";
 import { ConnectDb } from "@/lib/mongoose";
 import { NextApiResponseServerIo } from "@/lib/utils";
@@ -16,7 +17,7 @@ export default async function handler(
     
     try {
         await ConnectDb()
-        const {content,email,convoId,receiver} = req.body
+        const {content,email,convoId,receiver,type} = req.body
         
         const user = await User.findOne({email})
         
@@ -27,10 +28,15 @@ export default async function handler(
             content 
         })
         if(!message) return res.status(404).json({success:false})
-        
-        await Conversation.findByIdAndUpdate(convoId,{
-            $push:{messages:message._id}
-        })
+        if(type === "group") {
+            await Groups.findByIdAndUpdate(convoId,{
+                $push:{messages:message._id}
+            })
+        } else {
+            await Conversation.findByIdAndUpdate(convoId,{
+                $push:{messages:message._id}
+            })
+        }
         const messageFound = await Message.findById(message._id)
             .populate({
                 path:"sender",

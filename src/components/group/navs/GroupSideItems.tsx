@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { CiFileOn } from "react-icons/ci";
 
 import { useSession } from "next-auth/react"
-import { fetchConvos } from "@/lib/actions/chat.action"
+
 import { fetchGroupConvos } from "@/lib/actions/group.action";
 import Image from "next/image"
 import Link from "next/link"
@@ -30,7 +30,12 @@ export default function GroupSideItems() {
             const newData = prev.map(msg => {
               if(key.split(":")[1] === msg._id) {
                 
-                return {...msg,messages:{...msg.messages,content:data.content,_id:data._id}}
+                return {...msg,messages:
+                  {...msg.messages,
+                    content:data.content,
+                    _id:data._id,
+                    sender:data.sender
+                  }}
               } else {
                 return msg
               }
@@ -50,7 +55,9 @@ export default function GroupSideItems() {
               
               if(data===msg.messages?._id) {
     
-                return {...msg,messages:{...msg.messages,content:{...msg.messages.content,text:"Message deleted"}}}
+                return {...msg,messages:{...msg.messages,
+                  content:{...msg.messages.content,text:"Message deleted"},
+                  sender:""}}
               }
               return msg
             })
@@ -63,7 +70,7 @@ export default function GroupSideItems() {
 
       
     },[groups,socket]) 
-   
+    
     return (
         <>
             {groups&&groups.length !==0&&
@@ -86,7 +93,13 @@ export default function GroupSideItems() {
                             <div className="flex gap-2 items-center">
                               <p className="text-lg font-semibold text-black dark:text-white cursor-pointer">{group.name}</p>
                             </div>
-                            <div className=" truncate text-gray-1 text-sm">{
+                            <div className=" truncate text-gray-1 text-sm flex gap-1">
+                             {group.messages?.sender&&
+                             <p>
+                              {group.messages.sender.name + ":"}
+                              </p>
+                            }
+                            {
                             group.messages?.content.text && group.messages?.content.urls.length === 0
                             ?
                             group.messages?.content.text
