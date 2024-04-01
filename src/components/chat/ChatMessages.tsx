@@ -92,8 +92,8 @@ export default function ChatMessages({
             <div className={`w-full rounded-lg flex items-center ${message.sender._id === userId ? "justify-end" : "justify-start"}`}>
               {message.sender._id !== userId && (
                 <Image
-                  src={message.sender.image}
-                  alt=""
+                  src={message.sender.image ||"/user.png"}
+                  alt="user picture"
                   width={40}
                   height={40}
                   className="rounded-full h-auto w-auto"/>

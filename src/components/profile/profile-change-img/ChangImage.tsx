@@ -35,7 +35,7 @@ export default function ChangeImage({profileImg,userId}:{profileImg:string,userI
                 flex flex-col ">
                     <CoverChange userId={userId}/>
                     <div className="h-px w-full bg-dark dark:bg-white"/>
-                    <ProfileChange />
+                    <ProfileChange profileImg={profileImg} userId={userId}/>
                 </div>
             </div>}
         </div>

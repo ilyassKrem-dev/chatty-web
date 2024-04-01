@@ -73,7 +73,7 @@ export default function SideNavItems() {
                         <div className="flex items-center space-x-4">
                           <div className="relative w-10 h-10">
                             <Image 
-                              src={chat.participants[0].image} 
+                              src={chat.participants[0].image ||"/user.png"} 
                               alt="user profile pic"
                               priority
                               fill

@@ -31,7 +31,7 @@ export default function SearchResults() {
                         <div className="flex items-center space-x-4">
                           <div className="relative w-10 h-10">
                             <Image 
-                              src={user.image} 
+                              src={user.image ||"/user.png"} 
                               alt="user profile pic"
                               priority
                               fill

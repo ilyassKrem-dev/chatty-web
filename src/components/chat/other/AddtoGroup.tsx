@@ -84,7 +84,7 @@ export default function AddToGroup({ friendId }: { friendId: string }) {
                       <div key={index} className="flex justify-between items-center w-full">
                         <div className="flex gap-2">
                           <Image
-                            src={friend.image}
+                            src={friend.image ||"/user.png"}
                             alt={`${friend.name}  pic`}
                             width={40}
                             height={40}

@@ -40,6 +40,12 @@ export default function ProfilePage() {
                 return {...prev,status:data}
             })
         })
+        const key2 = `User:${user?._id}:profile`
+        socket.on(key2,(data:string) => {
+            setUser((prev:any) => {
+                return {...prev,image:data}
+            })
+        })
     },[socket,user])
     
     return (

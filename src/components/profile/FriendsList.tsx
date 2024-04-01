@@ -48,7 +48,7 @@ export default  function FriendsList() {
                           <div className="flex items-center space-x-4">
                             <div className="relative w-10 h-10">
                               <Image 
-                                src={friend.image} 
+                                src={friend.image ||"/user.png"} 
                                 alt="user profile pic"
                                 priority
                                 fill

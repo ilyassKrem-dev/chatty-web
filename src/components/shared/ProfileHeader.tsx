@@ -26,8 +26,9 @@ export default function ProfileHeader({user,type,userId}:Props) {
                 src={user.coverImage} 
                 alt="coverImage"
                 width={1200}
+                priority
                 height={1200}
-                className=" w-full h-[300px] max-h-[300px] xl:max-h-[350px] xl:h-[350px]" />
+                className=" w-full h-[295px] max-h-[295px] xl:max-h-[345px] xl:h-[345px] rounded-b-lg" />
                     :
                 <div className=" bg-gray-400 h-full w-full" />}
             </div>
@@ -35,12 +36,12 @@ export default function ProfileHeader({user,type,userId}:Props) {
                 <div className="relative flex justify-center items-center  lg:items-start lg:justify-start">
                     <div className="absolute flex flex-col items-center gap-2 lg:flex-row -top-[2.5rem]">
                         <Image 
-                        src={user.image} 
+                        src={user.image ||"/user.png"} 
                         alt={`${user.name} profile pic}`}
-                        width={100}
+                        width={1000}
                         priority
-                        height={100}
-                        className="rounded-full border-2 border-gray-200 bg-white" />
+                        height={1000}
+                        className="w-[100px] h-[100px] rounded-full border-2 border-gray-200 bg-white object-cover" />
                         <div className="text-center lg:self-end lg:mb-1 lg:text-start">
                             <p className=" font-bold capitalize ">{user.name}</p>
                             <Status status={user.status} type={type} email={user.email}/>

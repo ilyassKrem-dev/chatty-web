@@ -45,7 +45,7 @@ export default  function RequestList() {
                           <div className="flex items-center space-x-4">
                             <div className="relative w-10 h-10">
                               <Image 
-                                src={request.image} 
+                                src={request.image ||"/user.png"} 
                                 alt="user profile pic"
                                 priority
                                 fill

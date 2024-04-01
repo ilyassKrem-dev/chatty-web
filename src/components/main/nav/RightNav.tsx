@@ -23,7 +23,7 @@ export default function RightNav() {
                                 {icon.label === "Profile" && session 
                                 ?
                                 <Image 
-                                src={session?.user?.image|| ""} alt="Profile-icon"
+                                src={session?.user?.image||"/user.png"} alt="Profile-icon"
                                 width={36}
                                 priority
                                 height={40}

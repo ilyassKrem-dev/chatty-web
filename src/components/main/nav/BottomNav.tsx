@@ -18,7 +18,7 @@ export default function BottomNav() {
                                 {icon.label === "Profile" && session 
                                 ?
                                 <Image 
-                                src={session?.user?.image|| ""} alt="Profile-icon"
+                                src={session?.user?.image||"/user.png"} alt="Profile-icon"
                                 width={30}
                                 priority
                                 height={30}

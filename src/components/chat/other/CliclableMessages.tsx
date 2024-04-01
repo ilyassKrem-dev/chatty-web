@@ -61,8 +61,8 @@ contentUrls,sender,time}:Props) {
                 <div className="fixed top-0 left-0 right-0 flex p-2 md:p-4 items-center justify-between">
                     <div className="flex gap-2 items-center">
                         <Image 
-                        src={sender.image} 
-                        alt={sender._id}
+                        src={sender.image ||"/user.png"} 
+                        alt={sender._id ||""}
                         width={40}
                         height={40}
                         className="rounded-full" />

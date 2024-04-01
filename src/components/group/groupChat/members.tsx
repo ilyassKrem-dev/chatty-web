@@ -57,11 +57,11 @@ export default function Members(
                   >
                     <div className="flex gap-2 justify-between">
                       <Image
-                        src={member.user.image}
+                        src={member.user.image ||"/user.png"}
                         alt={`${member.user.name}  pic`}
                         width={50}
                         height={50}
-                        className="rounded-full  border-2"
+                        className="rounded-full  border-2 object-cover"
                       />
                       <div className="flex flex-col">
                         <p className="text-sm">{member.user.name}</p>

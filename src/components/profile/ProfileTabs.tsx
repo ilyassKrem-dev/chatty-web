@@ -21,7 +21,7 @@ export default function ProfileTabs() {
 
 
     return (
-        <section className="flex justify-center items-center text-center mt-10  flex-col">
+        <section className="flex justify-center items-center text-center   flex-col">
             <Tabs defaultValue="friends" className="w-full ">
                 <TabsList className="flex flex-1  items-center gap-3 bg-blue-400 text-white data-[state=active]:bg-white data-[state=active]:text-black ">
                     {tabsLabels.map((tab) => {

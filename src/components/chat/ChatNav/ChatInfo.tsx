@@ -16,7 +16,7 @@ export default function ChatInfo({friendInfo}:Props) {
         <div className="flex p-2 border-b-2 justify-between dark:bg-dark bg-white dark:border-0">
             <div className="flex gap-2">
                 <Image 
-                src={friendInfo.image} 
+                src={friendInfo.image ||"/user.png"} 
                 alt="Pic"
                 priority
                 width={50}

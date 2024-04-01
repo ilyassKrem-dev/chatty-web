@@ -26,7 +26,7 @@ export default function Info({name,img,chatId,members}:Props) {
         <div className="flex p-2 border-b-2 justify-between dark:bg-dark bg-white dark:border-0">
             <div className="flex gap-2 hover:opacity-50 cursor-pointer transition-all duration-300" onClick={() => setShow(true)}>
                 <Image 
-                src={img} 
+                src={img ||"/user.png"} 
                 alt="Pic"
                 priority
                 width={50}
