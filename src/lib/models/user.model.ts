@@ -22,6 +22,10 @@ const UserShema = new mongoose.Schema({
     image:{
         type:String
     },
+    coverImage:{
+        type:String
+    }
+    ,
     status:{
         type:String,
         

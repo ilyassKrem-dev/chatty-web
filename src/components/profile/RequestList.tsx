@@ -7,7 +7,7 @@ import { addFriend } from "@/lib/actions/friends.action"
 import { declineRequest } from "@/lib/actions/friends.action"
 export default  function RequestList() {
     const [requests,setRequests] = useState<any[]>([])
-    const pathname = usePathname()
+    const pathname = usePathname() as string
     const {data:session} = useSession()
     useEffect(() => {
         const fetchRe = async() => {
@@ -55,15 +55,15 @@ export default  function RequestList() {
                             </div>
                             <div className="flex flex-col items-start">
                               <p className="text-lg font-semibold text-black dark:text-white">{request.name}</p>
-                              <p className=" truncate text-sm text-gray-500  max-w-52">{request.bio}</p>
+                              <p className=" text-sm text-gray-500  truncate w-[60px] text-start">{request.bio}</p>
                             </div>
                           </div>
                           <div className="flex gap-2">
-                            <button className="bg-blue-500 hover:opacity-60 dark:bg-accent text-white py-2 px-4 rounded-md transition duration-300 ease-in-out"
+                            <button className="bg-blue-500 hover:opacity-60 dark:bg-accent text-white py-2 px-2 sm:px-4 rounded-md transition duration-300 ease-in-out text-sm sm:text-lg"
                             onClick={() => handleClick(request._id)}>
                               Add friend
                             </button>
-                            <button className="bg-accent hover:opacity-60  text-white py-2 px-4 rounded-md transition duration-300 ease-in-out"
+                            <button className="bg-accent hover:opacity-60  text-white py-2 px-2 sm:px-4 rounded-md transition duration-300 ease-in-out text-sm sm:text-lg"
                             onClick={() => handleDecline(request._id)}>
                               Decline
                             </button>

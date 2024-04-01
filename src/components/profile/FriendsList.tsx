@@ -11,7 +11,7 @@ import Status from "@/assets/clickable/Status"
 export default  function FriendsList() {
     const [friends,setFriends] = useState<any[]>([])
     const [showMore , setShowMore] = useState<number>(10)
-    const pathname = usePathname()
+    const pathname = usePathname() as string
     const router = useRouter()
     const {data:session} = useSession()
     useEffect(() => {
@@ -44,7 +44,7 @@ export default  function FriendsList() {
             <div className="flex flex-col gap-5 mt-10 lg:mx-10">
                 {friends.map((friend) => {
                     return (
-                        <div key={friend._id} className="flex items-center justify-between p-2 rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition duration-300 ease-in-out bg-white dark:bg-black  dark:border-black">
+                        <div key={friend._id} className="flex items-center justify-between p-1 sm:p-2 rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition duration-300 ease-in-out bg-white dark:bg-black  dark:border-black">
                           <div className="flex items-center space-x-4">
                             <div className="relative w-10 h-10">
                               <Image 
@@ -57,7 +57,7 @@ export default  function FriendsList() {
                               />
                             </div>
                             <div className="flex flex-col items-start">
-                              <p className="text-lg font-semibold text-black dark:text-white">{friend.name}</p>
+                              <p className="sm:text-lg font-semibold text-black dark:text-white truncate w-[60px] text-start sm:w-[100px] md:w-[200px]">{friend.name}</p>
                               <Status status={friend.status}/>
                             </div>
                           </div>

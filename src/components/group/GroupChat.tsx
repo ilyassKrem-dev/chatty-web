@@ -7,7 +7,7 @@ import ChatInput from "@/components/chat/allinputs/ChatInput"
 import ChatMessages from "@/components/chat/ChatMessages"
 import { useSocket } from "@/assets/other/providers/socket-provider"
 import Info from "./groupChat/info"
-
+import NoIdFound from "../shared/NoidFound"
 
 export default function GroupChat({convoId}:{
     convoId:string
@@ -21,14 +21,19 @@ export default function GroupChat({convoId}:{
     const deltKey = `Convo:${convoId}:deleted`
     useEffect(() => {
         const convoFetching = async() => {
-            const response = await fetchGroupChat(
-                convoId,
-                session?.user?.email
-                
-            )
+            try {
+                const response = await fetchGroupChat(
+                    convoId,
+                    session?.user?.email
+                    
+                )
             
-            setConvo(response.convoFull)
-            setUserId(response.userId)
+                setConvo(response.convoFull)
+                setUserId(response.userId)
+                
+            } catch (error:any) {
+                setConvo(null)
+            }
            
         }
 
@@ -60,6 +65,10 @@ export default function GroupChat({convoId}:{
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [convo?.messages]);
 
+
+    if(convo === null ) {
+        return <NoIdFound />
+    }
     return (
         <div className=" lg:pb-0">
             {convo&&

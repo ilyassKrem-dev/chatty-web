@@ -85,7 +85,7 @@ export default  function CompleteForm({
         setErrorN(true)
         return setLoading(false)
       } 
-      
+      router.push("/chat")
       
       
     }

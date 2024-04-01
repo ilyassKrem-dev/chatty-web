@@ -1,5 +1,5 @@
 import Image from "next/image"
-import ChangeImage from "@/assets/clickable/ChangImage";
+import ChangeImage from "@/components/profile/profile-change-img/ChangImage";
 import AddFriend from "@/assets/clickable/AddFriend";
 import Status from "@/assets/clickable/Status";
 interface Props {
@@ -7,6 +7,7 @@ interface Props {
         name:string;
         image:string;
         bio:string;
+        coverImage?:string
         status?:string;   
         email?:string
     },
@@ -16,10 +17,19 @@ interface Props {
 export default function ProfileHeader({user,type,userId}:Props) {
 
     return (
-        <>
-            <div className="h-[200px] border-b-4 border-gray-200 realtive">
-                <div className=" bg-gray-400 h-full w-full" />
-                
+        <div className="flex flex-col">
+            <div className="h-[300px] xl:h-[350px] border-b-4 border-gray-200 ">
+                {
+                user.coverImage
+                ?
+                <Image 
+                src={user.coverImage} 
+                alt="coverImage"
+                width={1200}
+                height={1200}
+                className=" w-full h-[300px] max-h-[300px] xl:max-h-[350px] xl:h-[350px]" />
+                    :
+                <div className=" bg-gray-400 h-full w-full" />}
             </div>
             <div className="relative flex  items-center lg:items-start lg:ml-16 h-full lg:justify-between flex-col lg:flex-row gap-4 lg:gap-0 mt-4 px-4">
                 <div className="relative flex justify-center items-center  lg:items-start lg:justify-start">
@@ -40,15 +50,15 @@ export default function ProfileHeader({user,type,userId}:Props) {
                     </div>
                     <div className="mt-32 lg:mt-20 lg:ml-2 flex items-center justify-center flex-col lg:flex-row lg:justify-start lg:gap-6">
                         <h2 className=" font-bold text-xl  lg:self-start">Bio:</h2>
-                        <p className=" w-96 text-center lg:text-start">{user.bio}</p>
+                        <p className=" text-center lg:text-start max-[300px]:truncate w-[200px]">{user.bio} </p>
                     </div>
                 </div>
                 {type==="profile"
                 ?
-                <ChangeImage />
+                <ChangeImage profileImg={user.image} userId={userId}/>
                 :
                 <AddFriend  userId={userId}/>}
             </div>
-        </>
+        </div>
     )
 }

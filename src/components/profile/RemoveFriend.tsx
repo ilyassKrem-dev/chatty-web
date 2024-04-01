@@ -29,11 +29,11 @@ export default function RemoveFriend({
     return (
         <>
             <div className="flex gap-2">
-                <button className="bg-blue-500 hover:opacity-60 dark:bg-accent text-white py-2 px-4 rounded-md transition duration-300 ease-in-out"
+                <button className="bg-blue-500 hover:opacity-60 dark:bg-accent text-white py-2 px-2 sm:px-4 rounded-md transition duration-300 ease-in-out text-sm sm:text-lg"
                 onClick={() => handleChat(friendId)}>
                     Chat
                 </button>
-                <button className="bg-accent hover:opacity-60  text-white py-2 px-4 rounded-md transition duration-300 ease-in-out"
+                <button className="bg-accent hover:opacity-60  text-white py-2 px-2 sm:px-4 rounded-md transition duration-300 ease-in-out text-sm  sm:text-lg"
                 onClick={() =>setShow(true)}>
                     Remove
                 </button>

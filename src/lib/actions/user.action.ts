@@ -4,6 +4,7 @@ import { ConnectDb } from "../mongoose";
 import User from "../models/user.model";
 import mongoose, { FilterQuery } from "mongoose";
 
+
 interface Params {
     name:string;
     email:string|null | undefined;
@@ -90,7 +91,7 @@ export const fetchUser = async(email:string|null|undefined) => {
     try {
         await ConnectDb()
         const user = await User.findOne({email})
-            .select('_id name email image bio status ').lean()
+            .select('_id name email image bio status coverImage').lean()
         
         return JSON.parse(JSON.stringify(user))
     } catch (error:any) {
@@ -98,14 +99,7 @@ export const fetchUser = async(email:string|null|undefined) => {
     }
 }
 
-export const onlineStatus = async(email:string|null|undefined,status:string) => {
-    try {
-        await ConnectDb()
-        const user = await User.findOneAndUpdate({email} ,{$set:{lastLogin:new Date(),status:status}})
-    } catch (error:any) {
-        throw new Error(`Failed to change status ${error.message}`)
-    }
-}
+
 
 export const fetchUsers = async(
     {
@@ -164,11 +158,12 @@ export const fetchUsers = async(
 }
 
 export const fetchUserById = async(userId:string) => {
-    const userIdToObject = new mongoose.Types.ObjectId(userId)
+    
     try {
+        const userIdToObject = new mongoose.Types.ObjectId(userId)
         await ConnectDb()
         const user = await User.findById(userIdToObject)
-            .select('-_id name image bio status')
+            .select('-_id name image bio status coverImage')
 
         return user
     } catch (error:any) {
@@ -204,5 +199,18 @@ export const changeUserState = async(email:string|null|undefined,state:string) =
         
     } catch (error:any) {
         throw new Error(`Failed to change state ${error.message}`)
+    }
+}
+
+export const coverAdd = async(userId:string | undefined,cover:string) => {
+    try {
+        await ConnectDb()
+        await User.findByIdAndUpdate(userId,{
+            coverImage:cover
+        })
+        
+        return {success:true}
+    } catch (error:any) {
+        throw new Error(`Failed to add cover ${error.message}`)
     }
 }

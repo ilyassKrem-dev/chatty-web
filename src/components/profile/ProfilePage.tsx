@@ -12,6 +12,7 @@ interface Params {
     name:string;
     email:string;
     image:string;
+    coverImage?:string;
     bio:string;
     status:string;
 }
@@ -44,8 +45,11 @@ export default function ProfilePage() {
     return (
         <>
             {user&&<section className="flex flex-col w-full">
-                <ProfileHeader user={user} type="profile"/>
-                <ProfileTabs />  
+                <div className="flex flex-col overflow-y-scroll h-screen [&::-webkit-scrollbar]:hidden">
+                    <ProfileHeader user={user} type="profile" userId={user._id}/>
+                    <ProfileTabs /> 
+
+                </div>
             </section>}
         
         </>

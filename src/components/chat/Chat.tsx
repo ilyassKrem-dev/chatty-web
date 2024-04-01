@@ -6,7 +6,7 @@ import { fetchConvoById } from "@/lib/actions/chat.action"
 import ChatInput from "@/components/chat/allinputs/ChatInput"
 import ChatMessages from "@/components/chat/ChatMessages"
 import { useSocket } from "@/assets/other/providers/socket-provider"
-
+import NoIdFound from "../shared/NoidFound"
 
 
 export default function Chat({convoId}:{
@@ -21,12 +21,22 @@ export default function Chat({convoId}:{
     const deltKey = `Convo:${convoId}:deleted`
     useEffect(() => {
         const convoFetching = async() => {
-            const response = await fetchConvoById({
-                email:session?.user?.email,
-                convoId:convoId
-            })
-            setConvo(response.convoFull)
-            setUserId(response.userId)
+            try {
+                const response = await fetchConvoById({
+                    email:session?.user?.email,
+                    convoId:convoId
+                })
+                
+                if(!response?.convoFull?.messages) {
+                    return setConvo(null)
+                }
+                setConvo(response.convoFull)
+                setUserId(response.userId)
+                
+            } catch (error:any) {
+               
+                setConvo(null)
+            }
            
         }
 
@@ -57,6 +67,10 @@ export default function Chat({convoId}:{
    useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [convo?.messages]);
+
+    if(convo === null) {
+        return <NoIdFound />
+    }
 
     return (
         <div className=" lg:pb-0">

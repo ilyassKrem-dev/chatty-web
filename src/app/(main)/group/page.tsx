@@ -1,5 +1,5 @@
 "use client"
-import GroupSideNav from "@/components/group/navs/groupSideNav"
+import GroupSideNav from "@/components/group/navs/GroupSideNav"
 export default function Page() {
 
     
