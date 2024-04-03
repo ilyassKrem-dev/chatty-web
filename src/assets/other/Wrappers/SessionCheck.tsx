@@ -3,18 +3,20 @@
 import { useEffect, useState } from "react"
 import { fetchUserCompletion } from "@/lib/actions/user.action"
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { useRouter,usePathname } from "next/navigation"
 export default function SessionCheck({children}:{
     children:React.ReactNode
 }) {
 
-    const {data: session,status} = useSession()
+    const {data: session} = useSession()
     
     const [completed,setCompleted] = useState<any>()
     const router = useRouter()
-    if(session === null) router.push('/login')
+    const pathname = usePathname()
     const [redirected, setRedirected] = useState(false);
-    
+    useEffect(() => {
+        if (session === null) router.push(`/login?next=${process.env.NEXT_PUBLIC_API_URL!}${pathname}`);
+    }, [session, router]);
     useEffect(() => {
         if(!session) return
         
@@ -25,7 +27,7 @@ export default function SessionCheck({children}:{
         }
         userFetch()
     },[session])
-    
+
     useEffect(() => {
         if (completed && !completed.completed&& !redirected) {
             setRedirected(true);
@@ -34,6 +36,7 @@ export default function SessionCheck({children}:{
         }
         
     }, [completed]);
+
     
     return (
         <>

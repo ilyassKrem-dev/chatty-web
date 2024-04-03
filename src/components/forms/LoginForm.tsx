@@ -20,13 +20,15 @@ import { useState } from "react"
 import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
 import { FaArrowLeft } from "react-icons/fa";
-import { useRouter } from "next/navigation"
+import { useRouter,useSearchParams } from "next/navigation"
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 export default  function LoginForm() {
     const [errorE,setErrorE] = useState<string>("")
     const [errorP,setErrorP] = useState<string>("")
     const [loading,setLoading] = useState<boolean>(false)
     const router = useRouter()
+    const searchParams = useSearchParams()
+
     const form = useForm({
         resolver:zodResolver(loginValidation),
         defaultValues:{
@@ -63,7 +65,12 @@ export default  function LoginForm() {
                 return setErrorE(resp?.error?.split(": ")[1])
             }
           }
-          router.push('/chat')
+          if(searchParams?.get("next")) {
+            router.push(searchParams?.get("next") as string)
+          } else {
+            router.push('/chat')
+          }
+          
       } catch (error) {
         console.error("An error occurred:", error);
       }

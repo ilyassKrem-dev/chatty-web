@@ -50,9 +50,9 @@ export const options: NextAuthOptions = {
                 }
             }
             
-            
+                
         })
     ],
-
+    
     
 }

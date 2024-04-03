@@ -7,6 +7,8 @@ import { MdFileUpload } from "react-icons/md";
 import { useUploadThing } from "@/lib/uploadthing";
 import { isBase64Image } from "@/lib/utils";
 import axios from "axios";
+
+
 export default function ProfileChange({
     profileImg,
     userId
@@ -19,6 +21,7 @@ export default function ProfileChange({
     const [show,setShow] = useState<boolean>(false)
     const {startUpload} = useUploadThing("media")
     const [loading,setLoading] = useState<boolean>(false)
+
     const handleImageChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         const fileReader = new FileReader()
         if(e.target.files && e.target.files.length !==0) {
@@ -32,6 +35,7 @@ export default function ProfileChange({
             fileReader.readAsDataURL(file)
         }
     }
+  
     const handleSave= async() => {
         setLoading(true)
         let imageUrl:any
@@ -48,6 +52,7 @@ export default function ProfileChange({
                 imageUrl
             })
             if(res) {
+                
                 setShow(false)
                 setLoading(false)
                 setFile([])

@@ -14,6 +14,7 @@ export default async function handler(req:NextRequest,res:NextApiResponseServerI
         const user = await User.findByIdAndUpdate(userId,{
             image:imageUrl
         })
+
         const key = `User:${user._id}:profile`
         const pictureProfile = user.image
         res?.socket?.server?.io?.emit(key,pictureProfile)

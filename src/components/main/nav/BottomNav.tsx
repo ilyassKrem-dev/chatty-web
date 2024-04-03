@@ -19,10 +19,10 @@ export default function BottomNav() {
                                 ?
                                 <Image 
                                 src={session?.user?.image||"/user.png"} alt="Profile-icon"
-                                width={30}
+                                width={35}
                                 priority
-                                height={30}
-                                className="rounded-full hover:opacity-60 transition-all duration-200" />
+                                height={35}
+                                className="rounded-full hover:opacity-60 transition-all duration-200 bg-white w-[35px] h-[35px] object-contain  border-2 border-gray-300" />
                                 :
                                 icon.icon}
                             </div>

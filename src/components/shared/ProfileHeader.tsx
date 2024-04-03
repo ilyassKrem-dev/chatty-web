@@ -2,6 +2,9 @@ import Image from "next/image"
 import ChangeImage from "@/components/profile/profile-change-img/ChangImage";
 import AddFriend from "@/assets/clickable/AddFriend";
 import Status from "@/assets/clickable/Status";
+import { RiUserSettingsFill } from "react-icons/ri";
+
+import Link from "next/link";
 interface Props {
     user:{
         name:string;
@@ -18,7 +21,7 @@ export default function ProfileHeader({user,type,userId}:Props) {
 
     return (
         <div className="flex flex-col">
-            <div className="h-[300px] xl:h-[350px] border-b-4 border-gray-200 ">
+            <div className="h-[250px] xl:h-[300px] border-b-4 border-gray-400 ">
                 {
                 user.coverImage
                 ?
@@ -28,11 +31,11 @@ export default function ProfileHeader({user,type,userId}:Props) {
                 width={1200}
                 priority
                 height={1200}
-                className=" w-full h-[295px] max-h-[295px] xl:max-h-[345px] xl:h-[345px] rounded-b-lg" />
+                className=" w-full h-[245px] max-h-[245px] xl:max-h-[295px] xl:h-[295px]" />
                     :
                 <div className=" bg-gray-400 h-full w-full" />}
             </div>
-            <div className="relative flex  items-center lg:items-start lg:ml-16 h-full lg:justify-between flex-col lg:flex-row gap-4 lg:gap-0 mt-4 px-4">
+            <div className="relative flex  items-center lg:items-start lg:ml-16  lg:justify-between flex-col lg:flex-row gap-4 lg:gap-0 mt-4 px-4 mb-10">
                 <div className="relative flex justify-center items-center  lg:items-start lg:justify-start">
                     <div className="absolute flex flex-col items-center gap-2 lg:flex-row -top-[2.5rem]">
                         <Image 
@@ -41,7 +44,7 @@ export default function ProfileHeader({user,type,userId}:Props) {
                         width={1000}
                         priority
                         height={1000}
-                        className="w-[100px] h-[100px] rounded-full border-2 border-gray-200 bg-white object-cover" />
+                        className="w-[100px] h-[100px] rounded-full border-2 border-gray-300 bg-white object-cover" />
                         <div className="text-center lg:self-end lg:mb-1 lg:text-start">
                             <p className=" font-bold capitalize ">{user.name}</p>
                             <Status status={user.status} type={type} email={user.email}/>
@@ -56,7 +59,14 @@ export default function ProfileHeader({user,type,userId}:Props) {
                 </div>
                 {type==="profile"
                 ?
-                <ChangeImage profileImg={user.image} userId={userId}/>
+                <div className="flex gap-4 items-center">
+                    <Link href={"/profile/settings"}>
+                        <RiUserSettingsFill className="text-5xl cursor-pointer hover:opacity-50 transition-all duration-300 hover:bg-dark/50 rounded-full p-2"
+                        />
+                    </Link>
+                    <ChangeImage profileImg={user.image} userId={userId}/>
+
+                </div>
                 :
                 <AddFriend  userId={userId}/>}
             </div>

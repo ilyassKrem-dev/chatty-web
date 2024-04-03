@@ -26,8 +26,8 @@ export default function RightNav() {
                                 src={session?.user?.image||"/user.png"} alt="Profile-icon"
                                 width={36}
                                 priority
-                                height={40}
-                                className="rounded-full hover:opacity-60 transition-all duration-200 w-auto h-auto" />
+                                height={36}
+                                className="rounded-full hover:opacity-60 transition-all duration-200 bg-white w-[40px] h-[40px] object-contain border-2 border-gray-300" />
                                 :
                                 icon.icon}
                             </div>

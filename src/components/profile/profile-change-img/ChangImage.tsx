@@ -26,11 +26,11 @@ export default function ChangeImage({profileImg,userId}:{profileImg:string,userI
         <div className="relative remove-change">
             <button className="border-2 rounded-xl border-black p-2 flex gap-2 items-center hover:opacity-50 transition-all duration-300 dark:border-white" onClick={() => setShow(prev => !prev)}>
                 <FaImage />
-                <p className=" cursor-pointer text-sm  sm:text-base">Change image</p>
+                <p className=" cursor-pointer text-sm  sm:text-base hidden sm:block">Change image</p>
                 <FaChevronDown />
             </button>
             {show&&
-            <div className="absolute w-full mt-1 ">
+            <div className="absolute w-[170px] sm:w-full mt-1 -right-16 sm:right-auto">
                 <div className="bg-white dark:bg-dark border rounded-xl  border-black dark:border-white dark:text-white
                 flex flex-col ">
                     <CoverChange userId={userId}/>
