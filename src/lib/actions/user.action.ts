@@ -214,3 +214,17 @@ export const coverAdd = async(userId:string | undefined,cover:string) => {
         throw new Error(`Failed to add cover ${error.message}`)
     }
 }
+
+export const fullUserInfo = async(email:string|null|undefined) => {
+    try {
+        await ConnectDb()
+        const user = await User.findOne({email})
+            .select("_id name email password")
+            .lean()
+
+        
+        return JSON.parse(JSON.stringify(user))
+    } catch (error:any) {
+        throw new Error(`Failed to get account details ${error.message}`)
+    }
+}

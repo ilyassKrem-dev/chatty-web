@@ -65,6 +65,7 @@ export default  function CompleteForm({
     }
 
     const onSubmit = async (values:z.infer<typeof completeValidation>) => {
+      if(loading) return
       setLoading(true)
       const blob = values.image
       const changed = isBase64Image(blob)

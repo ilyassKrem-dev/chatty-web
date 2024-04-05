@@ -60,7 +60,12 @@ UserShema.pre('save', async function(next) {
     } catch (error:any) {
         return next(error);
     }
+    
 });
+
+UserShema.methods.comparePassword = async function (enteredPassword:string) {
+    return await bcrypt.compare(enteredPassword, this.password);
+};
 
 const User = mongoose.models.User || mongoose.model("User",UserShema)
 

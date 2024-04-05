@@ -39,6 +39,7 @@ export default  function SignUpForm() {
     const { executeRecaptcha } = useGoogleReCaptcha();
 
     const onSubmit = async (values:z.infer<typeof signUpValidation>) => {
+      if(loading) return
       setLoading(true)
       if(!executeRecaptcha) {
         setLoading(false)

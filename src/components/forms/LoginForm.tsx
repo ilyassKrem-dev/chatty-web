@@ -40,6 +40,7 @@ export default  function LoginForm() {
     const { executeRecaptcha } = useGoogleReCaptcha();
 
     const onSubmit = async (values:z.infer<typeof loginValidation>) => {
+      if(loading) return
       setLoading(true)
       try {
         if(!executeRecaptcha) {
@@ -138,6 +139,11 @@ export default  function LoginForm() {
             {!loading&&<p className="cursor-pointer">Login</p>}
             {loading&&
             <LoadingAnimation />}
+          
+        </Button>
+        <Button type="button" onClick={() => router.push('/signup')}>
+            <p className="cursor-pointer">Sign up</p>
+            
           
         </Button>
       </form>
