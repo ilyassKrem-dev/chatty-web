@@ -80,6 +80,9 @@ export default function AddToGroup({ friendId }: { friendId: string }) {
               {friends && (
                 <div className="flex flex-col gap-4 items-center overflow-y-scroll [&::-webkit-scrollbar]:hidden max-h-[15rem]">
                   {friends.map((friend, index) => {
+                    const loaderProp =({ src }:any) => {
+                      return src;
+                   }
                     return (
                       <div key={index} className="flex justify-between items-center w-full">
                         <div className="flex gap-2">
@@ -88,7 +91,9 @@ export default function AddToGroup({ friendId }: { friendId: string }) {
                             alt={`${friend.name}  pic`}
                             width={40}
                             height={40}
-                            className="rounded-full  border-2"
+                            className="rounded-full w-[40px] h-[40px]  border-2"
+                            loader={loaderProp}
+                            unoptimized
                           />
                           <div className="flex flex-col">
                             <p className="text-sm">{friend.name}</p>

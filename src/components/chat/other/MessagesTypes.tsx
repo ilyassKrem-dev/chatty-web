@@ -19,6 +19,7 @@ export default function MessagesTypes({urlInfo,setEnlarge}:Props) {
     const handleEnlarge = (e:React.MouseEvent,info:any) => {
         e.stopPropagation();
         setEnlarge(info)
+        console.log(urlInfo)
     }
     return (
         <div className="  w-full rounded-xl  pb-1 flex gap-2 flex-wrap items-center justify-center">

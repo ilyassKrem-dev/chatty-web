@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image"
 import ChangeImage from "@/components/profile/profile-change-img/ChangImage";
 import AddFriend from "@/assets/clickable/AddFriend";
@@ -18,7 +19,9 @@ interface Props {
     userId?:string
 }
 export default function ProfileHeader({user,type,userId}:Props) {
-
+    const loaderProp =({ src }:any) => {
+        return src;
+    }
     return (
         <div className="flex flex-col">
             <div className="h-[250px] xl:h-[300px] border-b-4 border-gray-400 ">
@@ -31,7 +34,9 @@ export default function ProfileHeader({user,type,userId}:Props) {
                 width={1200}
                 priority
                 height={1200}
-                className=" w-full h-[245px] max-h-[245px] xl:max-h-[295px] xl:h-[295px]" />
+                className=" w-full h-[245px] max-h-[245px] xl:max-h-[295px] xl:h-[295px]"
+                loader={loaderProp}
+                unoptimized />
                     :
                 <div className=" bg-gray-400 h-full w-full" />}
             </div>
@@ -44,7 +49,9 @@ export default function ProfileHeader({user,type,userId}:Props) {
                         width={1000}
                         priority
                         height={1000}
-                        className="w-[100px] h-[100px] rounded-full border-2 border-gray-300 bg-white object-cover" />
+                        className="w-[100px] h-[100px] rounded-full border-2 border-gray-300 bg-white object-cover"
+                        loader={loaderProp}
+                        unoptimized />
                         <div className="text-center lg:self-end lg:mb-1 lg:text-start">
                             <p className=" font-bold capitalize ">{user.name}</p>
                             <Status status={user.status} type={type} email={user.email}/>

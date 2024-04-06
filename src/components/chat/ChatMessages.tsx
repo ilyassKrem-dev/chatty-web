@@ -80,12 +80,21 @@ export default function ChatMessages({
         data:{messageId,type}
       })
   }
+  const findImgId = enlarge && messages.find((msg:any) => {
+    if (msg.content && msg.content.urls) {
+        return msg.content.urls.some((urlObj:any) => urlObj._id === enlarge._id);
+    }
+    return false;
+}); 
   
   return (
     <section className="flex flex-col  gap-y-10 my-4">
       {messages.map((message: any) => {
         const like = message.content.urls.length !==0 && message.content.urls[0].url === "/like.png"
         
+        const loaderProp =({ src }:any) => {
+          return src;
+        }
         return (
           <div key={message._id} className="w-full">
             
@@ -96,14 +105,16 @@ export default function ChatMessages({
                   alt="user picture"
                   width={40}
                   height={40}
-                  className="rounded-full h-auto w-auto"/>
+                  className="w-[40px] h-[40px] rounded-full"
+                  loader={loaderProp}
+                  unoptimized/>
               )}
               <div className="relative">
                 <div
                 onMouseDown={() => handleMouseDown(message._id)}
                 
                 onMouseUp={handleMouseUp}
-                className={`${message.sender._id === userId?"bg-blue-400 text-white":"bg-slate-200 text-black"} max-w-[300px] w-fit  text-end p-2 rounded-lg mx-4 relative ${like && "bg-transparent"}`} 
+                className={`${message.sender._id === userId?"bg-blue-400 text-white":"bg-slate-200 text-black"} max-w-[300px] w-fit  text-end p-2 rounded-lg mx-4 relative ${like && "bg-transparent"} flex items-center justify-center flex-col`} 
                 onClick={() => handleContainerClick(message._id)}>
 
                     {type==="group"&&message.sender._id !== userId&&
@@ -124,26 +135,19 @@ export default function ChatMessages({
                                 height={40}
                                 className="h-auto w-auto" />
                               :
-                              <MessagesTypes urlInfo={url} setEnlarge={setEnlarge}/>
+                              <MessagesTypes 
+                              urlInfo={url} setEnlarge={setEnlarge}/>
                               }
                                 
                               </div>
                             )
                           })}
                         </div>
-
-                        {message.content.urls.length !==0 && message.content.urls[0].url !== "/like.png"&&<ClickableMessages 
-                        enlarge={enlarge}
-                        setEnlarge={setEnlarge}
-                        contentUrls={message.content.urls}
-                        sender={message.sender}
-                        time={message.timestamp}/>}
-
                         {message.content.text&&<p className="text-start">{message.content.text}</p>}
                     </div>
 
                     <div className={`absolute h-0 w-0 border-y-8 border-y-transparent   ${message.sender._id === userId ? 
-                    `top-3 -right-2 border-l-8  border-l-blue-400 ${like && "top-6 "}`:`top-3 -left-2 border-r-8  border-r-slat-100 ${like && "top-6 "}`
+                    ` -right-2 border-l-8  border-l-blue-400 ${like && "top-6 "}`:` -left-2 border-r-8  border-r-slat-100 ${like && "top-6 "}`
                     } `}/>
 
                     
@@ -174,6 +178,14 @@ export default function ChatMessages({
           
         );
       })}
+
+      {findImgId&&
+          <ClickableMessages 
+          enlarge={enlarge}
+          setEnlarge={setEnlarge}
+          contentUrls={findImgId.content.urls}
+          sender={findImgId.sender}
+          time={findImgId.timestamp}/>}
     </section>
   );
 }

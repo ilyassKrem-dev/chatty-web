@@ -43,6 +43,9 @@ export default  function FriendsList() {
             {friends.length !== 0&&
             <div className="flex flex-col gap-5 mt-10 lg:mx-10">
                 {friends.map((friend) => {
+                    const loaderProp =({ src }:any) => {
+                        return src;
+                    }
                     return (
                         <div key={friend._id} className="flex items-center justify-between p-1 sm:p-2 rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition duration-300 ease-in-out bg-white dark:bg-black  dark:border-black">
                           <div className="flex items-center space-x-4">
@@ -54,6 +57,8 @@ export default  function FriendsList() {
                                 fill
                                 sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 800px"
                                 className="rounded-full bg-white"
+                                loader={loaderProp}
+                                unoptimized
                               />
                             </div>
                             <div className="flex flex-col items-start">

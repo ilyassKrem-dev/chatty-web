@@ -27,6 +27,9 @@ export default function Members(
     members:Params[]
 }) {
     const router = useRouter()
+    const loaderProp =({ src }:any) => {
+      return src;
+  }
   return (
     <div className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center z-30">
       <div
@@ -40,7 +43,9 @@ export default function Members(
                 alt={`group pic`}
                 width={100}
                 height={100}
-                className="rounded-full  border-2"
+                className="rounded-full  border-2 h-[100px] w-[100px]"
+                loader={loaderProp}
+                unoptimized
                 />
                 <p className="font-semibold">{name}</p>    
             </div>
@@ -49,6 +54,9 @@ export default function Members(
           {members && (
             <div className="flex flex-col gap-4 items-center overflow-y-scroll [&::-webkit-scrollbar]:hidden max-h-[15rem] ">
               {members.map((member, index) => {
+                const loaderProp =({ src }:any) => {
+                  return src;
+              }
                 return (
                   <div
                     key={index}
@@ -61,7 +69,9 @@ export default function Members(
                         alt={`${member.user.name}  pic`}
                         width={50}
                         height={50}
-                        className="rounded-full  border-2 object-cover"
+                        className="rounded-full  border-2 object-cover w-[50px] h-[50px]"
+                        loader={loaderProp}
+                        unoptimized
                       />
                       <div className="flex flex-col">
                         <p className="text-sm">{member.user.name}</p>

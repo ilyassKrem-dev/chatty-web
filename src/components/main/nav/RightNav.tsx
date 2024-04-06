@@ -9,7 +9,9 @@ import { SocketIndicator } from "@/assets/other/socket-indicator"
 export default function RightNav() {
     const {data:session} = useSession()
     const pathname = usePathname()
-    
+    const loaderProp =({ src }:any) => {
+        return src;
+    }
     return (
         <nav className="hidden lg:flex sticky left-0 top-0 p-2 px-4 border-r dark:border-white  z-30 dark:bg-dark dark:border-0 bg-white">
             <div className="flex justify-center  flex-col h-full gap-10 group">
@@ -27,7 +29,9 @@ export default function RightNav() {
                                 width={36}
                                 priority
                                 height={36}
-                                className="rounded-full hover:opacity-60 transition-all duration-200 bg-white w-[40px] h-[40px] object-contain border-2 border-gray-300" />
+                                className="rounded-full hover:opacity-60 transition-all duration-200 bg-white w-[40px] h-[40px] object-contain border-2 border-gray-300"
+                                loader={loaderProp}
+                                unoptimized />
                                 :
                                 icon.icon}
                             </div>

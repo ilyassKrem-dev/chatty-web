@@ -165,7 +165,7 @@ export const fetchUserById = async(userId:string) => {
         await ConnectDb()
         const user = await User.findById(userIdToObject)
             .select('-_id name image bio status coverImage')
-
+            .lean()
         return user
     } catch (error:any) {
         throw new Error(`Error fetching user ${error.message}`)

@@ -10,7 +10,9 @@ interface Props {
 }
 
 export default function ChatInfo({friendInfo}:Props) {
-
+    const loaderProp =({ src }:any) => {
+        return src;
+     }
 
     return (
         <div className="flex p-2 border-b-2 justify-between dark:bg-dark bg-white dark:border-0">
@@ -21,7 +23,9 @@ export default function ChatInfo({friendInfo}:Props) {
                 priority
                 width={50}
                 height={50} 
-                className="rounded-full border-2 border-light"/>
+                className="rounded-full h-[50px] w-[50px] border-2 border-light"
+                loader={loaderProp}
+                unoptimized/>
                 <div className="flex flex-col justify-center">
                     <p className=" font-semibold">{friendInfo.name}</p>
                 </div>

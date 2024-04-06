@@ -2,13 +2,16 @@
 
 import { useState,useEffect,useContext,createContext } from "react"
 import {io as ClientIO} from "socket.io-client"
-import { changeUserState } from "@/lib/actions/user.action"
-//import axios from "axios"
+
+import axios from "axios"
+import { useSession } from "next-auth/react"
 type SocketContextType = {
     socket:any | null;
     isConnected:boolean
 }
-
+const loaderProp =({ src }:any) => {
+    return src;
+  }
 const SocketContext = createContext<SocketContextType>({
     socket:null,
     isConnected:false
@@ -26,6 +29,7 @@ export const SocketProvider = ({
 }) => {
     const [socket,setSocket] = useState(null)
     const [isConnected,setIsConnected] = useState(false)
+    const {data:session} = useSession()
     useEffect(() => {
         
         const socketInstance = new (ClientIO as any)(process.env.NEXT_PUBLIC_SITE_URL!,{
@@ -35,27 +39,29 @@ export const SocketProvider = ({
         });
         socketInstance.on('connect',() => {
             setIsConnected(true)
-           /* updateUserState(session?.user?.email,"online")*/
+            if(!session) return
+            updateUserState(session?.user?.email,"online")
             
         })
         socketInstance.on('disconnect',() => {
             setIsConnected(false)
-
-           /* updateUserState(session?.user?.email,"offline")*/
+            if(!session) return
+            updateUserState(session?.user?.email,"offline")
             
         })
         
         
         
-        /*const handleUnload = (e:BeforeUnloadEvent) => {
+        const handleUnload = (e:BeforeUnloadEvent) => {
+            if(!session) return
             updateUserState(session?.user?.email,"offline")  
             
         }
-        window.addEventListener('beforeunload',handleUnload)*/
+        window.addEventListener('beforeunload',handleUnload)
         setSocket(socketInstance)
 
         return () => {
-           /*window.removeEventListener("beforeunload", handleUnload);*/
+           window.removeEventListener("beforeunload", handleUnload);
            
             socketInstance.disconnect();
         }
@@ -71,7 +77,7 @@ export const SocketProvider = ({
 }
 
 
-/*const updateUserState = async(email:string|null|undefined,state:string) => {
+const updateUserState = async(email:string|null|undefined,state:string) => {
     try {
         
        await axios.post("/api/socket/status",{
@@ -84,4 +90,4 @@ export const SocketProvider = ({
     } catch (error:any) {
         throw new Error(`Failed to change ${error.message}`)
     }
-}*/
+}

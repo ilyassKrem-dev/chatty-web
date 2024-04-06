@@ -21,7 +21,9 @@ interface Props {
 
 export default function Info({name,img,chatId,members}:Props) {
     const [show,setShow] = useState<boolean>(false)
-   
+    const loaderProp =({ src }:any) => {
+        return src;
+    }
     return (
         <div className="flex p-2 border-b-2 justify-between dark:bg-dark bg-white dark:border-0">
             <div className="flex gap-2 hover:opacity-50 cursor-pointer transition-all duration-300" onClick={() => setShow(true)}>
@@ -31,7 +33,9 @@ export default function Info({name,img,chatId,members}:Props) {
                 priority
                 width={50}
                 height={50} 
-                className="rounded-full border-2 border-light"/>
+                className="rounded-full border-2 border-light w-[50px] h-[50px]"
+                loader={loaderProp}
+                unoptimized/>
                 <div className="flex flex-col justify-center">
                     <p className=" font-semibold cursor-pointer">{name}</p>
                     <p className="text-xs text-gray-1 cursor-pointer">Click here for more info</p>

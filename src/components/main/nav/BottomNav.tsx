@@ -21,8 +21,10 @@ export default function BottomNav() {
         }
         fetchStatus()
     },[session])
+    const loaderProp =({ src }:any) => {
+        return src;
+    }
     
-    console.log(userStatus)
     return (
         <nav className="fixed lg:hidden bottom-0 left-0 right-0 p-2 py-4  dark:bg-dark bg-white">
             <div className="flex justify-center h-full gap-14 group md:gap-20 max-[400px]:gap-5">
@@ -38,7 +40,9 @@ export default function BottomNav() {
                                     width={40}
                                     priority
                                     height={40}
-                                    className="rounded-full hover:opacity-60 transition-all duration-200 bg-white w-[36px] h-[36px] object-contain  border-2 border-gray-300" />
+                                    className="rounded-full hover:opacity-60 transition-all duration-200 bg-white w-[36px] h-[36px] object-contain  border-2 border-gray-300"
+                                    loader={loaderProp}
+                                    unoptimized />
                                 </div>
                                 :
                                 icon.icon}

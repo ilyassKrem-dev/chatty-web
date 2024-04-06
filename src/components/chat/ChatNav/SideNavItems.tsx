@@ -68,6 +68,9 @@ export default function SideNavItems() {
             {chats&&chats.length !==0&&
             <div>
                 {chats.map(chat => {
+                    const loaderProp =({ src }:any) => {
+                      return src;
+                  }
                     return (
                         <Link href={{ pathname: `/chat/${chat._id}`}} key={chat._id} className="flex items-center justify-between p-2 rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition duration-300 ease-in-out bg-white dark:bg-black hover:opacity-55 dark:border-black">
                         <div className="flex items-center space-x-4">
@@ -79,6 +82,8 @@ export default function SideNavItems() {
                               fill
                               sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 800px"
                               className="rounded-full bg-white"
+                              loader={loaderProp}
+                              unoptimized
                             />
                           </div>
                           <div>

@@ -54,10 +54,13 @@ contentUrls,sender,time}:Props) {
             console.error('Error downloading file:', error);
         }
     };
+    const loaderProp =({ src }:any) => {
+        return src;
+     }
     return (
         <>
             {enlarge&&
-            <div className="fixed top-0 bottom-0 right-0 left-0 bg-black/80 z-30 flex flex-col justify-center items-center" onClick={(e) => e.stopPropagation()}>
+            <div className="fixed top-0 bottom-0 right-0 left-0 bg-black/90 z-30 flex flex-col justify-center items-center text-white" onClick={(e) => e.stopPropagation()}>
                 <div className="fixed top-0 left-0 right-0 flex p-2 md:p-4 items-center justify-between">
                     <div className="flex gap-2 items-center">
                         <Image 
@@ -65,7 +68,9 @@ contentUrls,sender,time}:Props) {
                         alt={sender._id ||""}
                         width={40}
                         height={40}
-                        className="rounded-full" />
+                        className="rounded-full w-[40px] h-[40px]"
+                        loader={loaderProp}
+                        unoptimized />
                         <div className="text-start text-sm">
                             <p>{sender.name}</p>
                             <p>{formatDate(time)}</p>
@@ -124,6 +129,7 @@ contentUrls,sender,time}:Props) {
                 
                 <div className="absolute bottom-14  flex overflow-x-scroll gap-4 md:gap-6 md:items-center md:justify-center w-[75%] [&::-webkit-scrollbar]:hidden">
                     {contentUrls.map((url,index) => {
+                        
                         return (
                             <div key={index} className={`${enlarge.name !== url.name && "opacity-40  transition-all duration-300 "} min-w-[120px]`}>
                                 <MessagesTypes 
