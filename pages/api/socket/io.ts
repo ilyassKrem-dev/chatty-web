@@ -19,7 +19,7 @@ const ioHandler = (req:NextApiRequest,res:NextApiResponseServerIo) => {
             path:path,
             addTrailingSlash:false,
             allowEIO3: true,
-            transports: ['websocket']
+            
         })
         
         res.socket.server.io = io
