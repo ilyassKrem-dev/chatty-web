@@ -9,7 +9,7 @@ export default function SessionCheck({children}:{
 }) {
 
     const {data: session} = useSession()
-    
+    console.log(session)
     const [completed,setCompleted] = useState<any>()
     const router = useRouter()
     const pathname = usePathname()

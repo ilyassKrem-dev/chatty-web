@@ -28,35 +28,38 @@ export const SocketProvider = ({
     const [socket,setSocket] = useState(null)
     const [isConnected,setIsConnected] = useState(false)
     const {data:session} = useSession()
-    
+    console.log(session)
     useEffect(() => {
+        
         const socketInstance = new (ClientIO as any)(process.env.NEXT_PUBLIC_SITE_URL!,{
             path:"/api/socket/io",
             addTrailingSlash:false
         });
         socketInstance.on('connect',() => {
             setIsConnected(true)
-            updateUserState(session?.user?.email,"online")
+            /*if(!session) return
+            updateUserState(session?.user?.email,"online")*/
             
         })
         socketInstance.on('disconnect',() => {
             setIsConnected(false)
-            
-            updateUserState(session?.user?.email,"offline")
+            /*if(!session) return
+            updateUserState(session?.user?.email,"offline")*/
             
         })
         
         
         
-        const handleUnload = (e:BeforeUnloadEvent) => {
+       /* const handleUnload = (e:BeforeUnloadEvent) => {
+            if(!session) return
             updateUserState(session?.user?.email,"offline")  
             
         }
         window.addEventListener('beforeunload',handleUnload)
-        setSocket(socketInstance)
+        setSocket(socketInstance)*/
 
         return () => {
-            window.removeEventListener("beforeunload", handleUnload);
+            /*window.removeEventListener("beforeunload", handleUnload);*/
            
             socketInstance.disconnect();
         }
