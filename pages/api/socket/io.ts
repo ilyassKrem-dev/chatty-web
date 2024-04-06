@@ -17,8 +17,11 @@ const ioHandler = (req:NextApiRequest,res:NextApiResponseServerIo) => {
         const httpServer:NetServer = res.socket.server as any
         const io = new ServerIO(httpServer,{
             path:path,
-            addTrailingSlash:false
+            addTrailingSlash:false,
+            allowEIO3: true,
+            transports: ['websocket']
         })
+        
         res.socket.server.io = io
     }
 
