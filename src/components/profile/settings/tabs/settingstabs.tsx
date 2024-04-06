@@ -34,7 +34,9 @@ export default function SettingsTabs({showTabs}:{
             variants={variants}
             transition={{duration:0.5 , ease:"easeInOut"}}
             className={`border-r-2 h-screen  w-[300px] px-5 fixed left-0 top-[4.1rem] bottom-0 bg-white md:static  md:block`}>
-                <h1 className="font-bold text-2xl p-5">Settings</h1>
+                <Link href={"/profile/settings"} className="" >
+                    <h1 className="font-bold text-2xl p-5 hover:opacity-60 transition-all duration-300 active:opacity-50 cursor-pointer">Settings</h1>
+                </Link>
 
                 <div className="border-t-2 flex flex-col gap-4">
                     <div>
@@ -57,8 +59,10 @@ export default function SettingsTabs({showTabs}:{
             </motion.div>
             :
             <div
-            className={`border-r-2 h-screen  w-[300px] px-5 fixed left-0 top-[4.1rem] bottom-0 bg-white md:static  md:block`}>
-                <h1 className="font-bold text-2xl p-5">Settings</h1>
+            className={`border-r-2 h-screen  w-[400px] px-5 fixed left-0 top-[4.1rem] bottom-0 bg-white md:static  md:block`}>
+                <Link href={"/profile/settings"} className="" >
+                    <h1 className="font-bold text-2xl p-5 hover:opacity-60 transition-all duration-300 active:opacity-50 cursor-pointer">Settings</h1>
+                </Link>
 
                 <div className="border-t-2 flex flex-col gap-4">
                     <div>

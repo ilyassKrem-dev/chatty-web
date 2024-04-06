@@ -34,7 +34,8 @@ export default function ProfilePage() {
     },[session])
     useEffect(() => {
         if(!socket) return
-        const key = `User:${user?._id}`
+        console.log("e")
+        const key = `User:${user?._id}:status`
         socket.on(key,(data:string) => {
             setUser((prev:any) => {
                 return {...prev,status:data}

@@ -26,6 +26,8 @@ export default function SessionCheck({children}:{
           setCompleted(userCompeleted)
         }
         userFetch()
+
+        
     },[session])
 
     useEffect(() => {

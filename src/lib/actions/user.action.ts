@@ -3,7 +3,7 @@
 import { ConnectDb } from "../mongoose";
 import User from "../models/user.model";
 import mongoose, { FilterQuery } from "mongoose";
-
+import { fetchConvoId } from "./chat.action";
 
 interface Params {
     name:string;
@@ -42,6 +42,7 @@ export const AddUser = async ({
             },
             {upsert:true}
         )
+        await fetchConvoId({email,friendId:findUser._id})
     } catch (error:any) {
         throw new Error('Failed to add user '+error.message)
     }
@@ -226,5 +227,17 @@ export const fullUserInfo = async(email:string|null|undefined) => {
         return JSON.parse(JSON.stringify(user))
     } catch (error:any) {
         throw new Error(`Failed to get account details ${error.message}`)
+    }
+}
+
+export const userStatusFetch = async(email:string|null|undefined) => {
+    try {
+        await ConnectDb()
+        const user = await User.findOne({email})
+            .select("-_id status").lean()
+        
+        return user
+    } catch (error) {
+        throw new Error(`Failed to fetch status`)
     }
 }

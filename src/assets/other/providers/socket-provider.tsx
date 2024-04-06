@@ -4,7 +4,7 @@ import { useState,useEffect,useContext,createContext } from "react"
 import { useSession } from "next-auth/react"
 import {io as ClientIO} from "socket.io-client"
 import { changeUserState } from "@/lib/actions/user.action"
-
+import axios from "axios"
 type SocketContextType = {
     socket:any | null;
     isConnected:boolean
@@ -50,13 +50,14 @@ export const SocketProvider = ({
         
         const handleUnload = (e:BeforeUnloadEvent) => {
             updateUserState(session?.user?.email,"offline")  
+            
         }
         window.addEventListener('beforeunload',handleUnload)
         setSocket(socketInstance)
 
-
         return () => {
             window.removeEventListener("beforeunload", handleUnload);
+           
             socketInstance.disconnect();
         }
     }, [])
@@ -73,8 +74,12 @@ export const SocketProvider = ({
 
 const updateUserState = async(email:string|null|undefined,state:string) => {
     try {
-       await changeUserState(email,state)
-    
+       await axios.post("/api/socket/status",{
+            email,
+            state,
+            type:"load"
+       })
+        
         
     } catch (error:any) {
         throw new Error(`Failed to change ${error.message}`)

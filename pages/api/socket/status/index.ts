@@ -12,15 +12,24 @@ export default async function handler(
         res.status(500).json({error:"Method not allowed"})
     }
     try {
-        const {email,state} = req.body as any
+        const {email,state,type} = req.body as any
         await ConnectDb()
-        const user = await User.findOneAndUpdate({email},{
-            $set:{
-                status:state,
-                lastStatus:state
+        const user = await User.findOne({email})
+        if(type) {
+            if(!user.lastStatus) {
+                user.status=state
+                await user.save()
+            } else {
+                user.status = user.lastStatus
+                await user.save()
             }
-        },{new:true})
-        const userStatus = `User:${user._id}`
+        } else {
+            
+            user.status = state
+            user.lastStatus = state
+            await user.save()
+        }
+        const userStatus = `User:${user._id}:status`
         const changedState = user.status
         res?.socket?.server?.io?.emit(userStatus,changedState)
         return res.status(200).json({success:true})

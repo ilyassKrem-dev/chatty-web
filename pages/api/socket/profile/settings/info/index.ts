@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { NextApiResponseServerIo } from "@/lib/utils";
 import { ConnectDb } from "@/lib/mongoose";
 import User from "@/lib/models/user.model";
-import bcrypt from "bcrypt";
+
 
 export default async function handler(req:NextRequest,res:NextApiResponseServerIo) {
     if(req.method !== "PATCH") {
@@ -38,9 +38,8 @@ export default async function handler(req:NextRequest,res:NextApiResponseServerI
             if(!isValid) {
             return res.json({errorO:"Password incorrect"})
             }
-            const salt = await bcrypt.genSalt(10);
-            const hash = await bcrypt.hash(password, salt);
-            user.password = hash
+
+            user.password = password
             await user.save()
             return res.status(200).json({message:"Password changed"})
         }
