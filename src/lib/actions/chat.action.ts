@@ -19,6 +19,9 @@ export const fetchConvoId = async(
         const idToObjectId = new mongoose.Types.ObjectId(friendId)
         await ConnectDb()
         const user = await User.findOne({email})
+        if(!user) {
+            return {message:"Failed to find user"}
+        }
         let convo = await Conversation.findOne({
             participants:{
                 $all:[user._id,idToObjectId]
@@ -43,7 +46,9 @@ export const fetchConvos = async (email: string | null | undefined,type:string) 
     try {
         await ConnectDb();
         const user = await User.findOne({ email });
-
+        if(!user) {
+            return {message:"Failed to find user"}
+        }
         const convos = await Conversation.find({participants:{$in:[user._id]},type})
             .populate(
                 {
@@ -87,6 +92,9 @@ export const fetchConvoById = async(
     try {
         await ConnectDb()
         const user = await User.findOne({email})
+        if(!user) {
+            return {message:"Failed to find user"}
+        }
         const convo = await Conversation.findById(convoId)
                     .populate(
                         {

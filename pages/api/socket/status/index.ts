@@ -15,6 +15,9 @@ export default async function handler(
         const {email,state,type} = req.body as any
         await ConnectDb()
         const user = await User.findOne({email})
+        if(!user) {
+            return res.status(404).json({error:"User not found"})
+        }
         if(type) {
             if(!user.lastStatus) {
                 user.status=state
@@ -24,7 +27,6 @@ export default async function handler(
                 await user.save()
             }
         } else {
-            
             user.status = state
             user.lastStatus = state
             await user.save()
