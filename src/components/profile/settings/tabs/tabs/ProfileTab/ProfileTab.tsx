@@ -12,6 +12,7 @@ export default function ProfileTab() {
     const {socket} = useSocket()
     const [succesMsg,setSuccessMsg] = useState<string>("")
     useEffect(() => {
+        if(!session) return
         const getUser = async() => {
             const res = await fullUserInfo(session?.user?.email)
             if (res) setUser(res)

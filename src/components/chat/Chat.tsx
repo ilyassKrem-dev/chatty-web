@@ -20,6 +20,7 @@ export default function Chat({convoId}:{
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const deltKey = `Convo:${convoId}:deleted`
     useEffect(() => {
+        if(!session) return
         const convoFetching = async() => {
             try {
                 const response = await fetchConvoById({
@@ -42,7 +43,7 @@ export default function Chat({convoId}:{
 
         convoFetching()
         
-    },[])
+    },[session])
     
    useEffect(() => {
         if(!socket) return

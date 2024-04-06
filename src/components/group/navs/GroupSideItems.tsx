@@ -14,12 +14,13 @@ export default function GroupSideItems() {
     const {socket } = useSocket()
     
     useEffect(() =>{
+      if(!session) return
         const chatsfetch = async() => {
             const response = await fetchGroupConvos(session?.user?.email)
             setGroups(response)
         }
         chatsfetch()
-    },[])
+    },[session])
     useEffect(() => {
       if(groups.length === 0 || !socket) return
       groups.forEach(group => {

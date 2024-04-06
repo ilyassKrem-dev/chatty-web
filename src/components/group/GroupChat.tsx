@@ -20,6 +20,7 @@ export default function GroupChat({convoId}:{
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const deltKey = `Convo:${convoId}:deleted`
     useEffect(() => {
+        if(!session) return
         const convoFetching = async() => {
             try {
                 const response = await fetchGroupChat(
@@ -39,7 +40,7 @@ export default function GroupChat({convoId}:{
 
         convoFetching()
         
-    },[])
+    },[session])
     
    useEffect(() => {
         if(!socket) return

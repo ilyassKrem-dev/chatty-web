@@ -13,12 +13,13 @@ export default function SideNavItems() {
     const {socket } = useSocket()
     
     useEffect(() =>{
+      if(!session) return
         const chatsfetch = async() => {
             const response = await fetchConvos(session?.user?.email,"private")
             setChats(response)
         }
         chatsfetch()
-    },[])
+    },[session])
     useEffect(() => {
       if(chats.length === 0 || !socket) return
       chats.forEach(chat => {

@@ -12,6 +12,7 @@ export default function SearchResults() {
     const searchString = seacrhParams?.get('s')
     const string = typeof searchString === "string"? searchString : ""
     useEffect(() => {
+      if(!session) return
         const usersFetch = async() => {
                 const users = await fetchUsers({
                     searchString:string,
@@ -20,7 +21,7 @@ export default function SearchResults() {
                 setUsers(users)
         }
         usersFetch()
-    },[string])
+    },[string,session])
     return (
         <div>
             {users&&

@@ -15,12 +15,13 @@ export default  function FriendsList() {
     const router = useRouter()
     const {data:session} = useSession()
     useEffect(() => {
+        if(!session) return
         const fetchRe = async() => {
             const friends = await fetchFriends(session?.user?.email,showMore)
             setFriends(friends)
         }
         fetchRe()
-    } ,[])
+    } ,[session])
     const handleChat = async(id:string) => {
         const convoId = await fetchConvoId({
             email:session?.user?.email,

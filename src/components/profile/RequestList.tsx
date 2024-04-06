@@ -10,12 +10,13 @@ export default  function RequestList() {
     const pathname = usePathname() as string
     const {data:session} = useSession()
     useEffect(() => {
+      if(!session) return
         const fetchRe = async() => {
             const requests = await fetchRequests(session?.user?.email)
             setRequests(requests)
         }
         fetchRe()
-    } ,[])
+    } ,[session])
     
     const handleClick = async(id:string) => {
         await addFriend({
