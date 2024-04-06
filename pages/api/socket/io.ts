@@ -7,7 +7,7 @@ import { NextApiResponseServerIo } from "@/lib/utils";
 
 export const config = {
     api:{
-        bodyPareser:false
+        bodyParser:false
     }
 }
 

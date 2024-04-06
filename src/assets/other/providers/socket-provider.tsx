@@ -27,10 +27,7 @@ export const SocketProvider = ({
 }) => {
     const [socket,setSocket] = useState(null)
     const [isConnected,setIsConnected] = useState(false)
-    const [cheked,setChecked] = useState<boolean>(false)
     const {data:session} = useSession()
-    console.log(socket)
-    console.log(session)
     useEffect(() => {
         
         const socketInstance = new (ClientIO as any)(process.env.NEXT_PUBLIC_SITE_URL!,{
@@ -39,30 +36,27 @@ export const SocketProvider = ({
         });
         socketInstance.on('connect',() => {
             setIsConnected(true)
-            if(cheked) return
             updateUserState(session?.user?.email,"online")
-            setChecked(true)
             
         })
         socketInstance.on('disconnect',() => {
             setIsConnected(false)
-            if(cheked) return
+
             updateUserState(session?.user?.email,"offline")
             
         })
         
         
         
-        /*const handleUnload = (e:BeforeUnloadEvent) => {
-            if(cheked) return
+        const handleUnload = (e:BeforeUnloadEvent) => {
             updateUserState(session?.user?.email,"offline")  
             
         }
         window.addEventListener('beforeunload',handleUnload)
-        setSocket(socketInstance)*/
+        setSocket(socketInstance)
 
         return () => {
-           /* window.removeEventListener("beforeunload", handleUnload);*/
+           window.removeEventListener("beforeunload", handleUnload);
            
             socketInstance.disconnect();
         }
