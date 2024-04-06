@@ -27,7 +27,9 @@ export const SocketProvider = ({
 }) => {
     const [socket,setSocket] = useState(null)
     const [isConnected,setIsConnected] = useState(false)
+    const [cheked,setChecked] = useState<boolean>(false)
     const {data:session} = useSession()
+    console.log(socket)
     console.log(session)
     useEffect(() => {
         
@@ -37,29 +39,30 @@ export const SocketProvider = ({
         });
         socketInstance.on('connect',() => {
             setIsConnected(true)
-            /*if(!session) return
-            updateUserState(session?.user?.email,"online")*/
+            if(cheked) return
+            updateUserState(session?.user?.email,"online")
+            setChecked(true)
             
         })
         socketInstance.on('disconnect',() => {
             setIsConnected(false)
-            /*if(!session) return
-            updateUserState(session?.user?.email,"offline")*/
+            if(cheked) return
+            updateUserState(session?.user?.email,"offline")
             
         })
         
         
         
-       /* const handleUnload = (e:BeforeUnloadEvent) => {
-            if(!session) return
+        const handleUnload = (e:BeforeUnloadEvent) => {
+            if(cheked) return
             updateUserState(session?.user?.email,"offline")  
             
         }
         window.addEventListener('beforeunload',handleUnload)
-        setSocket(socketInstance)*/
+        setSocket(socketInstance)
 
         return () => {
-            /*window.removeEventListener("beforeunload", handleUnload);*/
+            window.removeEventListener("beforeunload", handleUnload);
            
             socketInstance.disconnect();
         }
@@ -77,6 +80,7 @@ export const SocketProvider = ({
 
 const updateUserState = async(email:string|null|undefined,state:string) => {
     try {
+        
        await axios.post("/api/socket/status",{
             email,
             state,

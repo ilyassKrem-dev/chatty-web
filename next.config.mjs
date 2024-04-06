@@ -5,6 +5,7 @@ const nextConfig = {
     },
     reactStrictMode: false,
     experimental: {
+       
         serverComponentsExternalPackages: ["mongoose"],
     },
     eslint: {
