@@ -53,16 +53,16 @@ export const SocketProvider = ({
         
         
         
-        const handleUnload = (e:BeforeUnloadEvent) => {
+        /*const handleUnload = (e:BeforeUnloadEvent) => {
             if(cheked) return
             updateUserState(session?.user?.email,"offline")  
             
         }
         window.addEventListener('beforeunload',handleUnload)
-        setSocket(socketInstance)
+        setSocket(socketInstance)*/
 
         return () => {
-            window.removeEventListener("beforeunload", handleUnload);
+           /* window.removeEventListener("beforeunload", handleUnload);*/
            
             socketInstance.disconnect();
         }
