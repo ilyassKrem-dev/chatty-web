@@ -4,7 +4,7 @@ import Back from "@/assets/other/Back";
 export default async function Page({params}:{
     params:{id:string}
 })  {
-    const user = await fetchUserById(params.id)
+    const user = await fetchUserById(params.id) as any
     return (
         <>
             <Back />

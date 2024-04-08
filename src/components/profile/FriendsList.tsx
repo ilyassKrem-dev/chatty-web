@@ -6,8 +6,8 @@ import { usePathname,useRouter } from "next/navigation"
 import { fetchFriends } from "@/lib/actions/friends.action"
 import { fetchConvoId } from "@/lib/actions/chat.action"
 import { removeFriend } from "@/lib/actions/friends.action"
-import RemoveFriend from "./RemoveFriend"
-import Status from "@/assets/clickable/Status"
+import FriendInputs from "./FriendsInputs"
+import Status from "@/components/shared/Status"
 export default  function FriendsList() {
     const [friends,setFriends] = useState<any[]>([])
     const [showMore , setShowMore] = useState<number>(10)
@@ -42,13 +42,13 @@ export default  function FriendsList() {
     return (
         <>
             {friends.length !== 0&&
-            <div className="flex flex-col gap-5 mt-10 lg:mx-10">
+            <div className="flex flex-col gap-5 mt-5 lg:mx-8">
                 {friends.map((friend) => {
                     const loaderProp =({ src }:any) => {
                         return src;
                     }
                     return (
-                        <div key={friend._id} className="flex items-center justify-between p-1 sm:p-2 rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition duration-300 ease-in-out bg-white dark:bg-black  dark:border-black">
+                        <div key={friend._id} className="flex items-center justify-between p-2 rounded-xl    hover:shadow-lg transition duration-300 ease-in-out  dark:bg-black hover:opacity-70 dark:border-black hover:bg-gray-300">
                           <div className="flex items-center space-x-4">
                             <div className="relative w-10 h-10">
                               <Image 
@@ -63,11 +63,11 @@ export default  function FriendsList() {
                               />
                             </div>
                             <div className="flex flex-col items-start">
-                              <p className="sm:text-lg font-semibold text-black dark:text-white truncate w-[60px] text-start sm:w-[100px] md:w-[200px]">{friend.name}</p>
-                              <Status status={friend.status}/>
+                              <p className="sm:text-lg font-semibold text-black dark:text-white truncate max-[300px]:w-[60px] w-[80px] text-start sm:w-[100px] md:w-[200px]">{friend.name}</p>
+                              <Status status={friend.status} className="max-[300px]:text-xs"/>
                             </div>
                           </div>
-                          <RemoveFriend 
+                          <FriendInputs 
                             friendId={friend._id}
                             handleRemove={handleRemove}
                             handleChat={handleChat}/>

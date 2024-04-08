@@ -1,8 +1,8 @@
 "use client"
 import Image from "next/image"
 import ChangeImage from "@/components/profile/profile-change-img/ChangImage";
-import AddFriend from "@/assets/clickable/AddFriend";
-import Status from "@/assets/clickable/Status";
+import AddFriend from "@/components/search/AddFriend";
+import Status from "@/components/shared/Status";
 import { RiUserSettingsFill } from "react-icons/ri";
 
 import Link from "next/link";
@@ -42,7 +42,7 @@ export default function ProfileHeader({user,type,userId}:Props) {
             </div>
             <div className="relative flex  items-center lg:items-start lg:ml-16  lg:justify-between flex-col lg:flex-row gap-4 lg:gap-0 mt-4 px-4 mb-10">
                 <div className="relative flex justify-center items-center  lg:items-start lg:justify-start">
-                    <div className="absolute flex flex-col items-center gap-2 lg:flex-row -top-[2.5rem]">
+                    <div className="absolute flex flex-col  gap-2 lg:flex-row -top-[2.5rem]">
                         <Image 
                         src={user.image ||"/user.png"} 
                         alt={`${user.name} profile pic}`}
@@ -53,8 +53,11 @@ export default function ProfileHeader({user,type,userId}:Props) {
                         loader={loaderProp}
                         unoptimized />
                         <div className="text-center lg:self-end lg:mb-1 lg:text-start">
-                            <p className=" font-bold capitalize ">{user.name}</p>
-                            <Status status={user.status} type={type} email={user.email}/>
+                            <div>
+                                <p className=" font-bold capitalize ">{user.name}</p>
+                                <Status status={user.status} type={type} email={user.email}/>
+
+                            </div>
                             
                         </div>
                         

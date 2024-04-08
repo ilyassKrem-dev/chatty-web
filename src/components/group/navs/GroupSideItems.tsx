@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { CiFileOn } from "react-icons/ci";
 
 import { useSession } from "next-auth/react"
-
+import { usePathname } from "next/navigation"
 import { fetchGroupConvos } from "@/lib/actions/group.action";
 import Image from "next/image"
 import Link from "next/link"
@@ -12,7 +12,7 @@ export default function GroupSideItems() {
     const [groups,setGroups] = useState<any[]>([])
     const {data:session} = useSession()
     const {socket } = useSocket()
-    
+    const pathname = usePathname()?.split('/')[2]
     useEffect(() =>{
       if(!session) return
         const chatsfetch = async() => {
@@ -81,16 +81,16 @@ export default function GroupSideItems() {
                       return src;
                   }
                     return (
-                        <Link href={{ pathname: `/group/${group._id}`}} key={group._id} className="flex items-center justify-between p-2 rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition duration-300 ease-in-out bg-white dark:bg-black hover:opacity-55 dark:border-black">
-                        <div className="flex items-center space-x-4">
-                          <div className="relative w-10 h-10">
+                        <Link href={{ pathname: `/group/${group._id}`}} key={group._id} className={`flex items-center justify-between p-2 rounded-xl    hover:shadow-lg transition duration-300 ease-in-out  dark:bg-black hover:opacity-55 dark:border-black ${pathname === group._id && "bg-gray-200"} hover:bg-gray-300`}>
+                        <div className="flex items-center space-x-2">
+                          <div className="relative w-12 h-12">
                             <Image 
                               src={group.image || "/user.png"} 
                               alt="user profile pic"
                               priority
                               fill
                               sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 800px"
-                              className="rounded-full bg-white"
+                              className="rounded-full bg-white border-2"
                               loader={loaderProp}
                               unoptimized
                             />

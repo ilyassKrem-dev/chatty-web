@@ -5,12 +5,14 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 export default function SearchResults() {
     const [users,setUsers] = useState<any[]>([])
     const seacrhParams = useSearchParams()
     const {data:session} = useSession()
     const searchString = seacrhParams?.get('s')
     const string = typeof searchString === "string"? searchString : ""
+    const pathname = usePathname()?.split('/')[2]
     useEffect(() => {
       if(!session) return
         const usersFetch = async() => {
@@ -31,16 +33,16 @@ export default function SearchResults() {
                     return src;
                   }
                     return (
-                        <Link href={{ pathname: `/search/${user._id}`, query: { s: string } }} key={index} className="flex items-center justify-between p-2 rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition duration-300 ease-in-out bg-white dark:bg-dark hover:opacity-55 dark:border-dark">
-                        <div className="flex items-center space-x-4">
-                          <div className="relative w-10 h-10">
+                        <Link href={{ pathname: `/search/${user._id}`, query: { s: string } }} key={index} className={`flex items-center justify-between p-2 rounded-xl    hover:shadow-lg transition duration-300 ease-in-out  dark:bg-black hover:opacity-55 dark:border-black ${pathname === user._id && "bg-gray-200"} hover:bg-gray-300`}>
+                        <div className="flex items-center space-x-2">
+                          <div className="relative w-12 h-12">
                             <Image 
                               src={user.image ||"/user.png"} 
                               alt="user profile pic"
                               priority
                               fill
-                              sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 800px"
-                              className="rounded-full bg-white"
+                              sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 800px "
+                              className="rounded-full bg-white border-2"
                               loader={loaderProp}
                               unoptimized
                             />
@@ -50,8 +52,8 @@ export default function SearchResults() {
                             
                           </div>
                         </div>
-                        <button className="bg-blue-500 hover:opacity-60 dark:bg-accent text-white py-2 px-4 rounded-md transition duration-300 ease-in-out">
-                          View Profile
+                        <button className="bg-blue-500 hover:opacity-60 dark:bg-accent text-white p-1 px-3 rounded-md transition duration-300 ease-in-out">
+                          View
                         </button>
                       </Link>
                     )

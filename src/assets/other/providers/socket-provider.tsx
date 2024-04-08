@@ -9,9 +9,7 @@ type SocketContextType = {
     socket:any | null;
     isConnected:boolean
 }
-const loaderProp =({ src }:any) => {
-    return src;
-  }
+
 const SocketContext = createContext<SocketContextType>({
     socket:null,
     isConnected:false

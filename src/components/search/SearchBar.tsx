@@ -28,14 +28,14 @@ export default function SearchBar() {
         return () => clearTimeout(timeId)
     },[search])
     return (
-        <div className="flex gap-2 bg-gray-100 items-center p-1 rounded-full group">
+        <div className="flex gap-2 bg-gray-100 items-center p-1 rounded-full group mr-2">
             <IoSearchSharp className=" text-3xl px-1 text-gray-400"/>
             
             <input 
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)} 
-            className=" bg-transparent focus:outline-none group-focus:outline group-focus:outline-blue-400 placeholder:text-sm focus:placeholder:opacity-50 dark:text-black" placeholder="Search"/>
+            className=" bg-transparent focus:outline-none group-focus:outline group-focus:outline-blue-400 placeholder:text-sm focus:placeholder:opacity-50 dark:text-black flex-1 pr-4" placeholder="Search"/>
         </div>
     )
 }

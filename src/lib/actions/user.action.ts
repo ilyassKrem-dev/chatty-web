@@ -234,9 +234,9 @@ export const userStatusFetch = async(email:string|null|undefined) => {
     try {
         await ConnectDb()
         const user = await User.findOne({email})
-            .select("-_id status").lean()
+            .select("_id status").lean()
         
-        return user
+        return JSON.parse(JSON.stringify(user))
     } catch (error) {
         throw new Error(`Failed to fetch status`)
     }
