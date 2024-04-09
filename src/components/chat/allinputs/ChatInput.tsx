@@ -72,10 +72,11 @@ export default function ChatInput({email,convoId,receiver,type}:Props) {
         setUrls([])
     }
     return (
-        <div className="flex items-center justify-center gap-4  py-4 px-2 lg:pb-4 dark:bg-dark border-t-2 dark:border-0">
-            <ChatMedia setFiles={setFiles} files={files} setUrls={setUrls}/>
-            <div className="flex flex-col items-center relative w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
-                <OtherTypes urls={urls} setFiles={setFiles} setUrls={setUrls} files={files}/>
+        <div className="flex flex-col items-center justify-center gap-4  py-4 px-2 lg:pb-4 dark:bg-dark border-t-2 dark:border-0">
+            
+            <OtherTypes urls={urls} setFiles={setFiles} setUrls={setUrls} files={files}/>
+            <div className="flex gap-5 items-center relative w-full  md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl px-2">
+                <ChatMedia setFiles={setFiles} files={files} setUrls={setUrls}/>
                 <div className="w-full relative">
                     <ContentEditable
                         html={content.text}
@@ -89,19 +90,19 @@ export default function ChatInput({email,convoId,receiver,type}:Props) {
                     {content.text === ""&&
                     <p className="absolute top-[0.57rem] left-[0.6rem] text-gray-1 text-sm">Aa</p>}
                 </div>
+                <div className="cursor-pointer hover:opacity-60 transition-all duration-300">
+                    {!content.text.trim() &&  urls.length === 0
+                    ?
+                    <ChatLike 
+                        email={email}
+                        convoId={convoId}
+                        receiver={receiver}/>
+                    :
+                    <IoSend
+                    onClick={handleSend}  
+                    className="text-blue-400 text-3xl"/>}
+                </div>
                 
-            </div>
-            <div className="cursor-pointer hover:opacity-60 transition-all duration-300">
-                {!content.text.trim() &&  urls.length === 0
-                ?
-                <ChatLike 
-                    email={email}
-                    convoId={convoId}
-                    receiver={receiver}/>
-                :
-                <IoSend
-                onClick={handleSend}  
-                className="text-blue-400 text-3xl"/>}
             </div>
         </div>
     )

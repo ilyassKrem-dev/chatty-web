@@ -23,7 +23,7 @@ export default function ChatInfo({friendInfo}:Props) {
                 priority
                 width={50}
                 height={50} 
-                className="rounded-full h-[50px] w-[50px] border-2 border-light"
+                className="rounded-full h-[50px] w-[50px] border-2 border-light bg-white dark:border-dark"
                 loader={loaderProp}
                 unoptimized/>
                 <div className="flex flex-col justify-center">

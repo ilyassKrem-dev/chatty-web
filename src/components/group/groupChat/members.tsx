@@ -36,20 +36,20 @@ export default function Members(
         className={`bg-dark/40 bg-opacity-75 fixed top-0 bottom-0 right-0 left-0 z-40 rounded-lg`}
       ></div>
       <div className="flex justify-center items-center z-50 w-[85%] md:w-[50%] max-w-[350px]">
-        <div className="bg-white rounded-lg p-4 shadow-md w-full flex flex-col">
+        <div className="bg-white rounded-lg p-4 shadow-md w-full flex flex-col dark:bg-dark">
             <div className="self-center flex gap-3 flex-col">
                 <Image
                 src={img}
                 alt={`group pic`}
                 width={100}
                 height={100}
-                className="rounded-full  border-2 h-[100px] w-[100px]"
+                className="rounded-full  border-2 h-[100px] w-[100px] bg-white dark:border-dark"
                 loader={loaderProp}
                 unoptimized
                 />
                 <p className="font-semibold">{name}</p>    
             </div>
-          <h2 className="text-lg font-bold my-4 dark:text-black">Members</h2>
+          <h2 className="text-lg font-bold my-4 dark:text-white">Members</h2>
 
           {members && (
             <div className="flex flex-col gap-4 items-center overflow-y-scroll [&::-webkit-scrollbar]:hidden max-h-[15rem] ">
@@ -69,7 +69,7 @@ export default function Members(
                         alt={`${member.user.name}  pic`}
                         width={50}
                         height={50}
-                        className="rounded-full  border-2 object-cover w-[50px] h-[50px]"
+                        className="rounded-full  border-2 object-cover w-[50px] h-[50px] bg-white dark:border-dark"
                         loader={loaderProp}
                         unoptimized
                       />
@@ -101,7 +101,7 @@ export default function Members(
                       </div>
                     </div>
                     {member.role === "admin"&&
-                    <div className={`text-xs p-1 bg-orange-200 rounded-lg`}>
+                    <div className={`text-xs p-1 bg-orange-200 rounded-lg dark:bg-green-500`}>
                         {/*still*/}
                         {member.role}
                     </div>}

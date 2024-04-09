@@ -45,7 +45,7 @@ export default function ProfileTab() {
             <h1 className="font-bold text-2xl">Account details</h1>
             {user&&
             <div className="w-full max-w-[600px]">
-                <div className="bg-gray-100 p-4 rounded-xl flex flex-col gap-6">
+                <div className="bg-gray-100 p-4 rounded-xl flex flex-col gap-6 dark:bg-dark">
                     <NameChange userName={user.name} userId={user._id} setSuccess={setSuccessMsg}/>
                     <EmailInfo email={user.email}/>
                     <PasswordChange userPassword={user.password} userId={user._id} setSuccess={setSuccessMsg}/>

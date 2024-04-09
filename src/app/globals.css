@@ -25,13 +25,22 @@
   .custom-scrollbar::-webkit-scrollbar {
     width: 7px;
     height: 7px;
-    border-radius: 2px;
+    
+    border-radius: 50px;
   }
-
+  
+  .dark .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #171717;
+    border-radius: 50px;
+  }
   .custom-scrollbar::-webkit-scrollbar-track {
     background: #ffffff;
+    border-radius: 50px;
   }
-
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 50px;
+  }
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: #a2a2b8;
     border-radius: 50px;

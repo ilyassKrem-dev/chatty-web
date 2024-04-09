@@ -19,7 +19,7 @@ export default function EmailInfo({email}:{
             animate={!show? {display:"none",opacity:0} : {display:"flex",opacity:1}}
             transition={{duration:0.5,ease:easeInOut}} 
             className={`flex justify-between items-center px-1  md:flex-row gap-4 md:gap-0`}>
-                 <p className="font-light text-lg text-dark">{email}</p>
+                 <p className="font-light text-lg text-dark dark:text-light">{email}</p>
             </motion.div>
         </div>
     )

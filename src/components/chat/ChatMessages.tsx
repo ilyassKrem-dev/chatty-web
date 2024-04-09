@@ -105,7 +105,7 @@ export default function ChatMessages({
                   alt="user picture"
                   width={40}
                   height={40}
-                  className="w-[40px] h-[40px] rounded-full"
+                  className="w-[40px] h-[40px] rounded-full bg-white"
                   loader={loaderProp}
                   unoptimized/>
               )}
@@ -114,7 +114,7 @@ export default function ChatMessages({
                 onMouseDown={() => handleMouseDown(message._id)}
                 
                 onMouseUp={handleMouseUp}
-                className={`${message.sender._id === userId?"bg-blue-400 text-white":"bg-slate-200 text-black"} max-w-[300px] w-fit  text-end p-2 rounded-lg mx-4 relative ${like && "bg-transparent"} flex items-center justify-center flex-col`} 
+                className={`${message.sender._id === userId?"bg-blue-400 text-white":"bg-slate-200 text-black"} max-w-[300px] w-fit  text-end p-2 rounded-lg mx-4 relative ${like && "bg-transparent"} flex items-start justify-center flex-col`} 
                 onClick={() => handleContainerClick(message._id)}>
 
                     {type==="group"&&message.sender._id !== userId&&

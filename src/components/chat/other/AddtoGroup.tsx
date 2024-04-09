@@ -75,8 +75,8 @@ export default function AddToGroup({ friendId }: { friendId: string }) {
         <div className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center z-30">
           <div className={`bg-dark/40 bg-opacity-75 fixed top-0 bottom-0 right-0 left-0 z-40 rounded-lg`}></div>
           <div className="flex justify-center items-center z-50 w-[75%] max-w-[400px]">
-            <div className="bg-white rounded-lg w-full">
-              <h2 className="text-lg font-bold  dark:text-black p-2">Add Friends to Group</h2>
+            <div className="bg-white rounded-lg w-full dark:bg-dark">
+              <h2 className="text-lg font-bold   p-2 dark:text-white">Add Friends to Group</h2>
                 <div className="border-b-2 border-gray-200 flex gap-1 overflow-x-scroll px-2 pb-2 [&::-webkit-scrollbar]:hidden">
                   {friends.map((friend) => {
                     if(toGroup.includes(friend._id)) {
@@ -90,7 +90,7 @@ export default function AddToGroup({ friendId }: { friendId: string }) {
                             alt={`${friend.name}  pic`}
                             width={40}
                             height={40}
-                            className="rounded-full w-[40px] h-[40px]  border-2 bg-white"
+                            className="rounded-full w-[40px] h-[40px]  border-2 bg-white dark:border-dark"
                             loader={loaderProp}
                             unoptimized
                           />
@@ -107,14 +107,14 @@ export default function AddToGroup({ friendId }: { friendId: string }) {
                    }
                    
                     return (
-                      <div key={friend._id} className="flex justify-between items-center w-full hover:bg-gray-300 rounded-lg p-1">
+                      <div key={friend._id} className="flex justify-between items-center w-full hover:bg-gray-300 dark:hover:bg-darker rounded-lg p-1">
                         <div className="flex gap-2">
                           <Image
                             src={friend.image ||"/user.png"}
                             alt={`${friend.name}  pic`}
                             width={40}
                             height={40}
-                            className="rounded-full w-[40px] h-[40px]  border-2 bg-white"
+                            className="rounded-full w-[40px] h-[40px]  border-2 bg-white dark:border-dark"
                             loader={loaderProp}
                             unoptimized
                           />

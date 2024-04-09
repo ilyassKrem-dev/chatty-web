@@ -74,7 +74,10 @@ export default function SideNavItems() {
                       return src;
                   }
                     return (
-                        <Link href={{ pathname: `/chat/${chat._id}`}} key={chat._id} className={`flex items-center justify-between p-2 rounded-xl    hover:shadow-lg transition duration-300 ease-in-out  dark:bg-black hover:opacity-55 dark:border-black ${pathname === chat._id && "bg-gray-200"}`}>
+                        <Link href={{ pathname: `/chat/${chat._id}`}} key={chat._id} className={`flex items-center justify-between p-2 rounded-xl
+                        hover:bg-gray-300
+                        dark:hover:bg-dark  hover:shadow-lg transition duration-300 ease-in-out  hover:opacity-55  ${pathname === chat._id && "bg-gray-200 dark:bg-dark"}
+                        group `}>
                           <div className="flex items-center space-x-2">
                             <div className="relative w-12 h-12">
                               <Image 
@@ -83,14 +86,14 @@ export default function SideNavItems() {
                                 priority
                                 fill
                                 sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 800px"
-                                className="rounded-full bg-white border-2"
+                                className="rounded-full bg-white border-2 dark:border-dark"
                                 loader={loaderProp}
                                 unoptimized
                               />
                             </div>
                             <div>
                               <div className="flex gap-2 items-center">
-                                <p className="text-lg font-semibold text-black dark:text-white cursor-pointer">{chat.participants[0].name}</p>
+                                <p className={`text-lg font-semibold text-black dark:text-white cursor-pointer  `}>{chat.participants[0].name}</p>
                                 <div className={`p-1 rounded-full 
                               ${
                                 chat.participants[0].status==="online"?"bg-green-500":

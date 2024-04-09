@@ -69,7 +69,7 @@ export default function NameChange({userName,userId,setSuccess}:{
                         {error&&<p className="text-sm text-accent text-center md:text-start">{error}</p>}
                     </div>
                     ) : (
-                        <p className="font-light text-lg text-dark">{userName}</p>
+                        <p className="font-light text-lg text-dark dark:text-light">{userName}</p>
                     )}
                     <div>
                         {isEditing ? (

@@ -62,7 +62,7 @@ export default function ChatMedia({setFiles,files,setUrls}:{
         <div className=" cursor-pointer relative">
             <AiFillPlusCircle className="text-blue-400 text-3xl hover:opacity-60" onClick={() => setShow(!show)}/>
             {show&&
-            <div className="absolute bg-white flex flex-col -top-[3rem] p-2 border border-gray-400 rounded-xl z-30">
+            <div className="absolute bg-white flex flex-col -top-[3rem] p-2 border border-gray-400 rounded-xl z-30 dark:bg-dark ">
                 <div className="flex gap-2 items-center hover:opacity-55 transition-all duration-300">
                     <label htmlFor="files" className="flex gap-2 items-center hover:opacity-55 transition-all duration-300 cursor-pointer">
                         <MdPermMedia className="text-blue-400 text-xl"/>

@@ -45,7 +45,7 @@ export default  function RequestList() {
                     return src;
                   }
                     return (
-                        <div key={request._id} className="flex items-center justify-between p-2 rounded-xl    hover:shadow-lg transition duration-300 ease-in-out  dark:bg-black hover:opacity-70 dark:border-black hover:bg-gray-300">
+                        <div key={request._id} className="flex items-center justify-between p-2 rounded-xl    hover:shadow-lg transition duration-300 ease-in-out   hover:opacity-70  hover:bg-gray-300 dark:hover:bg-dark">
                           <div className="flex items-center space-x-4">
                             <div className="relative w-10 h-10">
                               <Image 
@@ -65,7 +65,7 @@ export default  function RequestList() {
                             </div>
                           </div>
                           <div className="flex gap-2">
-                            <button className="bg-blue-500 hover:opacity-60 dark:bg-accent text-white py-2 px-2 sm:px-2 rounded-md transition duration-300 ease-in-out text-sm sm:text-lg"
+                            <button className="bg-blue-500 hover:opacity-60  text-white py-2 px-2 sm:px-2 rounded-md transition duration-300 ease-in-out text-sm sm:text-lg"
                             onClick={() => handleClick(request._id)}>
                               Add
                             </button>

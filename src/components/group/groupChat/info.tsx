@@ -33,7 +33,7 @@ export default function Info({name,img,chatId,members}:Props) {
                 priority
                 width={50}
                 height={50} 
-                className="rounded-full border-2 border-light w-[50px] h-[50px]"
+                className="rounded-full border-2 border-light w-[50px] h-[50px] bg-white dark:border-dark"
                 loader={loaderProp}
                 unoptimized/>
                 <div className="flex flex-col justify-center">

@@ -33,7 +33,8 @@ export default function SearchResults() {
                     return src;
                   }
                     return (
-                        <Link href={{ pathname: `/search/${user._id}`, query: { s: string } }} key={index} className={`flex items-center justify-between p-2 rounded-xl    hover:shadow-lg transition duration-300 ease-in-out  dark:bg-black hover:opacity-55 dark:border-black ${pathname === user._id && "bg-gray-200"} hover:bg-gray-300`}>
+                        <Link href={{ pathname: `/search/${user._id}`, query: { s: string } }} key={index} className={`flex items-center justify-between p-2 rounded-xl    hover:shadow-lg transition duration-300 ease-in-out   hover:opacity-55  ${pathname === user._id && "bg-gray-200 dark:bg-dark"} hover:bg-gray-300
+                        dark:hover:bg-dark`}>
                         <div className="flex items-center space-x-2">
                           <div className="relative w-12 h-12">
                             <Image 
@@ -42,7 +43,7 @@ export default function SearchResults() {
                               priority
                               fill
                               sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 800px "
-                              className="rounded-full bg-white border-2"
+                              className="rounded-full bg-white border-2 dark:border-dark"
                               loader={loaderProp}
                               unoptimized
                             />

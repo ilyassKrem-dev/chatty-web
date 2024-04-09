@@ -60,7 +60,7 @@ export default function Status({
   return (
     <div className={`relative background flex flex-col rounded-lg ${borderClass}`}>
       <div
-        className={`text-gray-1 flex items-center gap-2 text-sm   flex-col ${show&&"bg-white border-2 rounded-lg md:bg-transparent md:border-0 "} ${className}`}
+        className={`text-gray-1 flex items-center gap-2 text-sm   flex-col ${show&&"bg-white border-2 rounded-lg md:bg-transparent md:border-0 dark:bg-dark"} ${className}`}
         onClick={() => setShow(!show)}
       >
         <div className={`flex gap-2 items-center ${
@@ -91,15 +91,15 @@ export default function Status({
 
         </div>
         {type === "profile" && show && (
-        <div className="md:hidden bg-white  rounded-lg flex flex-col gap-2 items-start z-40 right-0 top-6">
+        <div className="md:hidden bg-white  rounded-lg flex flex-col gap-2 items-start z-40 right-0 top-6 dark:bg-dark ">
           {statesChange.map((state, index) => {
             return (
               <div key={index} className="flex flex-col gap-1 w-full">
                 {index === 0 && (
-                  <div className=" h-px w-full bg-dark" />
+                  <div className=" h-px w-full bg- dark:bg-white" />
                 )}
                 <div
-                  className="flex gap-2 items-center hover:opacity-50 transition-all duration-300 cursor-pointer px-4 p-1"
+                  className="flex gap-2 items-center hover:opacity-40 transition-all duration-300 cursor-pointer px-4 p-1 "
                   onClick={() => handleChange(state.state)}
                 >
                   <div
@@ -112,7 +112,7 @@ export default function Status({
                   </p>
                 </div>
                 {index !== statesChange.length - 1 && (
-                  <div className="h-px w-full bg-dark" />
+                  <div className="h-px w-full bg-dark dark:bg-white" />
                 )}
               </div>
             );
@@ -121,13 +121,13 @@ export default function Status({
       )}
       </div>
       {type === "profile" && show && (
-        <div className="hidden md:flex absolute bg-white  rounded-lg  flex-col gap-2 border-2 items-start z-40 right-0 top-6">
+        <div className="hidden md:flex absolute bg-white  rounded-lg  flex-col gap-2 border-2 items-start z-40 right-0 top-6 dark:bg-dark">
           {statesChange.map((state, index) => {
             return (
               <div key={index} className="flex flex-col gap-1 w-full">
                 
                 <div
-                  className="flex gap-2 items-center hover:opacity-50 transition-all duration-300 cursor-pointer px-4 p-1"
+                  className="flex gap-2 items-center hover:opacity-40 transition-all duration-300 cursor-pointer px-4 p-1"
                   onClick={() => handleChange(state.state)}
                 >
                   <div
@@ -140,7 +140,7 @@ export default function Status({
                   </p>
                 </div>
                 {index !== statesChange.length - 1 && (
-                  <div className="h-px w-full bg-dark" />
+                  <div className="h-px w-full bg-dark dark:bg-white" />
                 )}
               </div>
             );

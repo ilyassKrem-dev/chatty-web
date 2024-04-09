@@ -74,7 +74,7 @@ export default function PasswordChange({userPassword,userId,setSuccess}:{
         })
     }
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 text-white">
             <div className="flex items-center justify-between cursor-pointer"  onClick={() => setShow(!show)}>
                 <h4 className={`font-bold`}>Password</h4>
                 <IoIosArrowDown className="text-xl cursor-pointer"/>
@@ -86,7 +86,7 @@ export default function PasswordChange({userPassword,userId,setSuccess}:{
             className={`flex justify-between items-center px-1 ${isEditing?"flex-col":"flex-row"} gap-4 `}>
                 {isEditing ? (
                     <div className="w-full md:w-[80%] flex flex-col items-center md:items-start mt-5 gap-2">
-                        <div className="w-full">
+                        <div className="w-full ">
                             <p className="self-start font-semibold text-sm">Old password</p>
                             <motion.input
                                 initial={{opacity:0}}
@@ -131,7 +131,7 @@ export default function PasswordChange({userPassword,userId,setSuccess}:{
                         </div>
                     </div>
                     ) : (
-                        <p className=" text-lg text-dark font-bold">{toDotes(userPassword)}</p>
+                        <p className=" text-lg text-dark font-bold dark:text-light">{toDotes(userPassword)}</p>
                     )}
                     <div>
                         {isEditing ? (

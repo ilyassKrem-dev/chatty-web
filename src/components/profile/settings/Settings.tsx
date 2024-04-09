@@ -18,7 +18,7 @@ export default function Settings() {
     },[searchParams])
     return (
         <section className="flex">
-            <div className="fixed top-0 left-0 right-0 border-b border-gray-1 p-2 md:hidden bg-white">
+            <div className="fixed top-0 left-0 right-0 border-b border-gray-1 p-2 md:hidden bg-white dark:bg-dark">
                 <div className="w-[50px] flex flex-col gap-1 cursor-pointer hover:bg-black/10 rounded-full py-3 px-2 bg-white border-b-2" onClick={() => setShowTabs(!showTabs)}>
                         <motion.div
                             animate={showTabs?{rotate:140,y:10}:{rotate:0}}

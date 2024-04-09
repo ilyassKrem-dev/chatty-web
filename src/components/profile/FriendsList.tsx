@@ -48,8 +48,8 @@ export default  function FriendsList() {
                         return src;
                     }
                     return (
-                        <div key={friend._id} className="flex items-center justify-between p-2 rounded-xl    hover:shadow-lg transition duration-300 ease-in-out  dark:bg-black hover:opacity-70 dark:border-black hover:bg-gray-300">
-                          <div className="flex items-center space-x-4">
+                        <div key={friend._id} className="flex items-center justify-between p-2 rounded-xl    hover:shadow-lg transition ">
+                          <div className="flex items-center space-x-4 duration-300 ease-in-out  hover:opacity-70  hover:bg-gray-300 dark:hover:bg-dark">
                             <div className="relative w-10 h-10">
                               <Image 
                                 src={friend.image ||"/user.png"} 
