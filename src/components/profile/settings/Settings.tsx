@@ -3,7 +3,7 @@ import SettingsTabs from "./tabs/settingstabs";
 import TabDetails from "./tabs/tabDetails";
 import { useSearchParams,usePathname } from "next/dist/client/components/navigation";
 import SettingsHome from "./SettingHome";
-import { sideIcons } from "./other/SettingsIcons";
+
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -13,7 +13,7 @@ export default function Settings() {
     const [showTabs,setShowTabs] = useState<boolean>(false)
     const searchParams = useSearchParams()
     useEffect(() => {
-        if(!sideIcons.find(e=> e.link === searchParams?.get('tab'))) return
+        
         setActiveTab(searchParams?.get('tab'))
     },[searchParams])
     return (
@@ -41,7 +41,7 @@ export default function Settings() {
                 </div>
             </div>
            
-            <SettingsTabs showTabs={showTabs}/>
+            <SettingsTabs showTabs={showTabs} setActiveTab={setActiveTab}/>
             
             {
                 activeTab

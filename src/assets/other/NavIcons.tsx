@@ -1,7 +1,8 @@
 import { IoChatbox ,IoSearch } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import { MdGroups } from "react-icons/md";
-import ToogleTheme from "../Theme/ToogleTheme";
+import { PiSignOutBold } from "react-icons/pi";
+import { signOut } from "next-auth/react";
 
 
 export const NavIcons = [
@@ -16,8 +17,10 @@ export const NavIcons = [
         route:"/group"
     },
     {
-        icon:<ToogleTheme />,
-        label:"Theme",
+        icon:<div onClick={() => signOut()}>
+            <PiSignOutBold />
+        </div>,
+        label:"Signout",
         route:""
     },
     {

@@ -6,21 +6,27 @@ import { fetchConvos } from "@/lib/actions/chat.action"
 import Image from "next/image"
 import Link from "next/link"
 import { useSocket } from "@/assets/other/providers/socket-provider";
-import { usePathname } from "next/navigation";
+import { usePathname,useRouter } from "next/navigation";
 export default function SideNavItems() {
     const [chats,setChats] = useState<any[]>([])
     const {data:session} = useSession()
     const {socket } = useSocket()
     const pathname = usePathname()?.split('/')[2]
-    
+    const router = useRouter()
     useEffect(() =>{
       if(!session) return
         const chatsfetch = async() => {
             const response = await fetchConvos(session?.user?.email,"private")
             setChats(response)
+          
+            
         }
         chatsfetch()
     },[session])
+    useEffect(() => {
+        if(chats.length === 0) return
+        router.push(`/chat/${chats[0]._id}`)
+    },[chats])
     useEffect(() => {
       if(chats.length === 0 || !socket) return
       chats.forEach(chat => {
@@ -64,7 +70,6 @@ export default function SideNavItems() {
 
       
     },[chats,socket]) 
-   
     return (
         <>
             {chats&&chats.length !==0&&

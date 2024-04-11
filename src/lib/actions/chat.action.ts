@@ -64,9 +64,28 @@ export const fetchConvos = async (email: string | null | undefined,type:string) 
                     select:"_id content"
                 }
             ).lean()
-        const convosfilter = convos.map((convo) => {
-            return {...convo,participants:convo.participants.filter((part:any) => part._id.toString() !== user._id.toString())}
-        });
+        
+            const convosfilter = convos.map((convo) => {
+                const participantIds = new Set();
+              
+                if (convo.participants[0]._id === convo.participants[1]._id) {
+                    return {
+                        ...convo,
+                        participants: convo.participants.filter((part:any) => {
+                            if (!participantIds.has(part._id.toString())) {
+                                participantIds.add(part._id.toString());
+                                return true;
+                            }
+                            return false;
+                        })
+                    };
+                } else {
+                    return {
+                        ...convo,
+                        participants: convo.participants.filter((part:any) => part._id.toString() !== user._id.toString())
+                    };
+                }
+            });
         const convoLastMessage = convosfilter.map((convo:any) => {
             return {...convo,messages:convo.messages[convo.messages.length - 1]}
         })
@@ -118,11 +137,17 @@ export const fetchConvoById = async(
                             
                         }
                     )
-                    .lean()
-        // @ts-ignore         
+                    .lean()         
         
+        let convoFiltered:any
         // @ts-ignore
-        const convoFiltered = convo?.participants.filter((parti:any) => parti._id.toString() !== user._id.toString());
+        if(convo?.participants[0]._id === convo?.participants[1]._id) {
+            //@ts-ignore
+            convoFiltered = [convo?.participants[0]]
+        } else {
+            // @ts-ignore
+           convoFiltered = convo?.participants.filter((parti:any) => parti._id.toString() !== user._id.toString());
+        }
         const convoData:any = {
             ...convo,
             participants: convoFiltered

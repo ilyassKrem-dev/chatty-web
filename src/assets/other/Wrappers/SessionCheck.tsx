@@ -14,7 +14,16 @@ export default function SessionCheck({children}:{
     const pathname = usePathname()
     const [redirected, setRedirected] = useState(false);
     useEffect(() => {
-        if (session === null) router.push(`/login?next=${process.env.NEXT_PUBLIC_API_URL!}${pathname}`);
+        if (session === null) {
+            if(pathname?.includes('chat')) {
+                router.push(`/login?next=${process.env.NEXT_PUBLIC_API_URL!}/chat`)
+            }else if (pathname?.includes('group')) {
+                router.push(`/login?next=${process.env.NEXT_PUBLIC_API_URL!}/group`)
+            } else {
+                router.push(`/login?next=${process.env.NEXT_PUBLIC_API_URL!}${pathname}`)
+            };
+                
+        }
     }, [session, router]);
     useEffect(() => {
         if(!session) return

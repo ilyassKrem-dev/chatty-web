@@ -42,6 +42,9 @@ const UserShema = new mongoose.Schema({
     completed:{
         type:Boolean,
         default:false
+    },
+    removed:{
+        type:Boolean,
     }
     
 },{timestamps:{

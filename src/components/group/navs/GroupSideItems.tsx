@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { CiFileOn } from "react-icons/ci";
 
 import { useSession } from "next-auth/react"
-import { usePathname } from "next/navigation"
+import { usePathname,useRouter } from "next/navigation"
 import { fetchGroupConvos } from "@/lib/actions/group.action";
 import Image from "next/image"
 import Link from "next/link"
@@ -12,6 +12,7 @@ export default function GroupSideItems() {
     const [groups,setGroups] = useState<any[]>([])
     const {data:session} = useSession()
     const {socket } = useSocket()
+    const router = useRouter()
     const pathname = usePathname()?.split('/')[2]
     useEffect(() =>{
       if(!session) return
@@ -21,6 +22,10 @@ export default function GroupSideItems() {
         }
         chatsfetch()
     },[session])
+    useEffect(() => {
+      if(groups.length === 0) return
+      router.push(`/group/${groups[0]?._id}`)
+    },[groups])
     useEffect(() => {
       if(groups.length === 0 || !socket) return
       groups.forEach(group => {

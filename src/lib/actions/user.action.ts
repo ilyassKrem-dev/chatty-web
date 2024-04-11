@@ -241,3 +241,24 @@ export const userStatusFetch = async(email:string|null|undefined) => {
         throw new Error(`Failed to fetch status`)
     }
 }
+
+export const userDelete = async(email:string|null|undefined) => {
+    try {
+        await ConnectDb()
+        const user = await User.findOneAndUpdate({email},{
+            name:"Removed",
+            email:"",
+            removed:true,
+            password:"",
+            image:"/user.png",
+            status:"offline",
+            coverImage:""
+        })
+        if(!user) {
+            throw new Error(`User not found`)
+        }
+        return {success:true}
+    } catch (error:any) {
+        throw new Error(`Failed to delete Account ${error.message}`)
+    }
+}

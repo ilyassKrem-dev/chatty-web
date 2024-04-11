@@ -7,13 +7,14 @@ interface Props {
         bio:string;
         image:string;
     }
+    userId?:string
 }
 
-export default function ChatInfo({friendInfo}:Props) {
+export default function ChatInfo({friendInfo,userId}:Props) {
     const loaderProp =({ src }:any) => {
         return src;
      }
-
+    
     return (
         <div className="flex p-2 border-b-2 justify-between dark:bg-dark bg-white dark:border-0">
             <div className="flex gap-2">
@@ -30,12 +31,12 @@ export default function ChatInfo({friendInfo}:Props) {
                     <p className=" font-semibold">{friendInfo.name}</p>
                 </div>
             </div>
-            <div className="flex items-center gap-10 relative">
+            {friendInfo._id !== userId&&<div className="flex items-center gap-10 relative">
                 <AddToGroup friendId={friendInfo._id}/>
                 <div className="text-blue-400 text-3xl cursor-pointer hover:opacity-50 transition-all duration-300">
                     &#x22EF;
                 </div>
-            </div>
+            </div>}
         </div>
     )
 }

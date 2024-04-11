@@ -74,7 +74,7 @@ export default function PasswordChange({userPassword,userId,setSuccess}:{
         })
     }
     return (
-        <div className="flex flex-col gap-2 text-white">
+        <div className="flex flex-col gap-2 dark:text-white">
             <div className="flex items-center justify-between cursor-pointer"  onClick={() => setShow(!show)}>
                 <h4 className={`font-bold`}>Password</h4>
                 <IoIosArrowDown className="text-xl cursor-pointer"/>

@@ -72,12 +72,12 @@ export default function Chat({convoId}:{
     if(convo === null) {
         return <NoIdFound />
     }
-
+    
     return (
         <div className=" lg:pb-0">
             {convo&&
             <div className="flex flex-col h-screen">
-                <ChatInfo friendInfo={convo.participants[0]}/>
+                <ChatInfo friendInfo={convo.participants[0]} userId={userId}/>
 
                 <section className=" flex-1 ml-3 overflow-y-auto custom-scrollbar">
                     <ChatMessages messages={convo.messages} userId={userId}/>
@@ -89,7 +89,7 @@ export default function Chat({convoId}:{
                     <ChatInput 
                     email={session?.user?.email} 
                     convoId={convo._id}
-                    receiver={convo.participants[0]._id}
+                    receiver={convo.participants[0]?._id}
                     type="private"/>
                 </div>
                 

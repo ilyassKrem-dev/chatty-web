@@ -49,7 +49,7 @@ export default function RightNav() {
                 </div>  
                 {NavIcons.map((icon,index) => {
                     return (
-                        <Link key={index} href={icon.route} className={`  cursor-pointer ${pathname?.includes(icon.route) && icon.label !=="Theme" ? "text-dark   bg-gray-300":"text-gray-1 dark:text-white"} p-1 rounded-lg hover:text-black/80 dark:hover:text-blue-400 transition-all duration-300 flex gap-2 items-center justify-start ${icon.label ==="Theme" &&"justify-center"} ${icon.label !=="Theme" &&"hover:bg-gray-200"}`}>
+                        <Link key={index} href={icon.route} className={`  cursor-pointer ${pathname?.includes(icon.route) && icon.label !=="Signout" ? "text-dark   bg-gray-300":"text-gray-1 dark:text-white"} p-1 rounded-lg hover:text-black/80 dark:hover:text-blue-400 transition-all duration-300 flex gap-2 items-center justify-start hover:bg-gray-200`}>
                             <div className="text-4xl">
                                 {icon.label === "Profile" && session 
                                 ?
@@ -69,7 +69,7 @@ export default function RightNav() {
                                 :
                                 icon.icon}
                             </div>
-                            <p className={`cursor-pointer  text-sm ${icon.label ==="Theme" ?"hidden":"hidden xl:group-hover:block"}`}>{icon.label}</p>
+                            <p className={`cursor-pointer  text-sm hidden xl:group-hover:block`}>{icon.label}</p>
                         </Link>
                        
                     )

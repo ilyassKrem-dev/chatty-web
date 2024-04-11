@@ -16,24 +16,18 @@ export default function  ToogleTheme() {
     return (
         <>
             {mounted&&<button onClick={switchTheme} className="flex">
-                {resolvedTheme === "light"?
-                <motion.div
-                initial={{opacity:1}}
-                exit={{opacity:0}}
-                transition={{duration:0.2,ease:"easeInOut"}}
-                className={` text-gray-600 text-2xl  hover:opacity-60 transition-all duration-300 `}
-                >
-                    <FaMoon />
-                </motion.div>
-                :
-                <motion.div
-                initial={{opacity:1}}
-                exit={{opacity:0}}
-                transition={{duration:0.2,ease:"easeInOut"}}
-                className={` text-[#FFEA00] text-2xl  duration-300 transition-all shadow-[0px_0px_10px_3px_#ffff00] opacity-100 hover:opacity-60 rounded-full bg-[#FFEA00]/60`}
-                >
-                    <FaSun />
-                </motion.div>}
+                <div className="bg-gray-400 w-[50px] rounded-full relative h-full">
+                    <motion.div
+                    initial={{ x: resolvedTheme === "light" ? "-50%" : "100%" }}
+                    animate={{ x: resolvedTheme === "light" ? "-50%" : "100%" }}
+                    transition={{ duration: 0.1, ease: "easeInOut" }}
+                    className={`text-2xl bg-white absolute rounded-full  transition-all duration-300 p-1 -top-1`}>
+                        {resolvedTheme === "light"?
+                        <FaMoon className="text-black"/>
+                        :
+                        <FaSun className="text-yellow-300"/>}
+                    </motion.div>
+                </div>
             </button>}
         </>
     )
