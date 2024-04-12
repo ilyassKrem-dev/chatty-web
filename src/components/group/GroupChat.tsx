@@ -8,7 +8,7 @@ import ChatMessages from "@/components/chat/ChatMessages"
 import { useSocket } from "@/assets/other/providers/socket-provider"
 import Info from "./groupChat/info"
 import NoIdFound from "../shared/NoidFound"
-
+import OtherInfo from "../shared/OtherInfo"
 export default function GroupChat({convoId}:{
     convoId:string
 }) {
@@ -16,6 +16,7 @@ export default function GroupChat({convoId}:{
     const {data:session} = useSession()
     const [userId,setUserId] = useState<string>("")
     const {socket} = useSocket()
+    const [show,setShow] = useState<boolean>(false)
     const key = `Convo:${convoId}:messages`
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const deltKey = `Convo:${convoId}:deleted`
@@ -71,14 +72,15 @@ export default function GroupChat({convoId}:{
         return <NoIdFound />
     }
     return (
-        <div className=" lg:pb-0">
+        <div className=" lg:pb-0 flex">
             {convo&&
-            <div className="flex flex-col h-screen">
+            <div className="flex flex-col h-screen flex-1">
                 <Info 
                 name={convo.name} 
                 img={convo.image} 
                 chatId={convoId}
-                members={convo.participants}/>
+                members={convo.participants}
+                setShowO={setShow}/>
 
                 <section className=" flex-1 ml-3 overflow-y-auto custom-scrollbar">
                     <ChatMessages messages={convo.messages} userId={userId} type="group"/>
@@ -95,7 +97,13 @@ export default function GroupChat({convoId}:{
                     />
                 </div>
                 
-            </div> }   
+            </div> }  
+            {show&&convo&&
+            <OtherInfo 
+            friendInfo={convo}
+            messages={convo.messages}
+            setShow={setShow}
+            type={"group"}/>}
         </div>
     )
 }

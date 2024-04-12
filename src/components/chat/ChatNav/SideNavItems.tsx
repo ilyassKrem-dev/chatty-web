@@ -13,6 +13,15 @@ export default function SideNavItems() {
     const {socket } = useSocket()
     const pathname = usePathname()?.split('/')[2]
     const router = useRouter()
+    const [windowWidth,setWindowWidth] = useState(window.innerWidth)
+    useEffect(() => {
+        function changeWidth() {
+            setWindowWidth(window.innerWidth)
+        }
+        window.addEventListener('resize',changeWidth)
+        
+        return () => window.removeEventListener('resize',changeWidth)
+    },[windowWidth])
     useEffect(() =>{
       if(!session) return
         const chatsfetch = async() => {
@@ -24,7 +33,8 @@ export default function SideNavItems() {
         chatsfetch()
     },[session])
     useEffect(() => {
-        if(chats.length === 0) return
+
+        if(chats.length === 0||windowWidth<768) return
         router.push(`/chat/${chats[0]._id}`)
     },[chats])
     useEffect(() => {
@@ -98,7 +108,7 @@ export default function SideNavItems() {
                             </div>
                             <div>
                               <div className="flex gap-2 items-center">
-                                <p className={`text-lg font-semibold text-black dark:text-white cursor-pointer  `}>{chat.participants[0].name}</p>
+                                <p className={`text-base font-semibold text-black dark:text-white cursor-pointer  `}>{chat.participants[0].name}</p>
                                 <div className={`p-1 rounded-full 
                               ${
                                 chat.participants[0].status==="online"?"bg-green-500":

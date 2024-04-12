@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import Members from "./members";
 interface Params {
     role:string;
@@ -16,10 +16,11 @@ interface Props {
     name:string;
     img:string;
     chatId:string;
-    members:Params[]
+    members:Params[];
+    setShowO?:React.Dispatch<SetStateAction<boolean>>
 }
 
-export default function Info({name,img,chatId,members}:Props) {
+export default function Info({name,img,chatId,members,setShowO}:Props) {
     const [show,setShow] = useState<boolean>(false)
     const loaderProp =({ src }:any) => {
         return src;
@@ -43,7 +44,7 @@ export default function Info({name,img,chatId,members}:Props) {
             </div>
             
             <div className="flex items-center gap-10 relative">
-                <div className="text-blue-400 text-3xl cursor-pointer hover:opacity-50 transition-all duration-300">
+                <div className="text-blue-400 text-3xl cursor-pointer hover:opacity-50 transition-all duration-300" onClick={() => setShowO?.((prev:boolean) => !prev)}>
                     &#x22EF;
                 </div>
             </div>

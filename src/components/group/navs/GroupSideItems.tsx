@@ -14,6 +14,15 @@ export default function GroupSideItems() {
     const {socket } = useSocket()
     const router = useRouter()
     const pathname = usePathname()?.split('/')[2]
+    const [windowWidth,setWindowWidth] = useState(window.innerWidth)
+    useEffect(() => {
+        function changeWidth() {
+            setWindowWidth(window.innerWidth)
+        }
+        window.addEventListener('resize',changeWidth)
+        
+        return () => window.removeEventListener('resize',changeWidth)
+    },[windowWidth])
     useEffect(() =>{
       if(!session) return
         const chatsfetch = async() => {
@@ -23,7 +32,7 @@ export default function GroupSideItems() {
         chatsfetch()
     },[session])
     useEffect(() => {
-      if(groups.length === 0) return
+      if(groups.length === 0 ||windowWidth<768) return
       router.push(`/group/${groups[0]?._id}`)
     },[groups])
     useEffect(() => {
@@ -103,7 +112,7 @@ export default function GroupSideItems() {
                           </div>
                           <div>
                             <div className="flex gap-2 items-center">
-                              <p className="text-lg font-semibold text-black dark:text-white cursor-pointer">{group.name}</p>
+                              <p className="text-base font-semibold text-black dark:text-white cursor-pointer">{group.name}</p>
                             </div>
                             <div className=" truncate text-gray-1 text-sm flex gap-1">
                              {group.messages?.sender&&

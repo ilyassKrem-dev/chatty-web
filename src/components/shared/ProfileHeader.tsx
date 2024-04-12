@@ -24,7 +24,7 @@ export default function ProfileHeader({user,type,userId}:Props) {
     }
     return (
         <div className="flex flex-col">
-            <div className="h-[250px] xl:h-[300px] border-b-4 border-gray-400 ">
+            <div className="h-[250px] xl:h-[300px] border-b-4 border-gray-400 dark:border-b ">
                 {
                 user.coverImage
                 ?

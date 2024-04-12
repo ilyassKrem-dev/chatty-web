@@ -37,6 +37,7 @@ export default function ProfileChange({
     }
   
     const handleSave= async() => {
+        if(loading) return
         setLoading(true)
         let imageUrl:any
         const changed = isBase64Image(profileChanged)

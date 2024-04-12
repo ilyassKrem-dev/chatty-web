@@ -7,6 +7,7 @@ import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
 import LoadingAnimation from "@/assets/other/spinner";
 import { coverAdd } from "@/lib/actions/user.action";
+import axios from "axios";
 export default function CoverChange({
     userId
 }:{
@@ -63,6 +64,7 @@ export default function CoverChange({
         };
     }, []);
     const handleSave = async() => {
+        if(uploading) return
         let image:any
         const blob = cover as string
         const changed = isBase64Image(blob)
@@ -74,8 +76,17 @@ export default function CoverChange({
             } 
         }
         try {
-            const res = await coverAdd(userId,image)
-            if(res) window.location.reload()
+            const res = await axios.patch("/api/socket/profile/picture",{
+                userId:userId,
+                imageUrl:image,
+                type:"cover"})
+            if(res) {
+                setCover("");
+                setFile([]);
+                setShow(false);
+                setError(false);
+                setUploading(false)
+            }
         } catch (error) {
             setUploading(false)
         }

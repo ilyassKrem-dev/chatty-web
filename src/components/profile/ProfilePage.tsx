@@ -40,10 +40,16 @@ export default function ProfilePage() {
                 return {...prev,status:data}
             })
         })
-        const key2 = `User:${user?._id}:profile`
+        const key2 = `User:${user?._id}:profileImage`
         socket.on(key2,(data:string) => {
             setUser((prev:any) => {
                 return {...prev,image:data}
+            })
+        })
+        const key3 = `User:${user?._id}:CoverImage`
+        socket.on(key3,(data:string) => {
+            setUser((prev:any) => {
+                return {...prev,coverImage:data}
             })
         })
     },[socket,user])

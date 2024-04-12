@@ -7,7 +7,7 @@ import ChatInput from "@/components/chat/allinputs/ChatInput"
 import ChatMessages from "@/components/chat/ChatMessages"
 import { useSocket } from "@/assets/other/providers/socket-provider"
 import NoIdFound from "../shared/NoidFound"
-
+import OtherInfo from "../shared/OtherInfo"
 
 export default function Chat({convoId}:{
     convoId:string
@@ -15,6 +15,7 @@ export default function Chat({convoId}:{
     const [convo,setConvo] = useState<any>()
     const {data:session} = useSession()
     const [userId,setUserId] = useState<string>("")
+    const [show,setShow] = useState<boolean>(false)
     const {socket} = useSocket()
     const key = `Convo:${convoId}:messages`
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -74,10 +75,10 @@ export default function Chat({convoId}:{
     }
     
     return (
-        <div className=" lg:pb-0">
+        <div className=" lg:pb-0 flex">
             {convo&&
-            <div className="flex flex-col h-screen">
-                <ChatInfo friendInfo={convo.participants[0]} userId={userId}/>
+            <div className="flex flex-col h-screen flex-1">
+                <ChatInfo friendInfo={convo.participants[0]} userId={userId} setShow={setShow}/>
 
                 <section className=" flex-1 ml-3 overflow-y-auto custom-scrollbar">
                     <ChatMessages messages={convo.messages} userId={userId}/>
@@ -93,7 +94,12 @@ export default function Chat({convoId}:{
                     type="private"/>
                 </div>
                 
-            </div> }   
+            </div> }
+            {show&&convo&&
+            <OtherInfo 
+            friendInfo={convo.participants[0]}
+            messages={convo.messages}
+            setShow={setShow}/>}
         </div>
     )
 }
