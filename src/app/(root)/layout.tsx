@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 import { Sora } from "next/font/google";
 import Theme from "@/assets/Theme/Theme";
-import Nav from "@/assets/other/Nav/Nav";
+
 import AuthProvider from "@/assets/other/Wrappers/NextAuthWrapper";
 const sora = Sora({ subsets: ["latin"] });
 
@@ -22,12 +22,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning={true}>
       <body className={sora.className}>
           <AuthProvider>
-            <Theme>
-                <Nav />
-                <main>
-                  {children}
-                </main>
-            </Theme>
+            
+            <main className="bg-gradient-to-br from-blue-500 to-blue-800 min-h-screen flex flex-col justify-center items-center text-white">
+              {children}
+            </main>
+            
           </AuthProvider>
       </body>
      

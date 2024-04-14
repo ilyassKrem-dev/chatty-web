@@ -17,10 +17,11 @@ interface Props {
     img:string;
     chatId:string;
     members:Params[];
-    setShowO?:React.Dispatch<SetStateAction<boolean>>
+    setShowO?:React.Dispatch<SetStateAction<boolean>>;
+    showO:boolean
 }
 
-export default function Info({name,img,chatId,members,setShowO}:Props) {
+export default function Info({name,img,chatId,members,setShowO,showO}:Props) {
     const [show,setShow] = useState<boolean>(false)
     const loaderProp =({ src }:any) => {
         return src;
@@ -44,7 +45,7 @@ export default function Info({name,img,chatId,members,setShowO}:Props) {
             </div>
             
             <div className="flex items-center gap-10 relative">
-                <div className="text-blue-400 text-3xl cursor-pointer hover:opacity-50 transition-all duration-300" onClick={() => setShowO?.((prev:boolean) => !prev)}>
+                <div className={`text-blue-400 text-3xl cursor-pointer hover:opacity-50 transition-all duration-300 px-1 ${showO&&"text-white bg-blue-400 rounded-full"}`} onClick={() => setShowO?.((prev:boolean) => !prev)}>
                     &#x22EF;
                 </div>
             </div>

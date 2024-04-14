@@ -115,3 +115,19 @@ export const fetchGroupChat = async(groupId:string,email:string|null|undefined) 
         throw new Error(`Failrd to fetch messages: ${error.message}`)
     }
 }
+
+export const leavingGroup = async(userId:string|undefined,convoId:string | undefined) => {
+    try {
+        
+        await ConnectDb()
+        const group = await Groups.findById(convoId)
+        const index = group.participants.findIndex((participant:any) => participant.user === userId && participant.role === "member");
+        if(index !==-1) {
+            group.participants.splice(index,1)
+            await group.save()
+        }
+        
+    } catch (error:any) {
+        throw new Error(`Failed to leave group ${error.message}`)
+    }
+}

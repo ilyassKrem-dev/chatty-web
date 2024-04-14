@@ -3,7 +3,7 @@
 import { IoSend } from "react-icons/io5";
 import ChatLike from "./ChatLike";
 import ChatMedia from "./ChatMedia";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import ContentEditable from "react-contenteditable";
 import EmojisInput from "./EmojisInput";
 import { useUploadThing } from "@/lib/uploadthing";
@@ -34,9 +34,23 @@ export default function ChatInput({email,convoId,receiver,type}:Props) {
     const [urls,setUrls] = useState<PropsUrl[]>([])
     const [files,setFiles]= useState<File[]>([])
     const {startUpload} = useUploadThing("media");
-    
+    const contentEditableRef = useRef<HTMLDivElement>(null);
     const handleChange = (e: React.FormEvent<HTMLDivElement>) => {
         setContent({...content,text:e.currentTarget.innerText});
+    };
+    const handleCtrlA = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === "a" && (e.metaKey || e.ctrlKey)) {
+            e.preventDefault();
+            if (contentEditableRef.current) {
+                const range = document.createRange();
+                range.selectNodeContents(contentEditableRef.current);
+                const selection = window.getSelection();
+                if (selection) {
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                }
+            }
+        }
     };
     const handleSend= async() => {
         const uploadedUrls: any[] = [];
@@ -80,8 +94,9 @@ export default function ChatInput({email,convoId,receiver,type}:Props) {
                 <div className="w-full relative">
                     <ContentEditable
                         html={content.text}
-                    
+                        onKeyDown={handleCtrlA}
                         onChange={handleChange}
+                        innerRef={contentEditableRef}
                         className="min-h-20px p-2 outline-none bg-white rounded-xl border-2  text-sm max-h-[110px] flex-grow overflow-y-auto break-words whitespace-pre-wrap min-w-0  bg-transparent pr-10 [&::-webkit-scrollbar]:hidden max-w-full dark:text-dark"
                     />
                     <div className="absolute top-[0.57rem] right-[0.6rem]">

@@ -80,7 +80,8 @@ export default function GroupChat({convoId}:{
                 img={convo.image} 
                 chatId={convoId}
                 members={convo.participants}
-                setShowO={setShow}/>
+                setShowO={setShow}
+                showO={show}/>
 
                 <section className=" flex-1 ml-3 overflow-y-auto custom-scrollbar">
                     <ChatMessages messages={convo.messages} userId={userId} type="group"/>
@@ -103,7 +104,10 @@ export default function GroupChat({convoId}:{
             friendInfo={convo}
             messages={convo.messages}
             setShow={setShow}
-            type={"group"}/>}
+            type={"group"}
+            convoId={convo._id}
+            userId={userId}
+            isAdmin={convo.participants.some((parti:any) => parti.user._id === userId && parti.role=="admin")}/>}
         </div>
     )
 }

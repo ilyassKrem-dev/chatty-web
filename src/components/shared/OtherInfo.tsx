@@ -14,10 +14,14 @@ interface Props {
     };
     type?:string;
     messages:any;
-    setShow:React.Dispatch<SetStateAction<boolean>>
+    setShow:React.Dispatch<SetStateAction<boolean>>;
+    convoId?:string;
+    userId?:string;
+    isAdmin?:any
 }
-export default function OtherInfo({friendInfo,messages,setShow,type}:Props) {
+export default function OtherInfo({friendInfo,messages,setShow,type,convoId,userId,isAdmin}:Props) {
     const [tab,setTab] = useState<string>("")
+    console.log(isAdmin)
     const [windowWidth,setWindowWidth] = useState(window.innerWidth)
     useEffect(() => {
         function changeWidth() {
@@ -62,7 +66,13 @@ export default function OtherInfo({friendInfo,messages,setShow,type}:Props) {
             }
             {!tab
             ?
-            <DefaultTab friendInfo={friendInfo} setTab={setTab} type={type}/>
+            <DefaultTab 
+            friendInfo={friendInfo} 
+            setTab={setTab} 
+            type={type} 
+            convoId={convoId} 
+            userId={userId}
+            isAdmin={isAdmin}/>
             :
             <MediaTab messages={messages}/>}
         </div>

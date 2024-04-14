@@ -78,7 +78,7 @@ export default function Chat({convoId}:{
         <div className=" lg:pb-0 flex">
             {convo&&
             <div className="flex flex-col h-screen flex-1">
-                <ChatInfo friendInfo={convo.participants[0]} userId={userId} setShow={setShow}/>
+                <ChatInfo friendInfo={convo.participants[0]} userId={userId} setShow={setShow} show={show}/>
 
                 <section className=" flex-1 ml-3 overflow-y-auto custom-scrollbar">
                     <ChatMessages messages={convo.messages} userId={userId}/>
@@ -99,7 +99,9 @@ export default function Chat({convoId}:{
             <OtherInfo 
             friendInfo={convo.participants[0]}
             messages={convo.messages}
-            setShow={setShow}/>}
+            setShow={setShow}
+            convoId={convo._id}
+            userId={userId}/>}
         </div>
     )
 }

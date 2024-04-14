@@ -88,7 +88,7 @@ export default function ChatMessages({
 }); 
   
   return (
-    <section className="flex flex-col  gap-y-10 my-4">
+    <section className="flex flex-col  gap-y-10 my-4 pt-6">
       {messages.map((message: any) => {
         const like = message.content.urls.length !==0 && message.content.urls[0].url === "/like.png"
         

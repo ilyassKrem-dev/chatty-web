@@ -9,10 +9,11 @@ interface Props {
         image:string;
     }
     userId?:string;
-    setShow?:React.Dispatch<SetStateAction<boolean>>
+    setShow?:React.Dispatch<SetStateAction<boolean>>;
+    show:boolean
 }
 
-export default function ChatInfo({friendInfo,userId,setShow}:Props) {
+export default function ChatInfo({friendInfo,userId,setShow,show}:Props) {
     const loaderProp =({ src }:any) => {
         return src;
      }
@@ -35,7 +36,7 @@ export default function ChatInfo({friendInfo,userId,setShow}:Props) {
             </div>
             {friendInfo._id !== userId&&<div className="flex items-center gap-10 relative">
                 <AddToGroup friendId={friendInfo._id}/>
-                <div className="text-blue-400 text-3xl cursor-pointer hover:opacity-50 transition-all duration-300" onClick={() => setShow?.((prev:boolean) => !prev)}>
+                <div className={`text-blue-400 text-3xl cursor-pointer hover:opacity-50 transition-all duration-300 px-1 ${show&&"text-white bg-blue-400 rounded-full"}`} onClick={() => setShow?.((prev:boolean) => !prev)}>
                     &#x22EF;
                 </div>
             </div>}

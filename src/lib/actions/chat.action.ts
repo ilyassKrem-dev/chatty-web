@@ -101,7 +101,7 @@ export const fetchConvoById = async(
     {
         email,
         convoId,
-        toShow=10
+        
     }:{
         email:string|null|undefined,
         convoId:string;
@@ -127,7 +127,8 @@ export const fetchConvoById = async(
                             path:"messages",
                             model:Message,
                             options:{
-                            sort:{timestamp:1}
+                            sort:{timestamp:1},
+                            
                             },
                             populate:{
                                 path:"sender",
@@ -138,7 +139,9 @@ export const fetchConvoById = async(
                         }
                     )
                     .lean()         
-        
+        if(!convo) {
+            return {error:"No convo found"}
+        }
         let convoFiltered:any
         // @ts-ignore
         if(convo?.participants[0]._id === convo?.participants[1]._id) {
@@ -160,3 +163,19 @@ export const fetchConvoById = async(
     }
 }
 
+export const removeConvo = async(userId:string|undefined,convoId:string | undefined) => {
+    
+    try {
+        await ConnectDb()
+        const convo = await Conversation.findById(convoId)
+        if(!convo) {
+            return {error:"Convo not found"}
+        }
+        if(convo.participants.includes(userId)) {
+            convo.participants = convo.participants.filter((part:any) => part.toString() !== userId);
+            await convo.save()
+        }
+    } catch (error:any) {
+        throw new Error(`Failed to delete convo ${error.message}`)
+    }
+}
