@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { removeConvo } from "@/lib/actions/chat.action";
 import { leavingGroup } from "@/lib/actions/group.action";
+import Roles from "./Roles";
 interface Props {
     friendInfo:{
         _id:string;
@@ -18,12 +19,18 @@ interface Props {
     setTab:React.Dispatch<SetStateAction<string>>;
     convoId?:string;
     userId?:string;
-    isAdmin?:boolean
+    isAdmin?:boolean;
+    members?:{
+        role:string;
+        user:any;
+        _id:string
+    }[]
 }
 
-export default function DefaultTab({friendInfo,setTab,type,convoId,userId,isAdmin}:Props) {
+export default function DefaultTab({friendInfo,setTab,type,convoId,userId,isAdmin,members}:Props) {
     const [show,setShow] = useState<boolean>(false)
     const [showRem,setShowRem] = useState<boolean>(false)
+    const [showRoles,setShowRoles] = useState<boolean>(false)
     const router = useRouter()
     const handleRemove = async() => {
         if(type!=="group") {
@@ -36,7 +43,7 @@ export default function DefaultTab({friendInfo,setTab,type,convoId,userId,isAdmi
         } else {
             await leavingGroup(userId,convoId)
             setShowRem(false)
-            //router.push("/group")
+            router.push("/group")
         }
     }
     return (
@@ -56,7 +63,7 @@ export default function DefaultTab({friendInfo,setTab,type,convoId,userId,isAdmi
                             <div className="rounded-full p-2 text-xl bg-gray-100 dark:text-black">
                                 <FaRegUser />
                             </div>
-                            <p className="text-xs text-gray-1">Profile</p>
+                            <p className="text-xs text-gray-1">Profile  </p>
                         </div>}
                     </div>
                 </div>
@@ -79,9 +86,16 @@ export default function DefaultTab({friendInfo,setTab,type,convoId,userId,isAdmi
                         </div>}
                     </div>
                 </div>
-                {!isAdmin&&<Button className="bg-transparent border-accent text-accent border-2 hover:bg-accent/50 transition-all duration-300" onClick={() => setShowRem(true)}>
-                    {type!=="group"?"Remove Chat":"Leave Group"}
-                </Button>}
+                <div className="flex flex-col gap-4">
+                    {isAdmin&&type==="group"&&
+                    <Button className="bg-transparent border-green-400 text-green-400 border-2 hover:bg-green-400/50 transition-all duration-300" onClick={() => setShowRoles(true)}>
+                        Change roles
+                    </Button>}
+                    {!isAdmin&&<Button className="bg-transparent border-accent text-accent border-2 hover:bg-accent/50 transition-all duration-300" onClick={() => setShowRem(true)}>
+                        {type!=="group"?"Remove Chat":"Leave Group"}
+                    </Button>}
+
+                </div>
                 {showRem&&
                 <div className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center z-50 bg-gray-900 bg-opacity-50 ">
                     <div className="bg-white w-72 rounded-lg overflow-hidden shadow-xl dark:bg-dark">
@@ -93,6 +107,7 @@ export default function DefaultTab({friendInfo,setTab,type,convoId,userId,isAdmi
                                 <p className="font-semibold">{type!=="group"?"Remove":"Leaving"} Confirmation</p>
                                 <p>Are you sure you want to {type!=="group"?"remove":"leave"}?</p>
                             </div>
+
                         </div>
                         <div className="flex justify-center bg-red-500 text-white py-4 cursor-pointer hover:bg-red-600 transition-colors duration-300 hover:opacity-60" onClick={() => {
                            handleRemove()
@@ -103,6 +118,13 @@ export default function DefaultTab({friendInfo,setTab,type,convoId,userId,isAdmi
                         </div>
                     </div>
                 </div>}
+                
+                {showRoles&&
+                <Roles  
+                members={members} 
+                setShowRoles={setShowRoles}
+                userId={userId}
+                groupId={convoId}/>}
             </div>
     )
 }

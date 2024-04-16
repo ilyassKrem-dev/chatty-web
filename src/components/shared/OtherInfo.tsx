@@ -17,11 +17,15 @@ interface Props {
     setShow:React.Dispatch<SetStateAction<boolean>>;
     convoId?:string;
     userId?:string;
-    isAdmin?:any
+    isAdmin?:boolean;
+    members?:{
+        role:string;
+        user:any;
+        _id:string
+    }[]
 }
-export default function OtherInfo({friendInfo,messages,setShow,type,convoId,userId,isAdmin}:Props) {
+export default function OtherInfo({friendInfo,messages,setShow,type,convoId,userId,isAdmin,members}:Props) {
     const [tab,setTab] = useState<string>("")
-    console.log(isAdmin)
     const [windowWidth,setWindowWidth] = useState(window.innerWidth)
     useEffect(() => {
         function changeWidth() {
@@ -72,7 +76,8 @@ export default function OtherInfo({friendInfo,messages,setShow,type,convoId,user
             type={type} 
             convoId={convoId} 
             userId={userId}
-            isAdmin={isAdmin}/>
+            isAdmin={isAdmin}
+            members={members}/>
             :
             <MediaTab messages={messages}/>}
         </div>

@@ -17,7 +17,7 @@ export default function HomePage() {
           Get Started
         </Link>
       </div>
-      <p className="text-sm">Already have an account? <br/> <Link href="/login" className="underline">
+      <p className="text-sm">Already have an account? <br/> <Link href="/login" className="underline hover:opacity-50 transition-all duration-300">
         Log in here
       </Link>
       </p>

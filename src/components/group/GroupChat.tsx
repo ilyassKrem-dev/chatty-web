@@ -51,15 +51,36 @@ export default function GroupChat({convoId}:{
                 return {...prev,messages:[...prev.messages,message]}
             })
         })
+        
         socket.on(deltKey,(messageId:string) => {
             setConvo((prev:any) => {
                 return {...prev,messages:prev.messages.filter((message:any) => message._id !== messageId)}
             })
         })
+        const roleKey = `User:${userId}:RoleChanged`
+        socket.on(roleKey,(data:any) => {
+            if(Array.isArray(data)) {
+                setConvo((prev:any) => {
+                    return {...prev,participants:data}
+                })
+            } else {
+                setConvo((prev:any) => {
+                    const newData = prev.participants.map((particip:any) => {
+                        if(data._id === particip._id) {
+                            return {...particip,role:data.role}
+                        }
+                        return particip
+                    })
+                    return {...prev,participants:newData}
+                })
 
+            }
+            
+        })
         return () => {
             socket.off(key)
             socket.off(deltKey)
+            socket.off(roleKey)
         }
    },[socket])
 
@@ -107,7 +128,8 @@ export default function GroupChat({convoId}:{
             type={"group"}
             convoId={convo._id}
             userId={userId}
-            isAdmin={convo.participants.some((parti:any) => parti.user._id === userId && parti.role=="admin")}/>}
+            isAdmin={convo.participants.some((parti:any) => parti.user._id === userId && parti.role=="admin")}
+            members={convo.participants}/>}
         </div>
     )
 }

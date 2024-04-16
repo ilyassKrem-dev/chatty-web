@@ -30,6 +30,14 @@ export default function Members(
     const loaderProp =({ src }:any) => {
       return src;
   }
+  const sortedMembers = members?.sort((a, b) => {
+    if (a.role === "admin" && b.role !== "admin") {
+        return -1;
+    } else if (a.role !== "admin" && b.role === "admin") {
+        return 1;
+    }
+    return 0;
+});
   return (
     <div className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center z-30">
       <div
@@ -53,7 +61,7 @@ export default function Members(
 
           {members && (
             <div className="flex flex-col gap-4 items-center overflow-y-scroll [&::-webkit-scrollbar]:hidden max-h-[15rem] ">
-              {members.map((member, index) => {
+              {sortedMembers.map((member, index) => {
                 const loaderProp =({ src }:any) => {
                   return src;
               }
