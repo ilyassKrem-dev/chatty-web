@@ -88,7 +88,7 @@ export default function DefaultTab({friendInfo,setTab,type,convoId,userId,isAdmi
                 </div>
                 <div className="flex flex-col gap-4">
                     {isAdmin&&type==="group"&&
-                    <Button className="bg-transparent border-green-400 text-green-400 border-2 hover:bg-green-400/50 transition-all duration-300" onClick={() => setShowRoles(true)}>
+                    <Button className="bg-transparent border-green-400 text-green-400 border-2 hover:bg-green-400/50 transition-all duration-300 dark:bg-transparent dark:text-white dark:hover:bg-green-400" onClick={() => setShowRoles(true)}>
                         Change roles
                     </Button>}
                     {!isAdmin&&<Button className="bg-transparent border-accent text-accent border-2 hover:bg-accent/50 transition-all duration-300" onClick={() => setShowRem(true)}>

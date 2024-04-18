@@ -5,6 +5,14 @@ import { ConnectDb } from "@/lib/mongoose";
 import { NextApiResponseServerIo } from "@/lib/utils";
 import { NextApiRequest } from "next";
 
+interface SendMessageParams {
+    sender?: string;
+    convoId: string;
+    receiver: string;
+    content: any;
+    email: string;
+    type?: string;
+}
 
 export default async function handler(
     req:NextApiRequest,
@@ -17,7 +25,7 @@ export default async function handler(
     
     try {
         await ConnectDb()
-        const {content,email,convoId,receiver,type} = req.body
+        const {content,email,convoId,receiver,type} = req.body as SendMessageParams
         
         const user = await User.findOne({email})
         
@@ -27,6 +35,7 @@ export default async function handler(
             receiver:receiver,
             content 
         })
+        
         if(!message) return res.status(404).json({success:false})
         if(type === "group") {
             await Groups.findByIdAndUpdate(convoId,{

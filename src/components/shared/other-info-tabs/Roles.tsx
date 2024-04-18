@@ -42,12 +42,28 @@ export default function Roles({members,setShowRoles,userId,groupId}:{
     }
 
     const changeRoles = async(role:string,id:string) => {
-        await axios.patch('/api/socket/group/roles',{
+        const findMember = members?.find(member => member._id === id)
+        if(findMember?.role === role) return
+        const res = await axios.patch('/api/socket/group/roles',{
             role:role,
             userId:userId,
             memberId:id,
             groupId:groupId
         })
+        if(!res) return
+        
+        await axios.post('/api/socket/messages',{
+            content:{
+                    text:`${res?.data.data.user} changed ${res?.data.data.member} to ${role}`,
+                    urls:[]
+                },
+            email:"system",
+            convoId:groupId,
+            receiver:userId,
+            type:"group"
+            
+        })
+        setShow(null)
     }
 
     const sortedMembers = members?.sort((a, b) => {
@@ -60,13 +76,13 @@ export default function Roles({members,setShowRoles,userId,groupId}:{
     });
     return (
         <div className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center z-50 bg-gray-900 bg-opacity-50">
-            <div className="bg-white rounded-lg w-[85%] max-w-[600px] roles-bg">
-                <div className="flex flex-col p-2 gap-3">
+            <div className="bg-white rounded-lg w-[85%] max-w-[600px] h-1/2  roles-bg dark:bg-dark">
+                <div className="flex flex-col p-2 gap-3 h-full">
                     <div className="mt-4 flex justify-between px-2">
                         <h1 className="font-bold text-xl ">Members</h1>
-                        <p className=" p-1 px-3 font-bold border border-white hover:border rounded-full cursor-pointer text-lg hover:bg-gray-500 hover:opacity-50 transition-all duration-300 hover:border-dark" onClick={() => setShowRoles(false)}>X</p>
+                        <p className=" p-1 px-3 font-bold border border-white hover:border rounded-full cursor-pointer text-lg hover:bg-gray-500 hover:opacity-50 transition-all duration-300 hover:border-dark dark:border-dark dark:hover:border-white" onClick={() => setShowRoles(false)}>X</p>
                     </div>
-                    <div className="flex flex-col gap-4  max-h-[400px] h-56  custom-scrollbar p-1 sm:p-2 overflow-y-scroll ">
+                    <div className="flex flex-col gap-4 max-h-full h-full  custom-scrollbar p-1 sm:p-2 overflow-y-scroll ">
                         {sortedMembers?.map((member,index:number) => {
                             return (
                                 <div key={index} className="flex justify-between items-center">
@@ -74,7 +90,7 @@ export default function Roles({members,setShowRoles,userId,groupId}:{
                                         <img 
                                         src={member.user.image} 
                                         alt={`${member.user.name} profile pic`}
-                                        className="w-[40px] h-[40px] rounded-full" />
+                                        className="w-[40px] h-[40px] rounded-full bg-white" />
                                         <div>
                                             <p className="text-sm">{member.user.name}</p>
                                             <div className="flex items-center gap-1">

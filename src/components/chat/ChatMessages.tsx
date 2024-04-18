@@ -96,85 +96,94 @@ export default function ChatMessages({
           return src;
         }
         return (
-          <div key={message._id} className="w-full">
-            
-            <div className={`w-full rounded-lg flex items-center ${message.sender._id === userId ? "justify-end" : "justify-start"}`}>
-              {message.sender._id !== userId && (
-                <Image
-                  src={message.sender.image ||"/user.png"}
-                  alt="user picture"
-                  width={40}
-                  height={40}
-                  className="w-[40px] h-[40px] rounded-full bg-white"
-                  loader={loaderProp}
-                  unoptimized/>
-              )}
-              <div className="relative">
-                <div
-                onMouseDown={() => handleMouseDown(message._id)}
-                
-                onMouseUp={handleMouseUp}
-                className={`${message.sender._id === userId?"bg-blue-400 text-white":"bg-slate-200 text-black"} max-w-[300px] w-fit  text-end p-2 rounded-lg mx-4 relative ${like && "bg-transparent"} flex items-start justify-center flex-col`} 
-                onClick={() => handleContainerClick(message._id)}>
 
-                    {type==="group"&&message.sender._id !== userId&&
-                    <p className=" text-start font-bold">{message.sender.name}</p>}
-                    <div className={`flex flex-col gap-2  ${message.content.urls.length !== 0&&"items-center"}`}>
-                        <div className="flex flex-wrap gap-2 justify-center">
-                          {message.content.urls.length !== 0&&
-                          message.content.urls.map((url:any,index:number) => {
-                            
-                            return (
-                              <div key={index} >
-                                {url.type === "photo"&&url.url==="/like.png"
-                                ?
-                                <Image  
-                                src={url.url} 
-                                alt={url.url.split('/')[1].split(".")[0]} 
-                                width={40} 
-                                height={40}
-                                className="h-auto w-auto" />
-                              :
-                              <MessagesTypes 
-                              urlInfo={url} setEnlarge={setEnlarge}/>
-                              }
-                                
-                              </div>
-                            )
-                          })}
-                        </div>
-                        {message.content.text&&<p className="text-start">{message.content.text}</p>}
-                    </div>
-
-                    <div className={`absolute h-0 w-0 border-y-8 border-y-transparent   ${message.sender._id === userId ? 
-                    ` -right-2 border-l-8  border-l-blue-400 ${like && "top-6 "}`:` -left-2 border-r-8  border-r-slat-100 ${like && "top-6 "}`
-                    } `}/>
-
+            <div key={message._id} className="w-full">
+              {message.sender.name!=="system"?
+              <div className="w-full">
+                <div className={`w-full rounded-lg flex items-center ${message.sender._id === userId ? "justify-end" : "justify-start"}`}>
+                  {message.sender._id !== userId && (
+                    <Image
+                      src={message.sender.image ||"/user.png"}
+                      alt="user picture"
+                      width={40}
+                      height={40}
+                      className="w-[40px] h-[40px] rounded-full bg-white"
+                      loader={loaderProp}
+                      unoptimized/>
+                  )}
+                  <div className="relative">
+                    <div
+                    onMouseDown={() => handleMouseDown(message._id)}
                     
-                </div>
-                {show === message._id&&message.sender._id===userId&&
-                <div
-                ref={deleteButtonRef} 
-                className={`rounded-lg absolute bg-white p-2 text-black flex gap-2 items-center -top-8 shadow-[0px_0px_4px_1px_rgb(0,0,0)] cursor-pointer hover:opacity-50 transition-all duration-300 ${message.sender._id === userId ? "-left-14":" -right-14"}`} onClick={() => handleDelete(message._id)}>
-                      <MdDelete className="text-accent text-xl"/>
-                      Delete
-                  </div>}
+                    onMouseUp={handleMouseUp}
+                    className={`${message.sender._id === userId?"bg-blue-400 text-white":"bg-slate-200 text-black"} max-w-[300px] w-fit  text-end p-2 rounded-lg mx-4 relative ${like && "bg-transparent"} flex items-start justify-center flex-col`} 
+                    onClick={() => handleContainerClick(message._id)}>
 
-                {showMessageId === message._id&&
-                <p className={`mx-4 ${message.sender._id === userId?"text-start":"text-end"} text-xs text-gray-1`}>
-                {formatDate(message.timestamp).split('\n').map((item,key) => {
-                    return (
-                        <React.Fragment key={key}>
-                            {item}<br />
-                        </React.Fragment>
-                    )
-                })}
-                </p>}
+                        {type==="group"&&message.sender._id !== userId&&
+                        <p className=" text-start font-bold text-sm sm:text-md md:text-base">{message.sender.name}</p>}
+                        <div className={`flex flex-col gap-2  ${message.content.urls.length !== 0&&"items-center"}`}>
+                            <div className="flex flex-wrap gap-2 justify-center">
+                              {message.content.urls.length !== 0&&
+                              message.content.urls.map((url:any,index:number) => {
+                                
+                                return (
+                                  <div key={index} >
+                                    {url.type === "photo"&&url.url==="/like.png"
+                                    ?
+                                    <Image  
+                                    src={url.url} 
+                                    alt={url.url.split('/')[1].split(".")[0]} 
+                                    width={40} 
+                                    height={40}
+                                    className="h-auto w-auto" />
+                                  :
+                                  <MessagesTypes 
+                                  urlInfo={url} setEnlarge={setEnlarge}/>
+                                  }
+                                    
+                                  </div>
+                                )
+                              })}
+                            </div>
+                            {message.content.text&&<p className="text-start text-sm sm:text-md md:text-base">{message.content.text}</p>}
+                        </div>
+
+                        <div className={`absolute h-0 w-0 border-y-8 border-y-transparent   ${message.sender._id === userId ? 
+                        ` -right-2 border-l-8  border-l-blue-400 ${like && "top-6 "}`:` -left-2 border-r-8  border-r-slat-100 ${like && "top-6 "}`
+                        } `}/>
+
+                        
+                    </div>
+                    {show === message._id&&message.sender._id===userId&&
+                    <div
+                    ref={deleteButtonRef} 
+                    className={`rounded-lg absolute bg-white p-2 text-black flex gap-2 items-center -top-8 shadow-[0px_0px_4px_1px_rgb(0,0,0)] cursor-pointer hover:opacity-50 transition-all duration-300 ${message.sender._id === userId ? "-left-14":" -right-14"}`} onClick={() => handleDelete(message._id)}>
+                          <MdDelete className="text-accent text-xl"/>
+                          Delete
+                      </div>}
+
+                    {showMessageId === message._id&&
+                    <p className={`mx-4 ${message.sender._id === userId?"text-start":"text-end"} text-xs text-gray-1`}>
+                    {formatDate(message.timestamp).split('\n').map((item,key) => {
+                        return (
+                            <React.Fragment key={key}>
+                                {item}<br />
+                            </React.Fragment>
+                        )
+                    })}
+                    </p>}
+                  </div>
+                </div>
+                {oldMessages[oldMessages.length -1]?._id === message._id&&
+                <p className="text-center mt-4 underline">Yesterday</p>}
+
               </div>
+              :
+              <div className="text-center relative">
+                  <div className="bg-gray-400 h-px w-full absolute top-3 -z-10" />
+                  <p className="bg-gray-400 inline text-white p-2 rounded-full text-sm sm:text-md md:text-base max-[300px]:text-xs">{message.content.text}</p>
+              </div>}
             </div>
-            {oldMessages[oldMessages.length -1]?._id === message._id&&
-            <p className="text-center">Yesterday</p>}
-          </div>
           
         );
       })}

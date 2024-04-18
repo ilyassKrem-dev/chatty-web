@@ -117,7 +117,7 @@ export default function GroupSideItems() {
                             <div className=" truncate text-gray-1 text-sm flex gap-1">
                              {group.messages?.sender&&
                              <p>
-                              {group.messages.sender.name + ":"}
+                              {group.messages.sender.name !=="system"  ? group.messages.sender.name  + ":":""}
                               </p>
                             }
                             {
