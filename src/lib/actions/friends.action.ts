@@ -226,3 +226,52 @@ export const  fetchIsFriends = async(
         throw new Error(`Failed to check user ${error.message}`)
     }
 }
+
+export const fetchFriendsForGroup = async(
+    {
+    userId,
+    members,
+    searchString=""
+    }:{
+        userId:string|undefined;
+        members:{
+            user:any;
+            _id:string;
+            role:string
+        }[]| undefined;
+        searchString:string | null | undefined
+    }) => {
+    try {
+        await ConnectDb()
+        const user = await User.findById(userId)
+        if(!user) {
+            return {error:"No user Found"}
+        }
+        
+        const membersId = members?.map(member => member.user._id) || []
+        if(searchString) {
+            const find = await User.findOne({email:searchString})
+                .select('_id name image bio').lean()
+            if(!find) return
+            //@ts-ignore
+            
+            const user = {...find,_id:find._id.toString()}
+            
+            return [{friend:user}]
+        } else {
+            const allFriends = await Friend.find({user:user._id});
+            const filterdFriends = allFriends.filter(friend => {
+                return !membersId?.includes(friend.friend.toString())
+            })
+            const pupulated = await Friend.populate(filterdFriends,{
+                path:"friend",
+                model:User,
+                select:"_id name image bio"
+            })
+            
+            return JSON.parse(JSON.stringify(pupulated))
+        }
+    } catch (error:any) {
+        throw new Error(`Failed to find  ${error.message}`)
+    }
+}

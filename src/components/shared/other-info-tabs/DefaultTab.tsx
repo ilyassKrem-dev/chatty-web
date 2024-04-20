@@ -4,10 +4,12 @@ import { IoIosArrowForward } from "react-icons/io";
 import { FaRegUser } from "react-icons/fa";
 import React, { SetStateAction, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+
 import { removeConvo } from "@/lib/actions/chat.action";
 import { leavingGroup } from "@/lib/actions/group.action";
-import Roles from "./Roles";
+import Roles from "./admin-buttons/Roles";
+import TabButtons from "./Tabbuttons";
+import Invite from "./admin-buttons/Invite";
 interface Props {
     friendInfo:{
         _id:string;
@@ -31,6 +33,7 @@ export default function DefaultTab({friendInfo,setTab,type,convoId,userId,isAdmi
     const [show,setShow] = useState<boolean>(false)
     const [showRem,setShowRem] = useState<boolean>(false)
     const [showRoles,setShowRoles] = useState<boolean>(false)
+    const [showInvite,setShowInvite] = useState<boolean>(false)
     const router = useRouter()
     const handleRemove = async() => {
         if(type!=="group") {
@@ -86,16 +89,14 @@ export default function DefaultTab({friendInfo,setTab,type,convoId,userId,isAdmi
                         </div>}
                     </div>
                 </div>
-                <div className="flex flex-col gap-4">
-                    {isAdmin&&type==="group"&&
-                    <Button className="bg-transparent border-green-400 text-green-400 border-2 hover:bg-green-400/50 transition-all duration-300 dark:bg-transparent dark:text-white dark:hover:bg-green-400" onClick={() => setShowRoles(true)}>
-                        Change roles
-                    </Button>}
-                    {!isAdmin&&<Button className="bg-transparent border-accent text-accent border-2 hover:bg-accent/50 transition-all duration-300" onClick={() => setShowRem(true)}>
-                        {type!=="group"?"Remove Chat":"Leave Group"}
-                    </Button>}
-
-                </div>
+                <TabButtons 
+                isAdmin={isAdmin}
+                type={type}
+                setShowRoles={setShowRoles}
+                setShowRem={setShowRem}
+                setShowInvite={setShowInvite}
+                />
+                
                 {showRem&&
                 <div className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center z-50 bg-gray-900 bg-opacity-50 ">
                     <div className="bg-white w-72 rounded-lg overflow-hidden shadow-xl dark:bg-dark">
@@ -125,6 +126,14 @@ export default function DefaultTab({friendInfo,setTab,type,convoId,userId,isAdmi
                 setShowRoles={setShowRoles}
                 userId={userId}
                 groupId={convoId}/>}
+                {showInvite&&
+                <Invite
+                members={members}
+                userId={userId}
+                groupId={convoId}
+                setShowInvite={setShowInvite}/>
+                }
+                
             </div>
     )
 }

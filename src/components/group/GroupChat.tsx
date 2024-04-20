@@ -80,10 +80,18 @@ export default function GroupChat({convoId}:{
             }
             
         })
+        const keyInvite = `User:${userId}:invited`
+        socket.on(keyInvite,(data:any) => {
+            setConvo((prev:any) => {
+                const newData = [...prev.participants,data]
+                return {...prev,participants:newData}
+            })
+        }) 
         return () => {
             socket.off(key)
             socket.off(deltKey)
             socket.off(roleKey)
+            socket.off(keyInvite)
         }
    },[socket])
 

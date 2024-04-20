@@ -35,16 +35,20 @@ export default async function handler(req:NextRequest,res:NextApiResponseServerI
         if(findUserId.role !=="admin") {
             return res.status(400).json({error:"The user is not admin"})
         }
+        const memberFind:any = group.participants.find((particip:any) => particip._id.toString() === memberId)
         if(role==="delete") {
             const filteredMembers = group.participants.filter((participant:any) => participant._id.toString() !==memberId)
             group.participants = filteredMembers
             await group.save()
             const key = `User:${userId}:RoleChanged`
             res?.socket?.server?.io?.emit(key,filteredMembers)
-            return res.status(200).json({message:"user removed"})
+            return res.status(200).json({data:{
+                user:user.name,
+                member:memberFind.user.name,
+                status:"deleted"
+            }})
         }
         
-        const memberFind:any = group.participants.find((particip:any) => particip._id.toString() === memberId)
 
         if(!memberFind) {
             return res.status(404).json({error:"User not found"})
@@ -61,7 +65,8 @@ export default async function handler(req:NextRequest,res:NextApiResponseServerI
         
         return res.status(200).json({data:{
             user:user.name,
-            member:memberFind.user.name
+            member:memberFind.user.name,
+            status:"changed"
             
         }})
     } catch (error) {

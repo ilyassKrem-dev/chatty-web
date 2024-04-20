@@ -54,7 +54,7 @@ export default function Roles({members,setShowRoles,userId,groupId}:{
         
         await axios.post('/api/socket/messages',{
             content:{
-                    text:`${res?.data.data.user} changed ${res?.data.data.member} to ${role}`,
+                    text:`${res?.data.data.user} ${res.data.data.status} ${res?.data.data.member} ${res.data.data.status !=="deleted"?`to ${role}`:""}`,
                     urls:[]
                 },
             email:"system",

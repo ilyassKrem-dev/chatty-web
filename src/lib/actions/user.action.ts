@@ -131,8 +131,10 @@ export const fetchUsers = async(
         if(currentUser) {
             query._id = {$ne:currentUser._id}
         }
+        query.name = { $ne: "system" };
+
         let usersQuery;
-    
+        
         if (Object.keys(query).length === 0) {
            
             usersQuery = User.aggregate([
