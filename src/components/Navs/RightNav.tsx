@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
-import { SocketIndicator } from "@/assets/other/socket-indicator"
+
 import { useSocket } from "@/assets/other/providers/socket-provider"
 import { useEffect, useState } from "react"
 import { userStatusFetch } from "@/lib/actions/user.action"
@@ -29,14 +29,12 @@ export default function RightNav() {
         if(!socket) return
         const key = `User:${userStatus._id}:status`
         socket.on(key,(status:string) => {
-            setUserStatus((prev:any) => {
-                return {...prev,status:status}
-            })
+            setUserStatus(status)
         })
 
         return () => socket.off(key)
     },[])
-
+    
 
     const loaderProp =({ src }:any) => {
         return src;
@@ -44,9 +42,7 @@ export default function RightNav() {
     return (
         <nav className="hidden lg:flex sticky left-0 top-0 p-2 px-4 border-r dark:border-white  z-30 dark:bg-dark dark:border-0 bg-white">
             <div className="flex justify-center  flex-col h-full gap-10 group">
-                <div className="self-center">
-                    <SocketIndicator />
-                </div>  
+                  
                 {NavIcons.map((icon,index) => {
                     return (
                         <Link key={index} href={icon.route} className={`  cursor-pointer ${pathname?.includes(icon.route) && icon.label !=="Signout" ? "text-dark   bg-gray-300":"text-gray-1 dark:text-white"} p-1 rounded-lg hover:text-black/80 dark:hover:text-blue-400 transition-all duration-300 flex gap-2 items-center justify-start hover:bg-gray-200`}>

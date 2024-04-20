@@ -145,7 +145,7 @@ export default  function CompleteForm({
                 className="border-none cursor-pointer bg-transparent outline-none file:text-blue-400 hidden sm:block file:cursor-pointer"/>
               </FormControl>
              
-              <FormMessage />
+              <FormMessage className="h-1"/>
             </FormItem>
           )}
         />
@@ -159,7 +159,7 @@ export default  function CompleteForm({
                 <Input onChangeCapture={() => setErrorN(false)} autoComplete={"off"}  placeholder="Name" {...field} />
               </FormControl>
               {errorN&&<p className="text-accent text-sm font-medium ">Name already exsist</p>}
-              <FormMessage />
+              <FormMessage className="h-1"/>
             </FormItem>
           )}
         />
@@ -177,13 +177,13 @@ export default  function CompleteForm({
                 {...field} />
               </FormControl>
               
-              <FormMessage />
+              <FormMessage className="h-1"/>
             </FormItem>
           )}
         />
        
        
-        <Button type="submit">
+        <Button type="submit" disabled={loading}>
           {!loading&&<p className="cursor-pointer">Complete</p>}
           {loading&&
           <LoadingAnimation />}

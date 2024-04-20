@@ -91,7 +91,7 @@ export default  function SignUpForm() {
                 <Input onChangeCapture={() =>setErrorN(false)} placeholder="Name" {...field} />
               </FormControl>
               {errorN&&<p className="text-accent text-sm font-medium ">Name already exsist</p>}
-              <FormMessage />
+              <FormMessage className="h-1"/>
             </FormItem>
           )}
         />
@@ -107,7 +107,7 @@ export default  function SignUpForm() {
                 <Input  onChangeCapture={() => setErrorE(false)} type={"email"} placeholder="Email" {...field} />
               </FormControl>
               {errorE&&<p className="text-accent text-sm font-medium ">Email already exsist</p>}
-              <FormMessage />
+              <FormMessage className="h-1"/>
             </FormItem>
           )}
         />
@@ -120,7 +120,7 @@ export default  function SignUpForm() {
               <FormControl>
                 <Input type={"password"} placeholder="Password" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="h-1"/>
             </FormItem>
           )}
         />
@@ -133,11 +133,11 @@ export default  function SignUpForm() {
               <FormControl>
                 <Input  type={"password"}  placeholder="Confirm password" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="h-1"/>
             </FormItem>
           )}
         />
-        <Button type="submit">
+        <Button type="submit" disabled={loading}>
           {!loading&&<p className="cursor-pointer">Sign up</p>}
           {loading&&<LoadingAnimation />}
         </Button>

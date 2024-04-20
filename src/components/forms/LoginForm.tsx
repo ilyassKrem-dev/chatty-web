@@ -117,7 +117,7 @@ export default  function LoginForm() {
                 <Input  onChangeCapture={() => setErrorE("")} type={"email"} placeholder="Email" {...field} />
               </FormControl>
               {errorE&&<p className="text-accent text-sm font-medium ">{errorE}</p>}
-              <FormMessage />
+              <FormMessage className="h-1"/>
             </FormItem>
           )}
         />
@@ -131,11 +131,11 @@ export default  function LoginForm() {
                 <Input onChangeCapture={() => setErrorP('')} type={"password"} placeholder="Password" {...field} />
               </FormControl>
               {errorP&&<p className="text-accent text-sm font-medium ">{errorP}</p>}
-              <FormMessage />
+              <FormMessage className="h-1"/>
             </FormItem>
           )}
         />
-        <Button type="submit">
+        <Button type="submit" disabled={loading}>
             {!loading&&<p className="cursor-pointer">Login</p>}
             {loading&&
             <LoadingAnimation />}

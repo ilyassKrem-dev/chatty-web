@@ -60,7 +60,7 @@ export default function GroupChat({convoId}:{
         if(!userId) return
         const roleKey = `User:${userId}:RoleChanged`
         socket.on(roleKey,(data:any) => {
-            console.log(data)
+            
             if(Array.isArray(data)) {
                 setConvo((prev:any) => {
                     return {...prev,participants:data}

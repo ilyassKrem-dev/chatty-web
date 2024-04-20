@@ -76,7 +76,7 @@ export default  function PasswordForm({userData,handlePassword}:Props) {
                 <Input type={"password"} placeholder="Password" {...field} />
               </FormControl>
              
-              <FormMessage />
+              <FormMessage className="h-1"/>
             </FormItem>
           )}
         />
@@ -90,11 +90,11 @@ export default  function PasswordForm({userData,handlePassword}:Props) {
               <FormControl>
                 <Input  type={"password"} placeholder="Confirm password" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="h-1"/>
             </FormItem>
           )}
         />
-        <Button type="submit">
+        <Button type="submit" disabled={loading}>
             {!loading&&<p className="cursor-pointer">Continue</p>}
             {loading&&
             <LoadingAnimation />}

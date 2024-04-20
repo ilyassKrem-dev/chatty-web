@@ -131,7 +131,7 @@ export const fetchUsers = async(
         if(currentUser) {
             query._id = {$ne:currentUser._id}
         }
-        query.name = { $ne: "system" };
+        query.name = { $nin: ["system", "Removed"] };
 
         let usersQuery;
         
