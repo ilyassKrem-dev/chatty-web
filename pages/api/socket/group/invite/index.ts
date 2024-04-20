@@ -38,7 +38,7 @@ export default async function handler(req:NextRequest,res:NextApiResponseServerI
             (participant:any) => participant.user.equals(member._id)
           );
         const key = `User:${userId}:invited`
-        console.log(emittedParticipant)
+        
         res?.socket?.server?.io?.emit(key,emittedParticipant)
         return res.status(200).json({data:{
             user:findUser.user.name,

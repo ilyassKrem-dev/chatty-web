@@ -28,7 +28,7 @@ export default  function FriendsList() {
             friendId:id
         })
         router.push(`/chat/${convoId}`)
-        console.log(convoId)
+        
        
     }
     const handleRemove = async(id:string) => {

@@ -35,7 +35,7 @@ export default function Invite({setShowInvite,members,userId,groupId}:{
                 members,
                 searchString:searchParams
             })
-            console.log(res)
+           
             if(!res) return
             setFriends(res)
         }

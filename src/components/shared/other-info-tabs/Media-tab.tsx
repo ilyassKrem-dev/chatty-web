@@ -11,7 +11,7 @@ export default function MediaTab({messages}:any) {
             return url.url;
         });
     }).filter((url:string) => url);
-    console.log(messages)
+    
 
     return(
         <>

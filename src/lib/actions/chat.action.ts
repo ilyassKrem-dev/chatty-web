@@ -156,7 +156,7 @@ export const fetchConvoById = async(
             participants: convoFiltered
         };
         const convoFull = JSON.parse(JSON.stringify(convoData))
-        //console.log(convoData)
+        
         return {convoFull,userId:user._id.toString()}
     } catch (error:any) {
         throw new Error(`Failed to fetch conversation ${error.message}`)

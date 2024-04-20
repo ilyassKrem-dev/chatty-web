@@ -34,7 +34,7 @@ export default async function handler(req:NextRequest,res:NextApiResponseServerI
         }
         if(password&&oldPassword) {
             const isValid = await user.comparePassword(oldPassword)
-            console.log(isValid)
+            
             if(!isValid) {
             return res.json({errorO:"Password incorrect"})
             }
