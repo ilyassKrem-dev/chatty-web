@@ -3,13 +3,15 @@ import CompleteForm from "../forms/CompleteForm"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { fetchUserCompletion } from "@/lib/actions/user.action"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import PasswordForm from "../forms/PasswordForm"
 
 export default function ToComplete() {
-    const {data:session,status} = useSession()
+    const {data:session} = useSession()
     const [completed,setCompleted] = useState<any>()
     const [showPasswordInput, setShowPasswordInput] = useState(false)
+    const router = useRouter()
+    
     useEffect(() => {
         if(!session) return
         const userFetch =async () => {
@@ -18,7 +20,11 @@ export default function ToComplete() {
         }
         userFetch()
     },[session])
-    if(completed?.completed) redirect('/chat')
+    useEffect(() => {
+        if (completed && completed.completed) {
+            router.push("/chat");
+        }
+    }, [completed]);
     
     const userData = {
         name:session?.user?.name,
@@ -29,22 +35,29 @@ export default function ToComplete() {
         setShowPasswordInput(false)
     }
     useEffect(() => {
-        if (session && session?.user?.image?.includes('google')) {
+        if (session && session?.user?.image?.includes('google') && completed&&!completed?.password) {
             setShowPasswordInput(true)
         }
     }, [session])
+    if (!session) return null
     return (
         <>
             
             {session&&completed&&!completed?.completed&&!showPasswordInput &&
-                <CompleteForm 
+                <div className="flex justify-center items-center">
+                    <CompleteForm 
                     userData={userData}
                    />
+                </div>
+                
             }
             {showPasswordInput &&
-                <PasswordForm 
+                <div className="flex justify-center items-center">
+                    <PasswordForm 
                     userData={userData}
                     handlePassword={handlePasswordSubmit} />
+                </div>
+                
             }
         </>
         

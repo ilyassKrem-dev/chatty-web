@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -17,7 +17,7 @@ import { completeValidation } from "@/lib/validation/complete"
 import { ChangeEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Textarea } from "@/components/ui/textarea"
-import Image from "next/image"
+
 import { FiUpload } from "react-icons/fi";
 import { AddUser } from "@/lib/actions/user.action"
 import { isBase64Image } from "@/lib/utils"
@@ -95,9 +95,9 @@ export default  function CompleteForm({
   return (
     <Form {...form}>
         
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 bg-white p-4 sm:w-[400px] h-full rounded-lg flex flex-col relative">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-[85%]  p-4 sm:w-[500px] h-full rounded-lg flex flex-col relative">
         
-        <h1 className=" self-center text-xl underline">Complete profile</h1>
+        <h1 className=" self-center text-2xl font-bold">Complete profile</h1>
         <FormField
           control={form.control}
           name="image"
@@ -105,19 +105,18 @@ export default  function CompleteForm({
           render={({ field }) => (
             
             <FormItem className="flex gap-2 items-center justify-center sm:ml-2 sm:justify-start">
-              <FormLabel className="flex h-24 w-24 sm:w-32 items-center justify-center rounded-full border-2 border-black">
+              <FormLabel className="flex h-24 w-24 sm:w-32 items-center justify-center rounded-full border-2 ">
                 {
                     field.value ?
                     (
                         <div className="hover:bg-black/80 rounded-full relative group w-full">
                             <Image 
                                 src={field.value}
-                                priority
                                 alt="profile photo"
                                 width={96}
                                 height={96}
-                                className="cursor-pointer rounded-full  object-cover group-hover:opacity-40" />
-                                <FiUpload  className="absolute top-[2rem] left-[2.05rem] hidden group-hover:block text-white text-2xl cursor-pointer"/>
+                                className="cursor-pointer rounded-full w-[96px] h-[96px]  object-cover group-hover:opacity-40 bg-white border" />
+                                <FiUpload  className="absolute top-[2.2rem] left-[2.2rem] hidden group-hover:block text-white text-2xl cursor-pointer"/>
                         </div>
                         
                         
@@ -126,12 +125,12 @@ export default  function CompleteForm({
                     (<div className="hover:bg-black/80 rounded-full relative group ">
                         <Image 
                         src={"/user.png"}
-                        priority
+                        
                         alt="profile photo"
                         width={96}
                         height={96}
-                        className=" cursor-pointer rounded-full   object-cover group-hover:opacity-40 " />
-                        <FiUpload  className="absolute top-[2rem] left-[2.05rem] hidden group-hover:block text-white text-2xl sm:group-hover:hidden"/>
+                        className="w-[96px] h-[96px] cursor-pointer rounded-full   object-cover group-hover:opacity-40 border" />
+                        <FiUpload  className="absolute [2.2rem] left-[2.2rem] hidden group-hover:block text-white text-2xl sm:group-hover:hidden"/>
                     </div>)
                     
                 }
@@ -154,9 +153,9 @@ export default  function CompleteForm({
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel className={`${errorN&&"text-accent"}`}>Name</FormLabel>
               <FormControl>
-                <Input onChangeCapture={() => setErrorN(false)} autoComplete={"off"}  placeholder="Name" {...field} />
+                <Input onChangeCapture={() => setErrorN(false)} autoComplete={"off"}  placeholder="Name" {...field} className={`${errorN&&"border-accent"}`} />
               </FormControl>
               {errorN&&<p className="text-accent text-sm font-medium ">Name already exsist</p>}
               <FormMessage className="h-1"/>
@@ -183,7 +182,7 @@ export default  function CompleteForm({
         />
        
        
-        <Button type="submit" disabled={loading}>
+        <Button type="submit" disabled={loading} className="hover:opacity-60 active:opacity-45 transition-all duration-300">
           {!loading&&<p className="cursor-pointer">Complete</p>}
           {loading&&
           <LoadingAnimation />}

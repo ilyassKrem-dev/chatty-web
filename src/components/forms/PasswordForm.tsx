@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
-import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation"
 import { passwordValidation } from "@/lib/validation/password"
 import { addGoogleAccount } from "@/lib/actions/user.action"
@@ -30,7 +29,7 @@ interface Props {
 
 export default  function PasswordForm({userData,handlePassword}:Props) {
     const [loading,setLoading] = useState<boolean>(false)
-    const router = useRouter()
+    
     const form = useForm({
         resolver:zodResolver(passwordValidation),
         defaultValues:{
@@ -60,11 +59,9 @@ export default  function PasswordForm({userData,handlePassword}:Props) {
     
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 bg-white p-4 sm:w-[400px] h-full rounded-lg flex flex-col relative">
-        <div onClick={() => router.back()} className="absolute top-[2.5rem] left-3 text-2xl cursor-pointer rounded-full hover:bg-black/20 p-2 transition-all duration-300 active:opacity-60">
-          <FaArrowLeft />
-        </div>
-        <h1 className=" self-center text-xl underline">Password</h1>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-[85%]  p-4 sm:w-[500px] h-full rounded-lg flex flex-col relative">
+        
+        <h1 className=" self-center text-2xl font-bold">Password</h1>
         
         <FormField
           control={form.control}
@@ -94,7 +91,7 @@ export default  function PasswordForm({userData,handlePassword}:Props) {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={loading}>
+        <Button type="submit" disabled={loading}  className="hover:opacity-60 active:opacity-45 transition-all duration-300">
             {!loading&&<p className="cursor-pointer">Continue</p>}
             {loading&&
             <LoadingAnimation />}

@@ -1,9 +1,10 @@
 "use client"
+import LoginForm from "@/components/forms/LoginForm"
 import CaptchaWrapper from "@/assets/other/Wrappers/CaptchaWrapper"
-import SignUpForm from "@/components/forms/SignUpForm"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import Connected from "@/assets/Connected/Connected"
+import LoadingAnimation from "@/assets/other/spinner"
 export default function Page() {
     const [show,setShow] = useState<boolean | null>(null)
     const {data:session} = useSession()
@@ -11,21 +12,30 @@ export default function Page() {
         if(show) return
         if (session === null) setShow(true); 
         else setShow(false); 
-    }, [session]);
+    }, [session,show]);
 
     if (show === null) {
-        return null; 
+        return (
+            <div className="flex justify-center items-center h-screen pb-32">
+                <LoadingAnimation />
+            </div>
+        ); 
     }
-    if(show) {
+    
+    
+    if (show) {
         return (
             <CaptchaWrapper>
-                <SignUpForm />
+                <div className="flex justify-center items-center">
+                    <LoginForm />
+                </div>
             </CaptchaWrapper>
-        )
+        );
     }
+    
     return (
-        <div className="md:w-[400px]">
-            {session&&<Connected />}
+        <div className="flex justify-center items-center w-full">
+            {!show&&session&&<Connected />}
         </div>
     )
 }

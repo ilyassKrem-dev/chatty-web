@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-
+import Link from "next/link"
 import LoadingAnimation from "@/assets/other/spinner"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,7 +19,7 @@ import { loginValidation } from "@/lib/validation/login"
 import { useState } from "react"
 import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
-import { FaArrowLeft } from "react-icons/fa";
+
 import { useRouter,useSearchParams } from "next/navigation"
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 export default  function LoginForm() {
@@ -97,11 +97,9 @@ export default  function LoginForm() {
   return (
     <Form {...form}>
     
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 bg-white p-4 sm:w-[400px] h-full rounded-lg flex flex-col relative">
-        <div onClick={() => router.push('/')} className="absolute top-[2.5rem] left-3 text-2xl cursor-pointer rounded-full hover:bg-black/20 p-2 transition-all duration-300 active:opacity-60">
-          <FaArrowLeft />
-        </div>
-        <h1 className=" self-center text-xl underline">Login</h1>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-[85%] p-4 sm:w-[500px] h-full rounded-lg flex flex-col relative justify-center">
+        
+        <h1 className=" self-center text-2xl font-bold">Login</h1>
         <div className="flex items-center text-sm gap-4 self-center bg-gray-200 p-2 w-full  rounded-full justify-center cursor-pointer hover:opacity-60" onClick={handeGoogleClick}>
             <FcGoogle className="text-2xl"/>
             <p className="cursor-pointer"><span className="hidden sm:inline">Login with</span> google</p>
@@ -112,9 +110,9 @@ export default  function LoginForm() {
           render={({ field }) => (
             <FormItem>
               
-              <FormLabel>Email</FormLabel>
+              <FormLabel className={`${errorE&&"text-accent"}`}>Email</FormLabel>
               <FormControl>
-                <Input  onChangeCapture={() => setErrorE("")} type={"email"} placeholder="Email" {...field} />
+                <Input  onChangeCapture={() => setErrorE("")} type={"email"} placeholder="Email" {...field} className={`${errorE&&"border-accent"}`}/>
               </FormControl>
               {errorE&&<p className="text-accent text-sm font-medium ">{errorE}</p>}
               <FormMessage className="h-1"/>
@@ -126,26 +124,27 @@ export default  function LoginForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel className={`${errorP&&"text-accent"}`}>Password</FormLabel>
               <FormControl>
-                <Input onChangeCapture={() => setErrorP('')} type={"password"} placeholder="Password" {...field} />
+                <Input onChangeCapture={() => setErrorP('')} type={"password"} placeholder="Password" {...field} className={`${errorP&&"border-accent"}`}/>
               </FormControl>
               {errorP&&<p className="text-accent text-sm font-medium ">{errorP}</p>}
               <FormMessage className="h-1"/>
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={loading}>
+        <Button type="submit" disabled={loading} className="hover:opacity-60 transition-all duration-300 active:opacity-45">
             {!loading&&<p className="cursor-pointer">Login</p>}
             {loading&&
             <LoadingAnimation />}
           
         </Button>
-        <Button type="button" onClick={() => router.push('/signup')}>
-            <p className="cursor-pointer">Sign up</p>
-            
-          
-        </Button>
+        <div className="flex gap-2">
+            <p className="text-base">Don't have an account?</p>
+            <Link href={"/signup"} className="text-blue-400 underline hover:opacity-60 transition-all duration-300 active:opacity-45">
+              Sign up
+            </Link>
+        </div>
       </form>
     </Form>
   )

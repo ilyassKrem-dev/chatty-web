@@ -8,13 +8,18 @@ export async function POST(req:NextRequest) {
     try {
         
         const data =  await req.json()
-        const {email,password,token} = data
-        const isValidCaptcha = await verifyCaptcha(token)
-        if(!isValidCaptcha) {
-            return NextResponse.json({error:"Invalid captcha,try again"})
+        const {email,password,token,from} = data
+        if(from !== "/signup") {
+            const isValidCaptcha = await verifyCaptcha(token)
+            
+            if(!isValidCaptcha) {
+                return NextResponse.json({error:"Invalid captcha,try again"})
+            }
         }
+        
         await ConnectDb();
         const user = await User.findOne({email})
+        
         if(!user) {
             return NextResponse.json({error:"No email found"},{status:400})
         }

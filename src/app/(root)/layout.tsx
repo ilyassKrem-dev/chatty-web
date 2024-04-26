@@ -2,8 +2,8 @@ import "../globals.css";
 import type { Metadata } from "next";
 
 import { Sora } from "next/font/google";
-import Theme from "@/assets/Theme/Theme";
-
+import Navbar from "@/components/root/Navbar";
+import Logo from "@/components/root/Logo";
 import AuthProvider from "@/assets/other/Wrappers/NextAuthWrapper";
 const sora = Sora({ subsets: ["latin"] });
 
@@ -20,10 +20,11 @@ export default function RootLayout({
  
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className={sora.className}>
+      <body className={`bg-light ${sora.className}`}>
           <AuthProvider>
-            
-            <main className="bg-gradient-to-br from-blue-500 to-blue-800 min-h-screen flex flex-col justify-center items-center text-white">
+            <Navbar />
+            <Logo />
+            <main>
               {children}
             </main>
             

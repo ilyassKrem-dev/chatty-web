@@ -22,10 +22,11 @@ export const options: NextAuthOptions = {
                 // @ts-ignore
             async authorize(credentials) {
                 // @ts-ignore
-                const {email,password,token} = credentials
+                const {email,password,token,from} = credentials
                 
                 try {
                     const apiUrl = process.env.NEXT_PUBLIC_API_URL + "/api/login";
+                    
                     const fetchUser =await fetch(apiUrl,{
                         method:"POST",
                         headers:{
@@ -34,13 +35,16 @@ export const options: NextAuthOptions = {
                         body:JSON.stringify({
                             email,
                             password,
-                            token})
+                            token,
+                            from})
                     })
+                    
                     if (!fetchUser.ok) {
                         const errorResponse = await fetchUser.json();
                         throw new Error(errorResponse.error);
                     }
                     const user = await fetchUser.json()
+                    
                     user.authenticationMethod = 'custom'
                     
                     return user
@@ -49,7 +53,7 @@ export const options: NextAuthOptions = {
                     throw new Error('Authentication failed '+error);
                 }
             }
-            
+        
                 
         })
     ],

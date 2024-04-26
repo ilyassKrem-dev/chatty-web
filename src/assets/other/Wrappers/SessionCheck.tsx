@@ -13,6 +13,7 @@ export default function SessionCheck({children}:{
     const router = useRouter()
     const pathname = usePathname()
     const [redirected, setRedirected] = useState(false);
+    
     useEffect(() => {
         if (session === null) {
             if(pathname?.includes('chat')) {
@@ -40,13 +41,14 @@ export default function SessionCheck({children}:{
 
     useEffect(() => {
         if (completed && !completed.completed&& !redirected) {
-            setRedirected(true);
+            if(completed.completed) {
+                setRedirected(true);
+            }
             router.push('/tocomplete');
             
         }
         
     }, [completed]);
-
     
     return (
         <>

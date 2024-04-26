@@ -1,7 +1,9 @@
-const LoadingAnimation = () => {
+const LoadingAnimation = ({className}:{
+  className?:string
+}) => {
     return (
       <div className="loading-container">
-        <div className="spinner"></div>
+        <div className={`spinner ${className}`}></div>
       </div>
     );
   };

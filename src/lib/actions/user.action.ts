@@ -26,7 +26,7 @@ export const AddUser = async ({
             $ne:findUser._id
         }})
         
-        if(findName&&findName.name === name) {
+        if(findName&&findName.name.toLowerCase() === name.toLowerCase()) {
             return {
                 message:"Name already exsite"
             }
@@ -53,7 +53,7 @@ export const fetchUserCompletion = async(email:string)  => {
     try {
         await ConnectDb()
         const user = await User.findOne({email})
-            .select('-_id completed').lean()
+            .select('-_id completed password').lean()
         
         if(!user) {
             return {completed:false}

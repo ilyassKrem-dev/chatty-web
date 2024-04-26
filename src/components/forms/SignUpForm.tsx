@@ -3,7 +3,6 @@ import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -16,10 +15,11 @@ import {
 import { Input } from "@/components/ui/input"
 import { signUpValidation } from "@/lib/validation/signUp"
 import { useState } from "react"
-import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation"
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import LoadingAnimation from "@/assets/other/spinner"
+import { signIn } from "next-auth/react"
+import { FcGoogle } from "react-icons/fc"
 export default  function SignUpForm() {
     const [errorN,setErrorN] = useState<boolean>(false)
     const [errorE,setErrorE] = useState<boolean>(false)
@@ -69,18 +69,49 @@ export default  function SignUpForm() {
         if(responseData.error.startsWith('N')) return setErrorN(true)
         throw new Error(responseData.error ||"Can't sign up rign now,try again later")
       }
-      if(responseData.message) router.push('/login')
+      if(responseData.message) {
+        
+        const resp = await signIn("credentials",{
+          redirect:false,
+          email:values.email.toLowerCase(),
+          password:values.password,
+          token:reCaptchaToken,
+          from:"/signup"
+        })
+        if(resp) {
+          window.location.href = "/tocomplete"
+        }
+      }
     }
     
-    
+    const handeGoogleClick = async() => {
+      if(!executeRecaptcha) {
+          setLoading(false)
+          throw {
+            title:"reCaptcha not available at the moment",
+            decription:"Please try again",
+          }
+        }
+        const reCaptchaToken = await executeRecaptcha("login")
+        if(!reCaptchaToken) return setLoading(false)
+        const resp = await signIn("google",{
+          callbackUrl:"/chat"
+        })
+        
+        
+  }   
+  
+
   return (
     <Form {...form}>
     
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 bg-white p-4 sm:w-[400px] h-full rounded-lg flex flex-col relative">
-        <div onClick={() => router.push('/')} className="absolute top-[2.5rem] left-3 text-2xl cursor-pointer rounded-full hover:bg-black/20 p-2 transition-all duration-300 active:opacity-60">
-          <FaArrowLeft />
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-[85%] p-4 sm:w-[500px] h-full rounded-lg flex flex-col relative">
+        
+        <h1 className=" self-center text-2xl font-bold">Sign up</h1>
+        <div className="flex items-center text-sm gap-4 self-center bg-gray-200 p-2 w-full  rounded-full justify-center cursor-pointer hover:opacity-60" onClick={handeGoogleClick}>
+            <FcGoogle className="text-2xl"/>
+            <p className="cursor-pointer"><span className="hidden sm:inline">Sign up with</span> google</p>
         </div>
-        <h1 className=" self-center text-xl underline">Sign up</h1>
         <FormField
           control={form.control}
           name="name"
@@ -137,15 +168,16 @@ export default  function SignUpForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={loading}>
+        <Button type="submit" disabled={loading} className="hover:opacity-60 transition-all duration-300 active:opacity-45">
           {!loading&&<p className="cursor-pointer">Sign up</p>}
           {loading&&<LoadingAnimation />}
         </Button>
-        <Link href={"/login"} className="w-full">
-          <Button className="w-full bg-gradient-to-r from-black  to-gray-600  hover:opacity-70 hover:text-opacity-100 transition-all duration-200">
-            Login
-          </Button>
-        </Link>
+        <div className="flex gap-2">
+            <p className="text-base">Already have an account?</p>
+            <Link href={"/login"} className="text-blue-400 underline hover:opacity-60 transition-all duration-300 active:opacity-45">
+              Login
+            </Link>
+        </div>
       </form>
     </Form>
   )
