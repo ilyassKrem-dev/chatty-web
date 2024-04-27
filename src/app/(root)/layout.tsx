@@ -9,7 +9,7 @@ const sora = Sora({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Chatty",
-  description: "Chat with your friend,or Ai in Chatty",
+  description: "Chat with your friend in Chatty",
 };
 
 export default function RootLayout({
