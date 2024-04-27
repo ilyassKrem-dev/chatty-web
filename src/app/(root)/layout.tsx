@@ -10,6 +10,9 @@ const sora = Sora({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Chatty",
   description: "Chat with your friend in Chatty",
+  icons:{
+    icon:"/favicon.ico"
+  }
 };
 
 export default function RootLayout({

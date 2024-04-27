@@ -6,7 +6,7 @@ export default function  NotFound({err}:{
 }) {
 
     return (
-        <div className="flex items-center justify-center flex-col gap-5">
+        <div className="flex items-center justify-center flex-col gap-5 py-36">
             <h1 className="font-bold text-3xl">
                 404
             </h1>
