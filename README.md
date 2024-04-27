@@ -74,6 +74,6 @@ Chatty a messaging website built using nextjs,
 [MongoDB-url]:https://www.mongodb.com/
 [Socket.io]:https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101
 [Socket.io-url]:https://socket.io/
-[Chatty]:https://www.dropbox.com/scl/fi/14ac5ikz3db35aq9fm8c7/homePage.jpg?rlkey=d5lr9m7qjde5kd8lgz0ndhoky&st=eqxmbvib&raw=1
+[Chatty]:https://www.dropbox.com/scl/fi/dygfpkhjyx5f6bbkbfg1p/SiteRed.jpg?rlkey=h828h9cjyn594uomxpsx52cu5&st=odb1l9ns&raw=1
 [Chatty1]:https://www.dropbox.com/scl/fi/m4qbyacf6p52rx8lmcvdg/Site.jpg?rlkey=fik94l922tjbk5pwy44llkqs0&st=ut149shi&raw=1
 
