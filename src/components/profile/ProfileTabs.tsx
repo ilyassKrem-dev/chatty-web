@@ -22,8 +22,8 @@ export default function ProfileTabs() {
 
     return (
         <section className="flex justify-center items-center text-center   flex-col">
-            <Tabs defaultValue="friends" className="w-full ">
-                <TabsList className="flex flex-1  items-center gap-3 bg-blue-400 text-white data-[state=active]:bg-white data-[state=active]:text-black dark:bg-dark">
+            <Tabs defaultValue="friends" className="w-full bg-light dark:bg-dark/20">
+                <TabsList className="flex flex-1  items-center gap-3 bg-blue-400 text-white data-[state=active]:bg-white data-[state=active]:text-black dark:bg-dark rounded-none">
                     {tabsLabels.map((tab) => {
                         return (
                             <TabsTrigger key={tab.label} value={tab.value} className="flex  flex-1 items-center gap-3 bg-blue-400 text-white data-[state=active]:bg-white data-[state=active]:text-black dark:bg-dark dark:text-white dark:data-[state=active]:bg-white dark:data-[state=active]:text-black">

@@ -3,6 +3,7 @@ import { CiFileOn } from "react-icons/ci";
 
 import { useSession } from "next-auth/react"
 import { fetchConvos } from "@/lib/actions/chat.action"
+import ItemsLoad from "@/assets/Loaders/ItemsLoad";
 import Image from "next/image"
 import Link from "next/link"
 import { useSocket } from "@/assets/other/providers/socket-provider";
@@ -66,7 +67,11 @@ export default function SideNavItems() {
 
 
       
-    },[chats,socket]) 
+    },[chats,socket])
+  
+    if(chats.length === 0) {
+      return <ItemsLoad />
+    }
     return (
         <>
             {chats&&chats.length !==0&&
@@ -137,3 +142,4 @@ export default function SideNavItems() {
        
     )
 }
+

@@ -8,7 +8,7 @@ export default function TabDetails({query}:{
 }) {
 
     return (
-        <div className=" py-24 px-5 md:p-16 w-full">
+        <div className="p-5  py-28 md:py-14 flex-1">
             {query?.toLowerCase() === "info"
             ?
             <ProfileTab />

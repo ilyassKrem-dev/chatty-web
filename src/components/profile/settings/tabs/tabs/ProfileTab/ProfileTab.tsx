@@ -6,6 +6,7 @@ import { useSocket } from "@/assets/other/providers/socket-provider"
 import { motion } from "framer-motion";
 import EmailInfo from "./EmailInfo";
 import PasswordChange from "./PasswordChange";
+import LoadingAnimation from "@/assets/other/spinner";
 export default function ProfileTab() {
     const [user ,setUser] = useState<any>()
     const {data:session} = useSession()
@@ -40,6 +41,14 @@ export default function ProfileTab() {
 
         return () => clearTimeout(id)
     },[succesMsg])
+    if(!user) {
+        return (
+            <div className="flex gap-10 flex-col w-full items-center">
+                <h1 className="font-bold text-2xl">Account details</h1>
+                <LoadingAnimation />
+            </div>
+        )
+    }
     return (
         <div className="flex gap-5 flex-col w-full items-center">
             <h1 className="font-bold text-2xl">Account details</h1>

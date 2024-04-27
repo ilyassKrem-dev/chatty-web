@@ -8,7 +8,7 @@ import ChatMessages from "@/components/chat/ChatMessages"
 import { useSocket } from "@/assets/other/providers/socket-provider"
 import NoIdFound from "../shared/NoidFound"
 import OtherInfo from "../shared/OtherInfo"
-
+import ChatLoader from "@/assets/Loaders/ChatLoader"
 export default function Chat({convoId}:{
     convoId:string
 }) {
@@ -73,7 +73,9 @@ export default function Chat({convoId}:{
     if(convo === null) {
         return <NoIdFound />
     }
-    
+    if(!convo) {
+        return <ChatLoader path="chats" />
+    }
     return (
         <div className=" lg:pb-0 flex">
             {convo&&

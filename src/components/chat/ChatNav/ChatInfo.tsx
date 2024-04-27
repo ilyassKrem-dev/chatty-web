@@ -14,6 +14,7 @@ interface Props {
 }
 
 export default function ChatInfo({friendInfo,userId,setShow,show}:Props) {
+    
     const loaderProp =({ src }:any) => {
         return src;
      }

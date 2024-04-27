@@ -7,12 +7,13 @@ import { fetchGroupConvos } from "@/lib/actions/group.action";
 import Image from "next/image"
 import Link from "next/link"
 import { useSocket } from "@/assets/other/providers/socket-provider";
+import ItemsLoad from "@/assets/Loaders/ItemsLoad";
 
 export default function GroupSideItems() {
     const [groups,setGroups] = useState<any[]>([])
     const {data:session} = useSession()
-    const {socket } = useSocket()
-    
+    const {socket} = useSocket()
+    const [empty,setEmpty] = useState(true)
     const pathname = usePathname()?.split('/')[2]
     
     useEffect(() =>{
@@ -20,6 +21,7 @@ export default function GroupSideItems() {
         const chatsfetch = async() => {
             const response = await fetchGroupConvos(session?.user?.email)
             setGroups(response)
+            setEmpty(false)
         }
         chatsfetch()
     },[session])
@@ -74,7 +76,9 @@ export default function GroupSideItems() {
 
       
     },[groups,socket]) 
-    
+    if(empty) {
+      return <ItemsLoad />
+    }
     return (
         <>
             {groups&&groups.length !==0&&

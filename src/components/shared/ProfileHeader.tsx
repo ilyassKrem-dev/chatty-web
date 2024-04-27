@@ -24,7 +24,7 @@ export default function ProfileHeader({user,type,userId}:Props) {
     }
     return (
         <div className="flex flex-col">
-            <div className="h-[250px] xl:h-[300px] border-b-4 border-gray-400 dark:border-b ">
+            <div className="h-[250px] xl:h-[300px] border-b-2 border-gray-300 dark:border-0 ">
                 {
                 user.coverImage
                 ?
@@ -34,7 +34,7 @@ export default function ProfileHeader({user,type,userId}:Props) {
                 width={1200}
                 priority
                 height={1200}
-                className=" w-full h-[245px] max-h-[245px] xl:max-h-[295px] xl:h-[295px]"
+                className=" w-full h-[245px] max-h-[245px] xl:max-h-[295px] xl:h-[295px] bg-white"
                 loader={loaderProp}
                 unoptimized />
                     :

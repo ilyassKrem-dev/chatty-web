@@ -88,7 +88,7 @@ export default function ChatInput({email,convoId,receiver,type}:Props) {
     return (
         <div className="flex flex-col items-center justify-center gap-4  py-4 px-2 lg:pb-4 dark:bg-dark border-t-2 dark:border-0">
             
-            <OtherTypes urls={urls} setFiles={setFiles} setUrls={setUrls} files={files}/>
+            {urls.length >0&&<OtherTypes urls={urls} setFiles={setFiles} setUrls={setUrls} files={files}/>}
             <div className="flex gap-5 items-center relative w-full  md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl px-2">
                 <ChatMedia setFiles={setFiles} files={files} setUrls={setUrls}/>
                 <div className="w-full relative">

@@ -8,17 +8,20 @@ import { fetchConvoId } from "@/lib/actions/chat.action"
 import { removeFriend } from "@/lib/actions/friends.action"
 import FriendInputs from "./FriendsInputs"
 import Status from "@/components/shared/Status"
+import LoadingAnimation from "@/assets/other/spinner"
 export default  function FriendsList() {
     const [friends,setFriends] = useState<any[]>([])
     const [showMore , setShowMore] = useState<number>(10)
     const pathname = usePathname() as string
     const router = useRouter()
+    const [empty,setEmpty] = useState(true)
     const {data:session} = useSession()
     useEffect(() => {
         if(!session) return
         const fetchRe = async() => {
             const friends = await fetchFriends(session?.user?.email,showMore)
             setFriends(friends)
+            setEmpty(false)
         }
         fetchRe()
     } ,[session])
@@ -39,6 +42,12 @@ export default  function FriendsList() {
         })
       
     }
+    if(empty) {
+        return (
+        <div className="justify-center items-center flex pt-10">
+            <LoadingAnimation />
+        </div>)
+    }
     return (
         <>
             {friends.length !== 0&&
@@ -49,7 +58,7 @@ export default  function FriendsList() {
                     }
                     return (
                         <div key={friend._id} className="flex items-center justify-between p-2 rounded-xl    hover:shadow-lg transition ">
-                          <div className="flex items-center space-x-4 duration-300 ease-in-out  hover:opacity-70  hover:bg-gray-300 dark:hover:bg-dark">
+                          <div className="flex items-center space-x-4 duration-300 ease-in-out  hover:opacity-70  ">
                             <div className="relative w-10 h-10">
                               <Image 
                                 src={friend.image ||"/user.png"} 

@@ -116,7 +116,7 @@ export default function ChatMessages({
                     onMouseDown={() => handleMouseDown(message._id)}
                     
                     onMouseUp={handleMouseUp}
-                    className={`${message.sender._id === userId?"bg-blue-400 text-white":"bg-slate-200 text-black"} max-w-[300px] w-fit  text-end p-2 rounded-lg mx-4 relative ${like && "bg-transparent"} flex items-start justify-center flex-col`} 
+                    className={`${message.sender._id === userId?"bg-blue-400 text-white":"bg-slate-200 text-black"} max-w-[300px] w-fit  text-end p-2 rounded-lg mx-4 relative ${like && "bg-transparent mx-1"} flex items-start justify-center flex-col`} 
                     onClick={() => handleContainerClick(message._id)}>
 
                         {type==="group"&&message.sender._id !== userId&&
@@ -133,9 +133,9 @@ export default function ChatMessages({
                                     <Image  
                                     src={url.url} 
                                     alt={url.url.split('/')[1].split(".")[0]} 
-                                    width={40} 
-                                    height={40}
-                                    className="h-auto w-auto" />
+                                    width={50} 
+                                    height={50}
+                                    className={`h-[50px] w-[50px]  mb-4 ${message.sender._id === userId&&"scale-x-[-1]"} `}   />
                                   :
                                   <MessagesTypes 
                                   urlInfo={url} setEnlarge={setEnlarge}/>
@@ -149,8 +149,8 @@ export default function ChatMessages({
                         </div>
 
                         <div className={`absolute h-0 w-0 border-y-8 border-y-transparent   ${message.sender._id === userId ? 
-                        ` -right-2 border-l-8  border-l-blue-400 ${like && "top-6 "}`:` -left-2 border-r-8  border-r-slat-100 ${like && "top-6 "}`
-                        } `}/>
+                        ` -right-2 border-l-8  border-l-blue-400`:` -left-2 border-r-8  border-r-slat-100`
+                        } ${like && "hidden"}`}/>
 
                         
                     </div>

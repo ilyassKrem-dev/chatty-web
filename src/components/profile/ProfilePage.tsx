@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import ProfileHeader from "@/components/shared/ProfileHeader"
 import ProfileTabs from "./ProfileTabs"
 import { useSocket } from "@/assets/other/providers/socket-provider"
+import LoadingAnimation from "@/assets/other/spinner"
 interface Params {
     _id?:string
     name:string;
@@ -53,7 +54,13 @@ export default function ProfilePage() {
             })
         })
     },[socket,user])
-    
+    if(!user) {
+        return (
+            <div className="h-screen justify-center items-center flex">
+                <LoadingAnimation />
+            </div>
+        )
+    }
     return (
         <>
             {user&&<section className="flex flex-col w-full">

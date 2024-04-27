@@ -5,8 +5,10 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { addFriend } from "@/lib/actions/friends.action"
 import { declineRequest } from "@/lib/actions/friends.action"
+import LoadingAnimation from "@/assets/other/spinner"
 export default  function RequestList() {
     const [requests,setRequests] = useState<any[]>([])
+    const [empty,setEmpty] = useState(true)
     const pathname = usePathname() as string
     const {data:session} = useSession()
     useEffect(() => {
@@ -14,6 +16,7 @@ export default  function RequestList() {
         const fetchRe = async() => {
             const requests = await fetchRequests(session?.user?.email)
             setRequests(requests)
+            setEmpty(false)
         }
         fetchRe()
     } ,[session])
@@ -36,6 +39,12 @@ export default  function RequestList() {
       const updatedRequests = await fetchRequests(session?.user?.email)
       setRequests(updatedRequests)
     }
+    if(empty) {
+      return (
+      <div className="justify-center items-center flex pt-10">
+          <LoadingAnimation />
+      </div>)
+    }
     return (
         <>
             {requests&&requests.length !== 0&&
@@ -45,7 +54,7 @@ export default  function RequestList() {
                     return src;
                   }
                     return (
-                        <div key={request._id} className="flex items-center justify-between p-2 rounded-xl    hover:shadow-lg transition duration-300 ease-in-out   hover:opacity-70  hover:bg-gray-300 dark:hover:bg-dark">
+                        <div key={request._id} className="flex items-center justify-between p-2 rounded-xl    hover:shadow-lg transition duration-300 ease-in-out   hover:opacity-70  ">
                           <div className="flex items-center space-x-4">
                             <div className="relative w-10 h-10">
                               <Image 

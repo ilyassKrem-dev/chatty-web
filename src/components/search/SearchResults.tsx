@@ -6,6 +6,7 @@ import Image from "next/image"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import ItemsLoad from "@/assets/Loaders/ItemsLoad"
 export default function SearchResults() {
     const [users,setUsers] = useState<any[]>([])
     const seacrhParams = useSearchParams()
@@ -24,6 +25,9 @@ export default function SearchResults() {
         }
         usersFetch()
     },[string,session])
+    if(users.length === 0 &&!searchString) {
+      return <ItemsLoad />
+    }
     return (
         <div>
             {users&&
@@ -53,7 +57,7 @@ export default function SearchResults() {
                             
                           </div>
                         </div>
-                        <button className="bg-blue-500 hover:opacity-60 dark:bg-accent text-white p-1 px-3 rounded-md transition duration-300 ease-in-out">
+                        <button className="bg-blue-500 hover:opacity-60 dark:bg-accent/70 text-white p-1 px-3 rounded-lg transition duration-300 ease-in-out">
                           View
                         </button>
                       </Link>

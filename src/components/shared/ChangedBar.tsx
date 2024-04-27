@@ -13,7 +13,7 @@ export default function ChangedBar() {
                 {navPathname !=="profile"&&
                 <div
                 
-                className="hidden md:block border-r-2 dark:border-r dark:border-gray-700 py-10 w-[350px] h-screen pl-4  dark:bg-dark/70 bg-white">
+                className="hidden md:block border-r-2 dark:border-r dark:border-gray-700 py-10 w-[350px] h-screen pl-4  dark:bg-dark/70 bg-lighter/60">
                     {navPathname === "group"
                     ?
                     <GroupSideNav />

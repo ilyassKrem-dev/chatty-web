@@ -45,7 +45,7 @@ export default function SettingsTabs({showTabs,setActiveTab}:{
             </motion.div>
             :
             <div
-            className={`border-x-2 h-screen  w-[400px] px-5 fixed left-0 top-[4.1rem] bottom-0 bg-white md:static  md:block dark:bg-dark`}>
+            className={` h-screen w-[350px] px-5 fixed left-0 top-[4.1rem] bottom-0 bg-lighter md:static  md:block dark:bg-dark `}>
                 <Link href={"/profile/settings"} onClick={() => setActiveTab(null)} >
                     <h1 className="font-bold text-2xl p-5 hover:opacity-60 transition-all duration-300 active:opacity-50 cursor-pointer">Settings</h1>
                 </Link>

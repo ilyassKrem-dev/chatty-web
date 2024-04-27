@@ -19,9 +19,9 @@ export default function SettingsHome() {
                                     </div>
                                     
                                 </div>
-                                <div className="self-start">
-                                    <h1 className="font-semibold">{item.title}</h1>
-                                    <p className="text-gray-1 text-sm">{item.description}</p>
+                                <div className="self-start ">
+                                    <h1 className="font-semibold w-fit ">{item.title}</h1>
+                                    <p className="text-gray-1 text-sm w-fit ">{item.description}</p>
                                 </div>
 
                             </div>

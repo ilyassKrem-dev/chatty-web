@@ -23,13 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={sora.className}>
+      <body className={` ${sora.className}`}>
         <AuthProvider >
           <SessionCheck>
             
               <Theme>
                 <SocketProvider>
-                  <main className="flex flex-row">
+                  <main className="flex flex-row ">
                     <RightNav />
                     <ChangedBar />
                     <section className="flex min-h-screen flex-1 flex-col items-center">

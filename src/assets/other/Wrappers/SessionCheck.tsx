@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { fetchUserCompletion } from "@/lib/actions/user.action"
 import { useSession } from "next-auth/react"
 import { useRouter,usePathname } from "next/navigation"
+import LoadingAnimation from "../spinner"
 export default function SessionCheck({children}:{
     children:React.ReactNode
 }) {
@@ -49,7 +50,13 @@ export default function SessionCheck({children}:{
         }
         
     }, [completed]);
-    
+    if(!completed) {
+        return (
+            <div className="flex justify-center items-center h-screen pb-32">
+                <LoadingAnimation />
+            </div>
+        )
+    }
     return (
         <>
             {completed && (completed.completed || redirected) && children}

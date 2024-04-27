@@ -9,6 +9,7 @@ import { useSocket } from "@/assets/other/providers/socket-provider"
 import Info from "./groupChat/info"
 import NoIdFound from "../shared/NoidFound"
 import OtherInfo from "../shared/OtherInfo"
+import ChatLoader from "@/assets/Loaders/ChatLoader"
 export default function GroupChat({convoId}:{
     convoId:string
 }) {
@@ -102,6 +103,9 @@ export default function GroupChat({convoId}:{
 
     if(convo === null ) {
         return <NoIdFound />
+    }
+    if(!convo) {
+        return <ChatLoader />
     }
     return (
         <div className=" lg:pb-0 flex">
